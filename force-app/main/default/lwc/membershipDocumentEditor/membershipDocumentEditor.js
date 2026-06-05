@@ -7,7 +7,7 @@ import getPicklistValues from '@salesforce/apex/MembershipDocumentController.get
 import saveMembershipDocuments from '@salesforce/apex/MembershipDocumentController.saveMembershipDocuments';
 import initializeDocuments from '@salesforce/apex/MembershipDocumentController.initializeDocuments';
 
-export default class MembershipDocumentEditor extends LightningElement {
+export default class MembershipDocumentEditor extends LightningElement { 
     
     _recordId;
     @track documentList = [];

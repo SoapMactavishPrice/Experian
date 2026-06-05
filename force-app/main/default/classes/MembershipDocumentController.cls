@@ -1,6 +1,6 @@
 public with sharing class MembershipDocumentController {
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=true) 
     public static List<Membership_Document__c> getMembershipDocuments(Id leadId) {
         try {
             return [
