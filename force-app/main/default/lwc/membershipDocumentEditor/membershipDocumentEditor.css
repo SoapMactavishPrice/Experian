@@ -11,7 +11,7 @@
 }
 
 .table-responsive {
-    overflow-x: auto;
+    overflow-x: hidden;   /* no horizontal scroll */
     overflow-y: auto;
     max-height: 55vh;
     border: 1px solid #e2e8f0;
@@ -23,25 +23,30 @@
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
+    table-layout: fixed;   /* KEY: forces columns to share available width */
 }
 
 .custom-table th {
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    padding: 12px 10px;
+    font-size: 0.65rem;       /* reduced from 0.75rem */
+    letter-spacing: 0.03em;   /* reduced from 0.05em */
+    padding: 8px 5px;         /* reduced from 12px 10px */
     position: sticky;
     top: 0;
     z-index: 10;
     box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+    white-space: normal;       /* allow wrapping in headers */
+    word-break: break-word;
+    line-height: 1.2;
 }
 
 .custom-table td {
-    padding: 8px 6px;
+    padding: 5px 4px;          /* reduced from 8px 6px */
     vertical-align: middle;
     border-bottom: 1px solid #edf2f7;
     border-right: 1px solid #edf2f7;
+    overflow: hidden;
 }
 
 .custom-table td:last-child {
@@ -64,16 +69,16 @@
 }
 
 .cell-doc-name {
-    min-width: 180px;
     font-weight: 600;
     color: #2d3748;
+    font-size: 0.75rem;
 }
 
 .text-bold {
     font-weight: 600;
 }
 
-/* Column Header Specific Colors (as per Excel sheet in prompt) */
+/* Column Header Specific Colors */
 .hdr-grey {
     background-color: #f1f3f5 !important;
     color: #495057 !important;
@@ -81,26 +86,26 @@
 }
 
 .hdr-yellow {
-    background-color: #fffbeb !important; /* light yellow */
-    color: #854d0e !important; /* dark yellow/brown text */
+    background-color: #fffbeb !important;
+    color: #854d0e !important;
     border-bottom: 3px solid #fef08a;
 }
 
 .hdr-blue {
-    background-color: #eff6ff !important; /* light blue */
-    color: #1e40af !important; /* dark blue text */
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
     border-bottom: 3px solid #bfdbfe;
 }
 
 .hdr-orange {
-    background-color: #fff7ed !important; /* light orange/peach */
-    color: #c2410c !important; /* dark orange text */
+    background-color: #fff7ed !important;
+    color: #c2410c !important;
     border-bottom: 3px solid #fed7aa;
 }
 
 .hdr-teal {
-    background-color: #f0fdfa !important; /* light teal */
-    color: #0f766e !important; /* dark teal text */
+    background-color: #f0fdfa !important;
+    color: #0f766e !important;
     border-bottom: 3px solid #99f6e4;
 }
 
@@ -108,14 +113,15 @@
 .custom-input, 
 .custom-select {
     width: 100%;
-    padding: 6px 10px;
-    font-size: 0.85rem;
+    padding: 4px 6px;           /* reduced from 6px 10px */
+    font-size: 0.72rem;         /* reduced from 0.85rem */
     border-radius: 4px;
     border: 1.5px solid #cbd5e0;
     background-color: #ffffff;
     color: #2d3748;
     transition: all 0.2s ease-in-out;
     outline: none;
+    box-sizing: border-box;
 }
 
 .custom-input:hover,
@@ -127,53 +133,45 @@
 .custom-input:focus,
 .custom-select:focus {
     border-color: #3182ce;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.25);
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.25);
     background-color: #ffffff;
 }
 
 /* Conditional input background styling for groups */
-.input-yellow, .select-yellow {
-    background-color: #fefdf0;
-}
+.input-yellow, .select-yellow { background-color: #fefdf0; }
 .input-yellow:focus, .select-yellow:focus {
     border-color: #d97706;
-    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+    box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.15);
 }
 
-.input-blue, .select-blue {
-    background-color: #f5f9ff;
-}
+.input-blue, .select-blue { background-color: #f5f9ff; }
 .input-blue:focus, .select-blue:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
-.input-orange, .select-orange {
-    background-color: #fff9f5;
-}
+.input-orange, .select-orange { background-color: #fff9f5; }
 .input-orange:focus, .select-orange:focus {
     border-color: #ea580c;
-    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.15);
 }
 
-.input-teal {
-    background-color: #f2fdfb;
-}
+.input-teal { background-color: #f2fdfb; }
 .input-teal:focus {
     border-color: #0d9488;
-    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
 }
 
 .date-input {
-    min-width: 130px;
+    min-width: unset;    /* remove old min-width constraint */
 }
 
 /* Custom Checkbox Design */
 .checkbox-wrapper {
     display: inline-block;
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 16px;          /* reduced from 20px */
+    height: 16px;
     cursor: pointer;
     vertical-align: middle;
 }
@@ -194,10 +192,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background: #e2e8f0;
-    border-radius: 4px;
+    border-radius: 3px;
     border: 1.5px solid #cbd5e0;
     transition: all 0.2s ease;
     z-index: 1;
@@ -212,10 +210,10 @@
     content: '';
     position: absolute;
     display: none;
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
     border: solid white;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
@@ -226,20 +224,26 @@
 }
 
 .checkbox-input:focus + .checkbox-btn {
-    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.3);
+    box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.3);
     border-color: #0d9488;
 }
 
-/* Column widths settings to align neatly */
-.col-sr { width: 50px; }
-.col-name { min-width: 180px; }
-.col-status { min-width: 150px; }
-.col-comment { min-width: 160px; }
-.col-exception { width: 90px; }
-.col-date { min-width: 140px; }
-.col-notes { min-width: 160px; }
+/* ─── Column widths: fixed layout, all columns share ~100% width ─── */
+.col-sr       { width: 3.5%; }
+.col-name     { width: 12%; }
+.col-status   { width: 9%; }
+.col-comment  { width: 9%; }
+.col-exception { width: 5%; }
+.col-date     { width: 8%; }
+.col-notes    { width: 8%; }
+/* 
+  Layout breakdown (11 columns total):
+  sr(3.5) + name(12) + exe-status(9) + exe-comment(9)
+  + tl-status(9) + tl-comment(9) + adm-status(9) + adm-comment(9)
+  + exception(4) + date(8) + notes(9) = ~100.5% ≈ fits perfectly
+*/
 
-/* Empty state styling with custom glassmorphism card */
+/* Empty state styling */
 .empty-container {
     display: flex;
     flex-direction: column;
@@ -279,15 +283,9 @@
 }
 
 @keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-    }
+    0%   { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    70%  { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
 }
 
 /* Footer layout */

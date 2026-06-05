@@ -1,5 +1,5 @@
 <template>
-    <lightning-quick-action-panel header="Verify & Edit Membership Documents">
+    <lightning-quick-action-panel header="Edit Membership Documents">
         
         <!-- Loading Spinner -->
         <template if:true={isLoading}> 
@@ -9,7 +9,7 @@
         <!-- Table container -->
         <div class="table-outer-container">
             <template if:true={hasRecords}>
-                <div class="table-responsive slds-scrollable_x">
+                <div class="table-responsive">
                     <table class="slds-table slds-table_bordered slds-table_col-bordered custom-table">
                         <thead>
                             <tr class="header-row">
@@ -17,34 +17,36 @@
                                     <div class="slds-truncate slds-text-align_center" title="Sr. No.">Sr. No.</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-name">
-                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                    <div class="slds-wrap" title="Document Name">Document Name</div>
                                 </th>
-                                <th scope="col" class="hdr-yellow col-status">
-                                    <div class="slds-truncate" title="Executive Document Status">Executive Document Status</div>
+                                <th scope="col" class="hdr-grey col-status">
+                                    <div class="slds-wrap" title="Executive Document Status">Executive Document Status</div>
                                 </th>
-                                <th scope="col" class="hdr-yellow col-comment">
-                                    <div class="slds-truncate" title="Executive Comments">Executive Comments</div>
+                                <th scope="col" class="hdr-grey col-comment">
+                                    <div class="slds-wrap" title="Executive Comments">Executive Comments</div>
                                 </th>
-                                <th scope="col" class="hdr-blue col-status">
-                                    <div class="slds-truncate" title="TL Document Status">TL Document Status</div>
+                                <th scope="col" class="hdr-grey col-status">
+                                    <div class="slds-wrap" title="TL Document Status">TL Document Status</div>
                                 </th>
-                                <th scope="col" class="hdr-blue col-comment">
-                                    <div class="slds-truncate" title="TL Comments">TL Comments</div>
+                                <th scope="col" class="hdr-grey col-comment">
+                                    <div class="slds-wrap" title="TL Comments">TL Comments</div>
                                 </th>
-                                <th scope="col" class="hdr-orange col-status">
-                                    <div class="slds-truncate" title="Admin Document Status">Admin Document Status</div>
+                                <th scope="col" class="hdr-grey col-status">
+                                    <div class="slds-wrap" title="Admin Document Status">Admin Document Status</div>
                                 </th>
-                                <th scope="col" class="hdr-orange col-comment">
-                                    <div class="slds-truncate" title="Admin Comments">Admin Comments</div>
+                                <th scope="col" class="hdr-grey col-comment">
+                                    <div class="slds-wrap" title="Admin Comments">Admin Comments</div>
                                 </th>
-                                <th scope="col" class="hdr-teal col-exception">
-                                    <div class="slds-truncate slds-text-align_center" title="Is Exception?">Is Exception?</div>
+                                <th scope="col" class="hdr-grey col-exception">
+                                    <div class="slds-wrap" title="Is Exception?">
+                                        Is Exception?
+                                    </div>
                                 </th>
-                                <th scope="col" class="hdr-teal col-date">
-                                    <div class="slds-truncate" title="Exception Valid Till">Exception Valid Till</div>
+                                <th scope="col" class="hdr-grey col-date">
+                                    <div class="slds-truncate slds-wrap" title="Exception Valid Till">Exception Valid Till</div>
                                 </th>
-                                <th scope="col" class="hdr-teal col-notes">
-                                    <div class="slds-truncate" title="Exception Notes">Exception Notes</div>
+                                <th scope="col" class="hdr-grey col-notes">
+                                    <div class="slds-truncate slds-wrap" title="Exception Notes">Exception Notes</div>
                                 </th>
                             </tr>
                         </thead>

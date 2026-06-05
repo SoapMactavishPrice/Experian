@@ -23,6 +23,24 @@ export default class MembershipDocumentEditor extends LightningElement {
 
     // Store unsaved changes: { recordId: { field: value } }
     pendingUpdates = {};
+    isStyleApplied = false;
+
+    renderedCallback() {
+        if (!this.isStyleApplied) {
+            const style = document.createElement('style');
+            style.innerText = `
+                .slds-modal__container {
+                    width: 95% !important;
+                    max-width: 95rem !important;
+                }
+                .slds-modal__content {
+                    padding: 0 !important;
+                }
+            `;
+            document.head.appendChild(style);
+            this.isStyleApplied = true;
+        }
+    }
 
     @api
     get recordId() {
@@ -77,6 +95,11 @@ export default class MembershipDocumentEditor extends LightningElement {
                 return {
                     ...doc,
                     srNo: index++,
+                    Executive_Comments__c: doc.Executive_Comments__c || '',
+                    TL_Comments__c: doc.TL_Comments__c || '',
+                    Admin_Comments__c: doc.Admin_Comments__c || '',
+                    Exception_Notes__c: doc.Exception_Notes__c || '',
+                    Is_Exception__c: doc.Is_Exception__c || false,
                     // Pre-map picklist options with selection states
                     executiveOptions: this.picklistOptions.Executive.map(opt => ({
                         value: opt,
@@ -148,7 +171,14 @@ export default class MembershipDocumentEditor extends LightningElement {
      * Save staged updates to database
      */
     async handleSave() {
-        const recordsToSave = Object.values(this.pendingUpdates);
+        const recordsToSave = Object.values(this.pendingUpdates).map(record => {
+            const cleanRecord = { ...record };
+            if (cleanRecord.Executive_Comments__c === '') cleanRecord.Executive_Comments__c = null;
+            if (cleanRecord.TL_Comments__c === '') cleanRecord.TL_Comments__c = null;
+            if (cleanRecord.Admin_Comments__c === '') cleanRecord.Admin_Comments__c = null;
+            if (cleanRecord.Exception_Notes__c === '') cleanRecord.Exception_Notes__c = null;
+            return cleanRecord;
+        });
         
         if (recordsToSave.length === 0) {
             this.showToast('No Changes', 'No edits were made to save.', 'info');
