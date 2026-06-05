@@ -1,0 +1,132 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 11-04-2025
+  @last modified by  : 
+-->
+<template>
+        <lightning-card title="Archived Tasks" icon-name="standard:task">
+    
+            <!-- If no emails -->
+            <template if:true={noTasks}>
+                <p class="slds-p-around_medium slds-text-align_center">
+                    No archived tasks found.
+                </p>
+            </template>
+    
+            <!-- Emails List -->
+            <template if:false={noTasks}>
+                <template for:each={tasks} for:item="task">
+                    <div key={task.Id} class="slds-box slds-box_xx-small slds-m-around_x-small slds-card email-item">
+    
+                        <!-- Header Row -->
+                        <div class="slds-grid slds-wrap slds-p-around_x-small slds-align_absolute-center">
+    
+                            <!-- Left Icon -->
+                            <div class="slds-col slds-size_1-of-12 slds-text-align_center">
+                                <lightning-icon icon-name="standard:task" size="medium" alternative-text="Email"></lightning-icon>
+                           </div>
+    
+                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <p class="slds-text-title_bold">{task.CreatedByName}</p>
+                                <p class="slds-truncate slds-text-body_regular">{task.Subject}</p>
+                            </div>
+    
+                            <!-- Time and toggle -->
+                            <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                                <div class="time-toggle">
+                                    <span class="email-time" title={task.timeAgo}>{task.timeAgo}</span>
+                                    <lightning-button-icon
+                                        icon-name={task.iconName}
+                                        variant="border-filled"
+                                        alternative-text="Toggle Email"
+                                        onclick={handleToggle}
+                                        data-id={task.Id}>
+                                    </lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>                    <!-- Expanded body -->
+                        <template if:true={task.isExpanded}>
+                            <div class="slds-box slds-theme_default slds-m-top_x-small email-body">
+                                <div class="slds-m-top_x-small">
+                                    <p><b>Subject:</b> {task.Subject}</p>
+                                    <p><b>Priority:</b> {task.Priority}</p>
+                                    <p><b>Status:</b> {task.Status}</p>
+                                    <p><b>Related To:</b> {task.RelatedTo}</p>
+                                </div>
+                                <div class="email-content" lwc:dom="manual" data-emailid={task.Id}></div>
+                              
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+           
+        </lightning-card>
+    <!--<lightning-card title="Archived Tasks" icon-name="standard:task">
+        <div class="slds-p-horizontal_small">
+             <div class={sectionClass}>
+                <template if:true={isExpanded}>
+                    <div class="slds-section__content">
+                        <template if:true={error}>
+                            <p class="slds-text-color_error slds-p-around_small">Error loading tasks.</p>
+                        </template>
+                        <template if:true={hasTasks}>
+                            <ul class="slds-timeline">
+                                <template for:each={tasks} for:item="task">
+                                    <div class="slds-section__title slds-m-bottom_small" key={task.Id} onclick={toggleSection}>
+                                        <lightning-button-icon
+                                            icon-name={iconName}
+                                            alternative-text="Toggle section"
+                                            size="small"
+                                            variant="bare"
+                                            class="slds-m-right_x-small">
+                                        </lightning-button-icon>
+
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <p class="slds-text-title_bold">{task.created_by_c__c}</p>
+                                            <p class="slds-truncate slds-text-body_regular">{task.subject_c__c}</p>
+                                        </div>
+                                    </div>
+                                    <li key={task.Id} class="slds-timeline__item_expandable slds-timeline__item_task">
+                                        <span class="slds-assistive-text">Task</span>
+                                        <div class="slds-media">
+                                            <div class="slds-media__figure">
+                                                <lightning-icon icon-name="standard:task" size="small"></lightning-icon>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-grid slds-grid_align-spread slds-m-bottom_x-small">
+                                                    <p class="slds-truncate slds-text-title">
+                                                        <span class="slds-text-color_weak">{task.headerText}</span>
+                                                    </p>
+                                                    <p class="slds-text-color_weak">{task.timeAgo}</p>
+                                                </div>
+
+                                                <p class="slds-text-heading_small slds-m-bottom_x-small">{task.Subject}</p>
+
+                                                <div class="slds-m-top_x-small">
+                                                    <p><b>Subject:</b> {task.Subject}</p>
+                                                    <p><b>Priority:</b> {task.Priority}</p>
+                                                    <p><b>Status:</b> {task.Status}</p>
+                                                    <p><b>Related To:</b> {task.RelatedTo}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+
+                    <template if:false={hasTasks}>
+                        <p class="slds-text-body_small slds-p-around_small">
+                            No archived tasks found.
+                        </p>
+                    </template>
+                </div>
+                </template>
+            </div> 
+        </div> 
+    </lightning-card> -->
+</template>

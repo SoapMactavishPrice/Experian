@@ -1,0 +1,113 @@
+<template>
+    <lightning-card>
+        
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+        
+        <div class="header-container">
+                <h1 class="header-title">Case Upload Checker Items</h1>
+        </div>
+
+        <lightning-layout vertical-align="center" class="slds-m-around_small">
+
+            <!-- Header Label -->
+            <!-- <lightning-layout-item size="12" large-device-size="3">
+                <label style="margin-left: 20px; font-weight: bold; font-size: 17px;">
+                    Case Upload Checker Items
+                </label>
+            </lightning-layout-item> -->
+
+            <!-- Buttons -->
+            <lightning-layout-item size="12" large-device-size="7" class="slds-m-top_small">
+
+                <lightning-button 
+                    label="Run Update" 
+                    variant="brand" 
+                    onclick={handleRunUpdate}
+                    disabled={isRunDisabled}
+                    class="slds-m-left_small">
+                </lightning-button>
+
+                <lightning-button 
+                    label="Refresh" 
+                    variant="brand" 
+                    onclick={handleRefresh}
+                    disabled={isRefreshDisabled}
+                    class="slds-m-left_small">
+                </lightning-button>
+
+                <lightning-button 
+                    label="Download All (CSV)" 
+                    variant="brand"
+                    onclick={downloadBeforeCsv}
+                    disabled={isDownloadResultDisabled}
+                    class="slds-m-left_small">
+                </lightning-button>
+
+                <lightning-button 
+                    label="Download Error (CSV)" 
+                    variant="brand"
+                    onclick={downloadErrorCsv}
+                    disabled={isDownloadErrorDisabled}
+                    class="slds-m-left_small">
+                </lightning-button>
+
+            </lightning-layout-item>
+
+            <!-- Progress Bar -->
+            <lightning-layout-item size="12" large-device-size="1" class="slds-m-top_small">
+                <c-progress-bar percentage={percentage}></c-progress-bar>
+            </lightning-layout-item>
+
+            <!-- Counters -->
+            <lightning-layout-item size="12" large-device-size="1" class="slds-m-top_small">
+                <label><strong>Total Cases: </strong>{totalLoadedCase}</label><br/>
+                <label><strong>Success: </strong>{successCase}</label><br/>
+                <label><strong>Failed: </strong>{failedCase}</label><br/>
+            </lightning-layout-item>
+
+        </lightning-layout>
+
+        <!-- Data Table -->
+        <template if:true={childData.length}>
+            <table class="slds-table slds-table_bordered slds-m-around_small">
+
+                <thead>
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Checker Item No</th>
+                        <th>Case Upload Checker</th>
+                        <th>Last Reply From Bank</th>
+                        <th>Case Id</th>
+                        <th>Case Number</th>
+                        <th>Status</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <template for:each={childData} for:item="row">
+                        <tr key={row.Id}>
+                            <td>{row.Serial_No}</td>
+                            <td>{row.Name}</td>
+                            <td>{row.Case_Upload_Checker__r.Name}</td>
+                            <td>{row.Last_Reply_from_Bank_Team__c}</td>
+                            <td>{row.Case_ID__c}</td>
+                            <td>{row.CaseNumber}</td>
+                            <td>{row.Status}</td>
+                            <td>{row.Message}</td>
+                        </tr>
+                    </template>
+                </tbody>
+
+            </table>
+        </template>
+
+        <template if:false={childData.length}>
+            <p class="slds-p-around_medium">No child records found.</p>
+        </template>
+
+    </lightning-card>
+</template>

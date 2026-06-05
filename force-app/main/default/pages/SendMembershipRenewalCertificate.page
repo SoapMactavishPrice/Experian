@@ -1,0 +1,142 @@
+<apex:page controller="SendMembershipRenewalCertificate" renderAs="pdf" >
+    
+    <html>
+        <style type="text/css">
+            .FF{ font-family: Calibri; font-size: 12px; }
+            
+            u {
+            text-decoration: none;
+            border-bottom: 1px solid black;
+            width : 60PX
+            
+            }
+            h1 {
+            border-bottom: 1px solid black;
+            width:50px;
+            }
+        </style>
+        <head>
+            <title></title>
+        </head>
+        <body>
+            <div style="width:95%;height:100%;border:12px solid  #000066">
+                
+                <table width="100%" style="background-color:#D3D3D3">
+                    <tr>
+                        <td rowspan="1" class="slds-text-title_caps" style="text-align:left">
+                            <img width="240px" alt="logo" src="{!$Resource.experianLogo1}"/>
+                        </td>
+                        <td rowspan="1" class="slds-text-title_caps" style="text-align:right;">
+                            <img width="105px"  alt="logo" src="{!$Resource.Members_Logo}"/>
+                        </td>
+                    </tr>
+                </table>
+                
+                <table width="100%" style="background-color:#D3D3D3">
+                    <tr>
+                        <th style ="color:#000066; font-family: Brush Script MT, Brush Script Std, cursive; font-size:25px;text-align:center">
+                            Certificate Of Membership <br/> <br/>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center" >
+                            This is to certify that  
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center">
+                            {!acc.Account__r.Name}
+                            
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center;width:100%">
+                            <div style="display:block;width:57%;background-color:#333;border-top:1.5px solid #111;margin-left:145px">
+                                
+                            </div>
+                            
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center">
+                            is now a member of the Experian Credit Information
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center">
+                            Company Of India Private Limited. <br/> <br/>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center"> 
+                            This certificate valid from {!acc.Current_Date_Year__c} to {!acc.Next_Month_Year__c} 
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center;width:100%">
+                            <div style="display:block;width:10%;background-color:#333;border-top:1.5px solid #111;margin-left:346px">
+                            </div>
+                            <div style="display:block;width:10%;background-color:#333;border-top:2px solid #111;margin-left:435px">
+                            </div> <br/> 
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center">
+                            Application No. 
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center"> 
+                            {!acc.Subscriber_ID__c}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="slds-text-title_caps" style ="text-align:center;width:100%">
+                            <div style="display:block;width:15%;background-color:#333;border-top:1.5px solid #111;margin-left:275px">
+                                
+                            </div>
+                            
+                        </th>
+                    </tr>
+                </table> 
+                
+                <table width="100%" style="background-color:#D3D3D3">
+                    <tr>
+                        <td rowspan="6" class="slds-text-title_caps" style="text-align:left;vertical-align : bottom;">
+                            <img width="450px" alt="logo" src="{!$Resource.Data_Art}"/>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td  class="slds-text-title_caps" style="text-align:center;margin-top:-10px;">
+                            <img width="100" height="100%" style="margin-top:-20px;" alt="logo" src="{!$Resource.SaiSign}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td  class="slds-text-title_caps" style="text-align:center;">_________________________
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td  class="slds-text-title_caps" style="text-align:center;font-weight: bold">Saikrishnan Srinivasan
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td  class="slds-text-title_caps" style="text-align:center;font-size:12px">Managing Director
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td  class="slds-text-title_caps" style="text-align:center;font-size:12px">Experian Credit Information Company Of India Private Limited.
+                        </td> 
+                    </tr>
+                </table>
+            </div>
+        </body>
+    </html>
+    
+</apex:page>

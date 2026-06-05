@@ -1,0 +1,8 @@
+.header{ display:grid; grid-template-columns: 24px 1fr auto; align-items:center; gap:.5rem; width:100%; }
+.subject{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.time{ color: var(--slds-g-color-neutral-base-50, #666); font-size: .8rem; }
+.mail-icon{ --slds-c-icon-color-foreground-default: var(--slds-g-color-brand-base-60, #1b96ff); }
+.meta .row { display:grid; grid-template-columns: 80px 1fr; gap:.75rem; margin:.25rem 0; }
+.label { color: var(--slds-g-color-neutral-base-50, #444); font-weight: 600; }
+.value { word-break: break-word; }
+pre.plain { white-space: pre-wrap; font-family: var(--lwc-fontFamily, monospace); }

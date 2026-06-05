@@ -1,0 +1,91 @@
+.cards{
+  /* --slds-c-card-radius-border: 0.1 rem; */
+  --slds-c-card-color-border:white;
+  
+  --slds-c-card-color-background:#ffffff;
+}
+.otp-container {
+    display: flex;
+    }
+
+.countdown-timer {
+    font-size: 14px;
+    margin-top: 20px;
+        margin-left: 10px;
+}
+
+.otp-input {
+    width: 2.5rem;
+    height: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    /* border: 1px solid #ccc; */
+    box-shadow: none;
+}
+
+.slds-text-color_error {
+    color: #d54e53;
+}
+
+.slds-text-color_success {
+    color: #4caf50;
+}
+
+.slds-m-top_medium {
+    margin-top: 1rem;
+}
+
+.headercolor{
+  font-size: 18px;
+  text-decoration: underline;
+  color: #000000;
+}
+
+.headercolor2{
+  color: white;
+  font-size: 14px;
+
+}
+
+.margincls{
+  vertical-align:top;
+  width: 2%;
+}
+
+
+.accordion {
+  background-color: rgb(144, 177, 243);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.accordion-section {
+  margin-bottom: 10px;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 4px;
+  width: 55rem;
+}
+
+.accordion-content {
+  display: none;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-content.open {
+  display: block; /* Show content when open */
+}

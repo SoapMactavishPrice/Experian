@@ -1,0 +1,159 @@
+<template>
+    <template if:true={isLoading}>
+        <div class="spinner-overlay">
+            <lightning-spinner alternative-text="Processing..." size="large"></lightning-spinner>
+        </div>
+    </template>
+
+    <div class="page-container" style={backgroundStyle}>
+
+        <template if:true={showNotification}>
+            <div class="overlay">
+                <div class={notificationClass} role="alert">
+                    <span>{notificationMessage}</span>
+                    <button class="notification-close" onclick={handleCloseNotification}>X</button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Header -->
+        <div class="header-container">
+            <div class="header-left">
+                <img src={logoUrl} class="logo" />
+            </div>
+            <div class="header-center">
+                <h1 class="header-title">DATA INTELLIGENCE FORM</h1>
+            </div>
+        </div>
+
+        <!-- Centered Form Container -->
+        <div class="form-container">
+
+            <!-- Two-column grid -->
+            <div class="form-grid">
+
+                <!-- Member Account Lookup -->
+                <div class="lookup-container">
+                    <lightning-input label="Member Name" value={memberSearchKey} onchange={handleMemberSearch}
+                        placeholder="Search Account" required>
+                    </lightning-input>
+
+                    <template if:true={showAccountDropdown}>
+                        <ul class="lookup-dropdown">
+                            <template for:each={accountResults} for:item="acc">
+                                <li key={acc.Id} data-id={acc.Id} data-name={acc.Name} onclick={handleAccountSelect}>
+                                    {acc.Name}
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+
+                    <template if:true={selectedAccountId}>
+                        <p class="selected-text">Selected: {selectedAccountName}</p>
+                    </template>
+                </div>
+
+                <lightning-input label="Request Date" type="date" value={requestDate} onchange={handleInputChange}
+                    data-id="requestDate" required>
+                </lightning-input>
+
+                <lightning-input label="Requestor Name" value={requestorName} onchange={handleInputChange}
+                    data-id="requestorName" required>
+                </lightning-input>
+
+                <lightning-input label="Requestor Official Email Id" type="email" value={requestorEmail}
+                    onchange={handleInputChange} data-id="requestorEmail" required>
+                </lightning-input>
+
+                <lightning-input label="Requestor Department" value={requestorDept} onchange={handleInputChange}
+                    data-id="requestorDept" required>
+                </lightning-input>
+
+                <div>
+                    <lightning-input type="file" label="STS / SFTP screenshot of file uploaded" multiple
+                        onchange={handleFileChange} required>
+                    </lightning-input>
+                    <template if:true={uploadedFilesInfo}>
+                        <p class="upload-info">{uploadedFilesInfo}</p>
+                    </template>
+                </div>
+
+            </div>
+
+            <!-- Product & Bureau Side-by-Side -->
+            <div class="checkbox-row">
+
+                <!-- Product -->
+                <div class="checkbox-section">
+                    <h3 class="section-title">Product</h3>
+                    <div class="checkbox-grid">
+                        <template for:each={productOptions} for:item="opt">
+                            <lightning-input key={opt.value} type="checkbox" label={opt.label} checked={opt.checked}
+                                data-id={opt.value} onchange={handleProductChange}>
+                            </lightning-input>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Bureau -->
+                <div class="checkbox-section">
+                    <h3 class="section-title">Bureau</h3>
+                    <div class="checkbox-grid">
+                        <template for:each={bureauOptions} for:item="opt">
+                            <lightning-input key={opt.value} type="checkbox" label={opt.label} checked={opt.checked}
+                                data-id={opt.value} onchange={handleBureauChange}>
+                            </lightning-input>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Details Table -->
+            <div class="file-table-container">
+                <h3 class="section-title">File Details</h3>
+
+                <!-- Table Header -->
+                <div class="file-table-header">
+                    <span>File Name</span>
+                    <span>Input File Records</span>
+                    <span>Action</span>
+                </div>
+
+                <!-- Table Rows -->
+                <template for:each={fileLineItems} for:item="item" for:index="index">
+                    <div key={item.id} class="file-table-row">
+
+                        <lightning-input value={item.fileName} data-index={index} data-field="fileName"
+                            onchange={handleFileRowChange}>
+                        </lightning-input>
+
+                        <lightning-input type="number" value={item.inputFileRecords} data-index={index}
+                            data-field="inputFileRecords" onchange={handleFileRowChange}>
+                        </lightning-input>
+
+                        <div class="icon-container">
+                            <!-- <lightning-button-icon icon-name="utility:add" variant="brand" size="small"
+                                    alternative-text="Add Row" onclick={addRow}>
+                                </lightning-button-icon> -->
+                            <lightning-button-icon icon-name="utility:add" variant="brand" class="purple-icon"
+                                size="small" alternative-text="Add Row" onclick={addRow}>
+                            </lightning-button-icon>
+
+                            <lightning-button-icon icon-name="utility:close" variant="destructive" size="small"
+                                alternative-text="Remove Row" data-index={index} onclick={removeRow}>
+                            </lightning-button-icon>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-container">
+                <lightning-button label="Submit" variant="brand" onclick={handleSubmit}>
+                </lightning-button>
+            </div>
+
+        </div>
+    </div>
+
+</template>

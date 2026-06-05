@@ -1,0 +1,30 @@
+{
+    "memberTypeList": [{
+         "name": "Fintech Company",
+         "code": 1
+        },
+        {
+            "name": "Education Technology Company",
+            "code": 2
+           }
+           ,
+           {
+            "name": "Property Technology Company",
+            "code": 3
+           },
+           {
+            "name": "Others",
+            "code": 4
+           },
+           {
+            "name": "Market Place",
+            "code": 5
+           },
+           {
+            "name": "TSP (Technology Service Provider)",
+            "code": 6
+           }
+
+        
+       ]
+    }

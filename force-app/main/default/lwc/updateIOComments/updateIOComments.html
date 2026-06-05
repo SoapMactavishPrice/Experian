@@ -1,0 +1,132 @@
+<template>
+    <lightning-card>
+        <lightning-layout>
+            <lightning-layout-item size="12" large-device-size="3">
+                <label style="margin-left: 20px;
+    font-weight: bold;
+    font-size: 17px;">Case IO Status Upload</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" large-device-size="7">
+                <lightning-button label="File Upload" variant="brand" onclick={handleOpenModel}></lightning-button>
+                <lightning-button label="Run Update" variant="brand" onclick={sendDataInChunks} class="slds-m-left_small" disabled={isUpdateData}></lightning-button>
+                 <lightning-button label="Retry failed cases" variant="brand"  onclick={Refresh} disabled={isRefresh} class="slds-m-left_small" ></lightning-button>
+                <lightning-button label="Download All (CSV)" variant="brand"  onclick={downloadCsv} disabled={isDownloadResult} class="slds-m-left_small" ></lightning-button>
+                <lightning-button label="Download Error (CSV)" variant="brand"  onclick={downloadErrorCsv} disabled={isDownloadError} class="slds-m-left_small" ></lightning-button>
+
+                <!-- <lightning-button label="Download(CSV)" variant="brand" onclick={downloadCsv} disabled={isDownloadResult} class="slds-m-left_small" ></lightning-button> -->
+            </lightning-layout-item>
+            <lightning-layout-item size="12" large-device-size="1">
+
+               
+                <c-progress-bar percentage={percentage}></c-progress-bar>
+
+                
+        </lightning-layout-item>
+
+         <lightning-layout-item size="12" large-device-size="1">
+     
+                
+                                <label><span style="width:30%"><strong>Total Cases </strong></span>: {totalLoadedCase}</label><br/>
+                                <label><span style="width:30%"><strong>Success </strong></span> : {successCase}</label><br/>
+                                <label><span style="width:30%"><strong>Failed </strong></span> : {failedCase}</label><br/>
+                
+        </lightning-layout-item>
+            
+        </lightning-layout>
+
+        <template if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+
+        <template if:true={showTableData}>
+            <table class="slds-table tableCls_customer_ledger slds-table_bordered slds-border_left slds-border_right slds-m-top_small">
+                <thead>
+                    <tr>
+                        <th style="width:2%">Serial No</th>
+                        <template for:each={headerKeys} for:item="header">
+                            <th style="" key={header}>{header}</th>
+                        </template>
+                    </tr>
+                </thead>
+                <!-- <label>length is : {csvData.length}</label> -->
+                 <template if:true={csvData.length}>
+                    <tbody>
+                        <template for:each={csvData} for:item="row" for:index="index">
+                            <!-- {row.index} -->
+                            <tr key={row.Id}>
+                                <td>{row.Serial_No}</td>
+                                <td>{row.CaseNumber}</td>
+                                <td><p><lightning-formatted-url value={row.url} tooltip={row.CaseNumber} label={row.Id} target="_blank"></lightning-formatted-url></p>
+                               
+                                    </td>
+                                    <td>{row.IO_Status}</td>
+                                <td style="white-space: normal !important;
+    word-break: break-word !important;
+ ">{row.IO_Comment}</td>
+                                <td>{row.Status}</td>
+                                <td class="swapper">{row.Message}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </template>
+                
+            </table>
+        </template>
+
+
+        <template if:true={openModel}>
+
+            <!--
+                                        I Used SLDS for this code
+                                        Here is link https://www.lightningdesignsystem.com/components/modals/
+                                    -->
+
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width:30%">
+                    <!-- modal header start -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={handleCloseModel}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select File
+                        </h2>
+                    </header>
+
+                    <!-- modal body start -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                        <!-- <lightning-combobox label="Select IO Status" value={value} options={options}
+                            onchange={handleChange}>
+                        </lightning-combobox> -->
+                        <div class="slds-align_absolute-center">
+
+                        <lightning-input type="file" accept={acceptedFormats} style="margin-top:10px"
+                            variant="label-hidden" onchange={handleFileChange} 
+                            
+
+                            label="Name Change"> </lightning-input>
+
+
+                    </div>
+                    </div>
+
+                    <!-- modal footer start-->
+                    <footer class="slds-modal__footer">
+
+                        <button class="slds-button slds-button_neutral" onclick={handleCloseModel}>Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={handleDoneModel} disabled={disabledDone}>Done</button>
+
+                    </footer>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+
+</template>

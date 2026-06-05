@@ -1,0 +1,15 @@
+<template>
+    <div class="progress-container">
+        <svg class="circular-progress" viewBox="0 0 36 36">
+            <!-- Background circle -->
+            <path class="circle-bg" stroke="#e6e6e6" stroke-width="3" fill="transparent" d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 0 0 0-31.831" />
+            
+            <!-- Foreground circle with dynamic stroke -->
+            <path class="circle" stroke="#4db8ff" stroke-width="3"  fill="transparent" stroke-dasharray={strokeValue}
+            d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 0 0 0-31.831" />
+            
+            <!-- Percentage text -->
+            <text class="percentage" x="50%" y="50%" text-anchor="middle" dy=".3em">{percentage}%</text>
+        </svg>
+    </div>
+</template>

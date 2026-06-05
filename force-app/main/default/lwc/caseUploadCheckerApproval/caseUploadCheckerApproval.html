@@ -1,0 +1,45 @@
+<template>
+    <lightning-card>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Processing..." size="large" variant="brand"></lightning-spinner>
+        </template>
+        <div class="header-container">
+            <h1 class="header-title">Checker Screen</h1>
+        </div>
+        <div class="slds-p-around_medium">
+        <table class="custom-table slds-table slds-table_cell-buffer">
+            <thead>
+                <tr>
+                    <th scope="col">File Uploaded By</th>
+                    <th scope="col">File Uploaded Date/Time</th>
+                    <th scope="col">Case Upload Checker No</th>
+                    <th scope="col">No of Cases</th>
+                    <th scope="col">Type of Upload</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Status Action</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={data} for:item="row">
+                    <tr key={row.Id}>
+                        <td>{row.File_Uploaded_By_Name__c}</td>
+                        <td>{row.File_Uploaded_Date_Time__c}</td>
+                        <td>{row.Name}</td>
+                        <td>{row.No_of_Cases__c}</td>
+                        <td>{row.File_Type__c}</td>
+                        <td>
+                            <lightning-button label="Download CSV" onclick={handleDownload} data-id={row.Id} variant="brand" size="small" disabled={row.disableActions}></lightning-button>
+                        </td>
+                        <td>
+                            <lightning-button label="Approve" onclick={handleApprove} data-id={row.Id} variant="brand" size="small" class="slds-m-right_x-small" disabled={row.disableActions}></lightning-button>
+                            <lightning-button label="Reject" onclick={handleReject} data-id={row.Id} variant="destructive" size="small" disabled={row.disableActions}></lightning-button>
+                        </td>
+                        <td>{row.Status__c}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    </lightning-card>
+</template>

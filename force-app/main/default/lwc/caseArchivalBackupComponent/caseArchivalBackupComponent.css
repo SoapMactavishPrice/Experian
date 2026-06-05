@@ -1,0 +1,16 @@
+.main-content {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background-color: #ffffff;
+    margin-left: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state-message {
+    text-align: center;
+    color: #68217A;
+    font-weight: 600;
+    margin-top: 0.75rem;
+}

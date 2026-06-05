@@ -1,0 +1,224 @@
+<template>
+	<div if:true={showSpinner} class="exampleHolder">
+		<lightning-spinner alternative-text="Loading" class="slds-is-fixed" size="medium"></lightning-spinner>
+	</div>
+
+	<lightning-card>
+		<div style="width:100%">
+			<table style="width:100%">
+				<tbody>
+					<tr style="width: 98%; text-align: center;">
+						<td style="width: 20%;padding-left:10px">
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFileUploaded}
+								label="Authorized Signatory as per MCA ID Proof">
+							</lightning-input>
+							{fileNames1}
+						</td>
+
+						<td style="width: 20%">
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_bd_md_id_Proof}
+								label="BR / MD/ Company Secretary ID Proof">
+							</lightning-input>
+							{fileNames2}
+						</td>
+
+						<td style="width: 20%">
+							<lightning-input type="file" accept={acceptedFormats}
+								onchange={handleFile_Domain_Name_Confirm} label="Domain Name - Confirmation">
+							</lightning-input>
+							{fileNames3}
+						</td>
+
+						<td style="width: 20%">
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_mca_snap}
+								label="MCA - Snapshot">
+							</lightning-input>
+							{fileNames4}
+
+						</td>
+
+						<td style="width: 20%">
+							<lightning-input type="file" accept={acceptedFormats}
+								onchange={handleFile_name_Change_confirm} label="Name Change - Confirmation">
+							</lightning-input>
+							{fileNames5}
+						</td>
+					</tr>
+
+					<tr style="width: 98%; text-align: center;padding-left:10px">
+
+						<td style="padding-left:10px">
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_nodal_nameChange}
+								label="Nodal Officer - Name Change">
+							</lightning-input>
+							{fileNames6}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_Nodal_Id_proof}
+								label="Nodal Officer - ID Proof">
+							</lightning-input>
+							{fileNames7}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_emp_proof}
+								label="Nodal Officer - Employment Proof">
+							</lightning-input>
+							{fileNames8}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_sign_id}
+								label="New Authorized Signatory - ID Proof">
+							</lightning-input>
+							{fileNames9}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFile_sign_emp_proof}
+								label="New Authorized Signatory - Employment Proof">
+							</lightning-input>
+							{fileNames0}
+						</td>
+</tr>
+<tr style="width: 98%; text-align: center;padding-left:10px">
+						<td style="padding-left:10px">
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFileUploadedCOI}
+								label="COI">
+							</lightning-input>
+							{fileNames01}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFileUploadedRBI}
+								label="RBI">
+							</lightning-input>
+							{fileNames02}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFileUploadedPAN}
+								label="PAN">
+							</lightning-input>
+							{fileNames03}
+						</td>
+
+						<td>
+							<lightning-input type="file" accept={acceptedFormats} onchange={handleFileUploadedGST}
+								label="GST">
+							</lightning-input>
+							{fileNames04}
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+
+			<div style="width: 100%; margin: 0 auto; text-align: center; margin-top: 1vh">
+				<lightning-button variant="brand" label="Upload Document" title="Upload Document" onclick={handleClick}
+					disabled={isUploading} class="slds-m-left_x-small .slds-align_absolute-center">
+				</lightning-button>
+			</div>
+
+		</div>
+	</lightning-card>
+
+
+	<!-- <lightning-card>
+            <lightning-layout multiple-rows="true" horizontal-align="spread">
+               
+
+
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="Authorized Signatory as per MCA – ID Proof" onchange={handleFileUploaded} multiple>
+                        </lightning-input>
+                    </div>
+         </lightning-layout-item>
+    
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="BR / MD/ Company Secretary – ID Proof" onchange={handleFile_bd_md_id_Proof} multiple>
+                        </lightning-input>
+                    </div>
+                    
+                </lightning-layout-item>
+    
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="Domain Name – Confirmation" onchange={handleFile_Domain_Name_Confirm}>
+                        </lightning-input>
+                    </div>
+                    
+                </lightning-layout-item>
+    
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="MCA - Snapshot" onchange={handleFile_mca_snap}>
+                        </lightning-input>
+                    </div>
+                </lightning-layout-item>
+    
+               <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="Name Change – Confirmation" onchange={handleFile_name_Change_confirm}>
+                        </lightning-input>
+                    </div>
+                   
+                </lightning-layout-item>
+
+
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="Nodal Officer – Name Change" onchange={handleFile_nodal_nameChange}>
+                        </lightning-input>
+                    </div>
+                   
+                </lightning-layout-item>
+
+                
+
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="Nodal Officer – ID Proof" onchange={handleFile_Nodal_Id_proof}>
+                        </lightning-input>
+                    </div>
+                   
+                </lightning-layout-item>
+
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="Nodal Officer – Employment Proof" onchange={handleFile_emp_proof}>
+                        </lightning-input>
+                    </div>
+                   
+                </lightning-layout-item>
+
+
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="New Authorized Signatory – ID Proof" onchange={handleFile_sign_id}>
+                        </lightning-input>
+                    </div>
+                   
+                </lightning-layout-item>
+
+                <lightning-layout-item size="10" large-device-size="2">
+                    <div class="slds-m-around_small">
+                        <lightning-input type="file" class ="" accept={acceptedFormats} label="New Authorized Signatory – Employment Proof" onchange={handleFile_sign_emp_proof}>
+                        </lightning-input>
+                    </div>
+                   
+                </lightning-layout-item>
+
+                <lightning-layout-item size="10" large-device-size="2">
+                   
+                    <lightning-button variant="brand" label="Upload Document" title="Upload Document" onclick={handleClick}
+                               class="slds-m-left_x-small"></lightning-button>
+                           </lightning-layout-item>
+             </lightning-layout>
+ 
+        </lightning-card> -->
+
+</template>

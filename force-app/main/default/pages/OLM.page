@@ -1,0 +1,903 @@
+<apex:page standardStylesheets="false" controller="profileController" showHeader="false" sidebar="false" applyHtmlTag="false"
+    applyBodyTag="false" docType="html-5.0">
+    <html ng-app="ngApp">
+
+    <head>
+        <title>SalesForce | Portal Case </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" /> -->
+        <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+        <apex:stylesheet value="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/dataSubmission.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/header.css')}" />
+
+        <link href="{!URLFOR($Resource.portalAssets,'/assets/image/expLogo.png')}" rel="icon"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+        <apex:includeScript value="http://code.jquery.com/jquery-2.1.4.min.js"></apex:includeScript>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/ng-idle/1.3.2/angular-idle.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></apex:includeScript>
+        <apex:includeScript value="https://rawgit.com/l-lin/angular-datatables/v0.4.3/dist/angular-datatables.min.js"></apex:includeScript>
+        <apex:includescript value="https://code.angularjs.org/1.7.9/angular-messages.js"></apex:includescript>
+
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"> </apex:includeScript>
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></apex:includeScript>
+
+        <apex:includescript value="https://code.angularjs.org/1.2.0/angular-animate.min.js"></apex:includescript>
+        <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.js"></apex:includescript>
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+        <!--  If necessary, please modify the charset parameter to specify the        -->
+        <!--  character set of your HTML page.                                        -->
+        <!--  ----------------------------------------------------------------------  -->
+
+        <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/angular.js') }" />
+        <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/FileUploadJS.js') }" />
+        <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+    </head>
+
+
+    <body ng-controller="LinkCtrl">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand ml-5" href="#">
+                <img src="{!URLFOR($Resource.portalAssets,'/assets/image/Experian_logo.png')}" alt="Logo" style="width:130px;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <div class="inner-navbar" ng-repeat="t in tabs">
+                        <li class="nav-item mr-4" ng-if="(t.Tab_Url__c == 'Home' || t.Tab_Url__c == 'DataSubmission' || t.Tab_Url__c == 'Case')" ng-click="routeTo(t.Tab_Url__c)">
+                            <a class="nav-link" ng-class="t.Active ? 'l-active' : '' " href="#">{{t.Name}}</a>
+                        </li>
+                    </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i style="padding:6px;font-size:20px;" class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <!-- <li > -->
+                            <div class="inner-navbar" ng-repeat-start="t in tabs">
+                                <a class="dropdown-item" ng-if="(t.Tab_Url__c != 'Home' && t.Tab_Url__c != 'DataSubmission' && t.Tab_Url__c != 'Case')" ng-class="t.Active ? 'l-active' : '' "
+                                    ng-click="routeTo(t.Tab_Url__c)">{{t.Name}}</a>
+                            </div>
+                            <div ng-repeat-end="t in tabs"></div>
+                            <!-- </li> -->
+                            <!-- <a class="dropdown-item" ng-click="routeTo('CompanyInfo')" >Company Information</a> -->
+                            <a class="dropdown-item" ng-click="routeTo(salesforceSiteLabel)">Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">{{userDetail.Name}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <toaster-container toaster-options="{'time-out': 4000}"></toaster-container>
+        <div ng-show="showOverlay" class="overlay">
+            <div class="loader">
+                <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/loading.gif')}" title="Please Wait..." />
+            </div>
+        </div>
+
+        <div class="container-fluid bg-img shadow-lg mt-4">
+            <div class="row page-row"></div>
+            <div class="row m-4">
+                <!-- <div class="col-sm-3 text-center">
+                </div> -->
+                <div class="col-sm-3 text-center">
+                    <div class="link-tab-box" ng-click="openNewCaseForm('Dispute For Resolution')">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/DisputeForResolution.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        Dispute For Resolution
+                    </div>
+                </div>
+                <!-- <div class="col-sm-3 text-center">
+                    <div class="link-tab-box">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/UIFOROLM.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        UI FOR OLM Correction
+                    </div>
+                </div> -->
+                <div class="col-sm-3 text-center" >
+                    <div class="link-tab-box" ng-click="openNewCaseForm('User Id Management')">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/UserId.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        User Id Management
+                    </div>
+                </div>
+                <div class="col-sm-3 text-center" >
+                    <div class="link-tab-box" ng-click="openNewCaseForm('Change Request Nodal Officer / Address / Company Name Change')">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/ChangeRequest2.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        Change Request Nodal Officer / Address / Company Name Change
+                    </div>
+                </div>
+                <div class="col-sm-3 text-center">
+                </div>
+            </div>
+            <div class="space-20px"></div>
+        </div>
+
+        <div class="space-20px"></div>
+        <div class="space-20px"></div>
+        <div class="footer-sticky mt-4 mb-2">
+            <div class="row">
+                <div class="col-sm-9">
+                    <span>&copy; 2017 - 2019 Experian Information Solutions, Inc. All rights reserved.
+                        <a> Terms &amp; Conditions </a>
+                    </span>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div class="col-sm-12">
+                        <span>Stay connected</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <i class="fa fa-linkedin p-1" style="font-size:20px"></i>&nbsp;
+                        <i class="fa fa-facebook p-1" style="font-size:20px"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- The Modal -->
+        <div id="newCaseWindow" class="modal">
+            <div class="modal-content">
+                <span class="float-right" style="margin-right:10px">
+                    <i ng-click="openNewCaseFormClose()" class="fa fa-close"></i>
+                </span>
+                <form class="pt-5 pl-5 pr-5 pb-3" id="caseForm" novalidate="caseForm" name="caseForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="name_of_Member">Creating a case for {{CreatingACaseForLabel}}</label>
+                            <select class="form-control" id="caseCategory_id" name="case_Category" ng-model="caseCategory" required="true" ng-change="cateogory_change(caseCategory)">
+                                <option>Customer</option>
+                                <option>Consumer</option>
+                            </select>
+                            <div ng-if="(caseForm.case_Category.$dirty || caseForm.$submitted)" ng-messages="caseForm.case_Category.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please select the option</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="name_of_Member">Case Type</label>
+                            <select class="form-control" id="caseComplain_id" name="case_Complain" ng-model="caseComplain" required="true">
+                                <option ng-repeat="c in caseComplainpickList" value="{{c.key}}">{{c.key}}</option>
+                            </select>
+                            <div ng-if="(caseForm.case_Complain.$dirty || caseForm.$submitted)" ng-messages="caseForm.case_Complain.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please select the option</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-4">
+                            <label for="name_of_Member">Case Subject</label>
+                            <input type="text" ng-model="caseSubject" name="case_Subject" class="form-control" required="true" />
+                            <div ng-if="(caseForm.case_Subject.$dirty || caseForm.$submitted)" ng-messages="caseForm.case_Subject.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please enter subject</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="case_Attachement">Attachments</label>
+                            <input type="file" id="caseAttachment_id" name="case_Attachement" ng-model="caseAttachment" class="form-control" onchange="angular.element(this).scope().attachmentChange(this)"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-12">
+                            <label for="case_body">Case Details</label>
+                            <textarea id="case_body" ng-model="caseDescription" name="case_Details" class="form-control" rows="9" required="true"></textarea>
+                            <div ng-if="(caseForm.case_Details.$dirty || caseForm.$submitted)" ng-messages="caseForm.case_Details.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please select Case Category</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="form-group col-md-6"></div>
+                        <div class="form-group col-md-6">
+                            <button type="submit" ng-if="tabsAccessController.ReadWrite_Access__c" class="float-right experian-button" ng-click="submitCaseForm(caseForm)">Submit &nbsp;
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <FORM> element to your page.             -->
+        <!--  ----------------------------------------------------------------------  -->
+        <script>
+            var app = angular.module('ngApp', ['toaster', 'datatables','ngMessages','ngIdle']);
+            app.controller('LinkCtrl', function ($scope, $filter, toaster, $http, $timeout,Idle) {
+
+                $scope.userDetail = undefined;
+                $scope.showOverlay = true;
+                $scope.deleteCaseNumber = undefined;
+                $scope.chnagesCaseSubType = [];
+                $scope.chnagesCaseSubTypeOne = [];
+                $scope.caseCategory = undefined;
+                $scope.CreatingACaseForLabel = undefined;
+                $scope.caseType = undefined;
+                $scope.caseSubType = undefined;
+                $scope.caseSubTypeOne = undefined;
+                $scope.caseComplain  = undefined;
+                $scope.editedCase = undefined;
+                $scope.showcaseCategoryErrorMsg = false;
+                $scope.showcaseTypeErrorMsg = false;
+                $scope.showcaseSubTypeErrorMsg = false;
+                $scope.showcaseSubTypeOneErrorMsg = false;
+                $scope.showcaseSubjectErrorMsg = false;
+                $scope.showcaseDescriptionErrorMsg = false;
+                $scope.caseSubject = '';
+                $scope.caseDescription = '';
+                $scope.items = [];
+                $scope.caseAttachment = undefined;
+                $scope.dpndntPcklstValue = undefined;
+                // $scope.caseJsonToSend = [{Subject: 'Portal Web to Case', Description : 'This Case Has Been Register By Portal'}];
+                $scope.caseJsonToSend = [];
+                $scope.salesforceSiteLabel = '/'+'{!force_site_label}';
+
+                $scope.caseComplainpickList  = undefined;
+
+                $scope.customerComplainPickList = [
+                    {key : "Login / application issues"},
+                    {key : "ID related"},
+                    {key : "I have a suggestion"},
+                    {key : "Discrepancy in credit report"},
+                    {key : "How to read report"},
+                    {key : "Data Quality related"},
+                    {key : "Invoice related"},
+                    {key : "Membership status"}
+                ];
+
+                $scope.consumerComplainPickList = [
+                    {key : "Correct details on credit report"},
+                    {key : "General Query"},
+                    {key : "Correct details on credit report"},
+                    {key : "Login Issues"},
+                    {key : "Credit report is not generated"},
+                    {key : "General Query"},
+                    {key : "Appreciation / Suggestion"}
+                ];
+
+                $scope.safeApply = function (fn) {
+                    var phase = this.$root.$$phase;
+                    if (phase == '$apply' || phase == '$digest') {
+                        if (fn && (typeof (fn) === 'function')) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
+                    }
+                };
+
+                $scope.events = [];
+                $scope.idle = 180; //seconds
+                $scope.timeout = 5; //seconds
+
+                $scope.$on('IdleStart', function() {
+                    console.log('Log IdleStart');
+                    addEvent({event: 'IdleStart', date: new Date()});
+                });
+
+                $scope.$on('IdleEnd', function() {
+                    console.log('Log IdleEnd');
+                    addEvent({event: 'IdleEnd', date: new Date()});
+                });
+
+                $scope.$on('IdleWarn', function(e, countdown) {
+                    console.log('Log IdleWarn');
+                    addEvent({event: 'IdleWarn', date: new Date(), countdown: countdown});
+                });
+
+                $scope.$on('IdleTimeout', function() {
+                    console.log('Log IdleTimeout');
+                    $scope.routeTo($scope.salesforceSiteLabel);
+                    addEvent({event: 'IdleTimeout', date: new Date()});
+                });
+
+                $scope.$on('Keepalive', function() {
+                    console.log('Log Keepalive');
+                    addEvent({event: 'Keepalive', date: new Date()});
+                });
+
+                function addEvent(evt) {
+                    $scope.$evalAsync(function() {
+                        $scope.events.push(evt);
+                    })
+                }
+
+                $scope.reset = function() {
+                    Idle.watch();
+                }
+
+                $scope.$watch('idle', function(value) {
+                    if (value !== null) Idle.setIdle(value);
+                });
+
+                $scope.$watch('timeout', function(value) {
+                    if (value !== null) Idle.setTimeout(value);
+                });
+
+                $scope.routeTo = function (param) {
+                    if (param == $scope.salesforceSiteLabel) {
+                        localStorage.clear();
+                        Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.expire_session}',
+                        $scope.userId,
+                        function (result, event) {
+                            if (result) {
+                                window.location.href = param;
+                            } else {
+                                window.location.href = param;
+                            }
+                        });
+                    }else{
+                        window.location.href = param;
+                    }                    
+                }
+
+                $scope.attachmentChange = function (param) {
+                    console.log("On Change Attachment Clicked");
+                   
+                    var fileName = document.getElementById('caseAttachment_id').value;
+                    var idxDot = fileName.lastIndexOf(".") + 1;
+                    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                    if (extFile == "pdf" || extFile == "jpg" || extFile == "jpeg" || extFile == "gif" || extFile == "png" || extFile == "doc" || extFile == "docx" || extFile == "xls" || extFile == "xlsx" || extFile == "ppt" ||extFile == "txt" ) {
+                      const fi= document.getElementById('caseAttachment_id');
+                      if(fi.files.length > 0){
+                        console.log('filesize1',fi.files.length);
+                        for (const i = 0; i <= fi.files.length - 1; i++) {
+                            const fsize = fi.files.item(i).size; 
+                            const file = Math.round((fsize / 1024)); 
+                            // The size of the file. 
+                            console.log('filesize',file);
+                            
+                            if (file >= 10240) { 
+                                document.getElementById('caseAttachment_id').value = "";
+                                alert( "File too Big, please select a file less than 10mb");     
+                             }
+                        }
+                      }     
+                    } else {
+                        document.getElementById('caseAttachment_id').value = "";
+                        alert("This files is not allowed!");
+                    }
+                }
+
+                $scope.tabs = [];
+                $scope.tabsAccessController  = undefined;
+                $scope.sessionData = undefined;
+                
+                $scope.userId = localStorage.getItem("UserId");
+                if(localStorage.getItem("ControllAccess") != 'undefined'){
+                    $scope.sessionData = JSON.parse(localStorage.getItem("ControllAccess"));
+                }
+                $scope.accId = localStorage.getItem("AccountId");
+
+                if ($scope.userId) {
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.getInforamtion}',
+                        $scope.userId,
+                        localStorage.getItem("AccessToken"),
+                        function (result, event) {
+                            if(result != null){
+                                $scope.userDetail = result;
+                                $scope.safeApply(function () {
+                                    console.log($scope.userDetail);
+                                    $scope.getCases();
+                                })
+                                // localStorage.setItem("AccountId", result.AccountId);
+                                // window.location.replace('/apex/Profile');
+                                // event.preventDefault();
+                                return false;
+                            } else {
+                                $scope.routeTo($scope.salesforceSiteLabel);
+                                console.log('else', result);
+                            }
+                        });
+                } else {
+                    $scope.safeApply(function(){
+                        $scope.routeTo($scope.salesforceSiteLabel);
+                    })
+                }
+
+                $scope.pageReady = function () {
+                    $scope.safeApply(function () {
+                        _.each($scope.sessionData, function (someThing) {
+                            if (someThing.None_Access__c == false) {
+                                $scope.tabs.push(someThing.Tabs_Name__r);
+                                if (someThing.Tabs_Name__r.Name == 'Create Service Requests') {
+                                    $scope.tabsAccessController = someThing
+                                    someThing.Tabs_Name__r.Active = true;
+                                    $scope.showOverlay = false;
+                                } else {
+                                    someThing.Tabs_Name__r.Active = false;
+                                    $scope.showOverlay = false;
+                                    // $scope.tabs.push(someThing.Tabs_Name__r);
+                                    // window.location.replace('/apex/' + 'PortalLogin');
+                                }
+                            }
+                        });
+                    })
+                }
+
+                $scope.pageReady();
+
+                $scope.cateogory_change = function(param){
+                    console.log(param);
+                    if(param == 'Customer'){
+                        $scope.caseComplainpickList = $scope.customerComplainPickList;
+                        $scope.CreatingACaseForLabel = 'yourself';
+                    }else{
+                        $scope.caseComplainpickList = $scope.consumerComplainPickList;
+                        $scope.CreatingACaseForLabel = 'consumer';
+                    }
+                }
+
+                $scope.caseTypeChange = function (param) {
+                    // console.log(param);
+                    $scope.caseSubType = '';
+                    $scope.caseSubTypeOne = '';
+                    if (param.cSubType) {
+                        $scope.chnagesCaseSubType = param.cSubType;
+                    }
+                }
+
+                $scope.caseSubTypeChange = function (param) {
+                    // console.log(param);
+                    $scope.caseSubTypeOne = '';
+                    if (param.cSSType) {
+                        $scope.chnagesCaseSubTypeOne = param.cSSType;
+                    }
+                }
+
+                $scope.getCases = function () {
+                    $scope.pagedItems = [];
+
+                    console.log("Start to get Cases function");
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.getCases}',
+                        $scope.userDetail.Id,
+                        localStorage.getItem("AccessToken"),
+                        function (result, event) {
+                            if (result != null) {
+                                $scope.items = result;
+                                $scope.showOverlay = false;
+                                $scope.$apply();
+                                // localStorage.setItem("AccountId", result.AccountId);
+                                // window.location.replace('/apex/Profile');
+                                // event.preventDefault();
+                                return false;
+                            } else {
+                                $scope.showOverlay = false;
+                                $scope.routeTo($scope.salesforceSiteLabel);
+                                // console.log('else', result);
+                            }
+                        })
+                }
+
+                $scope.submitCaseFormTest = function (param) {
+                    // console.log(param);
+                    console.log($scope.caseCategory);
+                    console.log($scope.caseType);
+                    console.log($scope.caseSubType);
+                    console.log($scope.caseSubTypeOne);
+                    console.log($scope.caseSubject);
+                    console.log($scope.caseDescription);
+
+                    $scope.showcaseCategoryErrorMsg = false;
+                    $scope.showcaseTypeErrorMsg = false;
+                    $scope.showcaseTypeErrorMsg = false;
+                    $scope.showcaseSubTypeErrorMsg = false;
+                    $scope.showcaseSubTypeOneErrorMsg = false;
+                    $scope.showcaseSubjectErrorMsg = false;
+                    $scope.showcaseDescriptionErrorMsg = false;
+                    console.log("Case Registeration Form Started");
+                    if ($scope.caseCategory == '' && $scope.caseType == '' && $scope.caseSubType == '' && $scope.caseSubTypeOne == '' && $scope.caseSubject == '' && $scope.caseDescription == '') {
+                        $scope.showcaseCategoryErrorMsg = true;
+                        $scope.showcaseTypeErrorMsg = true;
+                        $scope.showcaseSubTypeErrorMsg = true;
+                        $scope.showcaseSubTypeOneErrorMsg = true;
+                        $scope.showcaseSubjectErrorMsg = true;
+                        $scope.showcaseDescriptionErrorMsg = true;
+                    } else if ($scope.caseCategory == '') {
+                        $scope.showcaseCategoryErrorMsg = true;
+                    } else if ($scope.caseType == '') {
+                        $scope.showcaseTypeErrorMsg = true;
+                    } else if ($scope.caseSubType == '') {
+                        $scope.showcaseSubTypeErrorMsg = true;
+                    } else if ($scope.caseSubTypeOne == '') {
+                        $scope.showcaseSubTypeOneErrorMsg = true;
+                    } else if ($scope.caseSubject == '') {
+                        $scope.showcaseSubjectErrorMsg = true;
+                    } else if ($scope.caseDescription == '') {
+                        $scope.showcaseDescriptionErrorMsg = true;
+                    } else {
+                        $scope.showOverlay = true;
+                        $scope.caseJsonToSend = [
+                            {
+                                caseCategory: $scope.caseCategory,
+                                contactId: $scope.userDetail.Id,
+                                caseType: $scope.caseType.cName,
+                                caseSubType: $scope.caseSubType.cSName,
+                                caseSubtypeOne: $scope.caseSubTypeOne.cSSName,
+                                Subject: $scope.caseSubject,
+                                Description: $scope.caseDescription,
+                                CaseNumber: ''
+                            }];
+                        if ($scope.editedCase) {
+                            $scope.caseJsonToSend[0].CaseNumber = $scope.editedCase.CaseNumber;
+                            $scope.caseJsonToSend[0].Id = $scope.editedCase.Id;
+                        }
+                        console.log(document.getElementById('caseAttachment_id').files[0]);
+                        console.log("->>>", JSON.stringify($scope.caseJsonToSend));
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.profileController.registerCases}',
+                            JSON.stringify($scope.caseJsonToSend),
+                            function (resultfromcontroller, event) {
+                                if (resultfromcontroller) {
+                                    if (resultfromcontroller.status == true) {
+                                        if (document.getElementById('caseAttachment_id').files[0]) {
+                                            console.log('Printed')
+                                            jQuery(checkForUploads(['caseAttachment_id']).then((result) => {
+                                                if (result == 'Done') {
+                                                    jQuery(processByteChunkArray('', resultfromcontroller.caseId, 'profileController').then((result) => {
+                                                        console.log(result);
+                                                        if (result.status == true) {
+                                                            $scope.safeApply(function () {
+                                                                $scope.getCases();
+                                                                $scope.openNewCaseFormClose();
+                                                                toaster.pop('success', "Your Case " + resultfromcontroller.subject + " is " + resultfromcontroller.sNe, "Case No :" + resultfromcontroller.caseNumber + "");
+                                                                console.log("success  processByteChunkArray-->", result);
+                                                            });
+                                                        } else {
+                                                            $scope.safeApply(function () {
+                                                                $scope.getCases();
+                                                                $scope.openNewCaseFormClose();
+                                                                toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                                                console.log("error  processByteChunkArray-->", result);
+                                                            });
+                                                        }
+                                                    }).catch((err) => {
+                                                        $scope.safeApply(function () {
+                                                            $scope.getCases();
+                                                            $scope.openNewCaseFormClose();
+                                                            console.log("Erroe in processByteChunkArray-->", err);
+                                                            toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                                        })
+                                                    }));
+                                                } else {
+                                                    $scope.safeApply(function () {
+                                                        $scope.getCases();
+                                                        $scope.openNewCaseFormClose();
+                                                        console.log("Erroe in checkForUploads-->", err);
+                                                        toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                                    })
+                                                }
+                                            }));
+                                        } else {
+                                            console.log('Not Printed')
+                                            $scope.safeApply(function () {
+                                                $scope.getCases();
+                                                $scope.openNewCaseFormClose();
+                                                toaster.pop('success', "Your Case " + resultfromcontroller.subject + " is " + resultfromcontroller.sNe, "Case No :" + resultfromcontroller.caseNumber + "");
+                                                console.log("success  processByteChunkArray-->", resultfromcontroller);
+                                            });
+                                        }
+                                    } else {
+                                        $scope.safeApply(function () {
+                                            $scope.getCases();
+                                            $scope.openNewCaseFormClose();
+                                            console.log("Erroe in checkForUploads-->", err);
+                                            toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                        })
+                                    }
+                                } else {
+                                    $scope.safeApply(function () {
+                                        $scope.getCases();
+                                        $scope.openNewCaseFormClose();
+                                        console.log("Erroe in checkForUploads-->", err);
+                                        toaster.pop('error', "Error in case submission (", "");
+                                    })
+                                }
+                            });
+                    }
+                }
+
+                $scope.submitCaseForm = function (param) {
+                    $scope.showOverlay = true;
+                    if(param.$valid){
+                        console.log("Valid For");
+                        $scope.caseJsonToSend = [
+                            {
+                                caseCategory: $scope.caseCategory,
+                                contactId: $scope.userDetail.Id,
+                                caseComplain: $scope.caseComplain,
+                                Subject: $scope.caseSubject,
+                                Description: $scope.caseDescription,
+                                CaseNumber: ''
+                            }];
+                        if ($scope.editedCase) {
+                            $scope.caseJsonToSend[0].CaseNumber = $scope.editedCase.CaseNumber;
+                            $scope.caseJsonToSend[0].Id = $scope.editedCase.Id;
+                        }
+                        console.log(document.getElementById('caseAttachment_id').files[0]);
+                        console.log("->>>", JSON.stringify($scope.caseJsonToSend));
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.profileController.registerCases}',
+                            JSON.stringify($scope.caseJsonToSend),
+                            localStorage.getItem('UserId'),
+                            localStorage.getItem("AccessToken"),
+                            function (resultfromcontroller, event) {
+                                if (resultfromcontroller != null ) {
+                                    if (resultfromcontroller.status == true) {
+                                        if (document.getElementById('caseAttachment_id').files[0]) {
+                                            console.log('Printed')
+                                            jQuery(checkForUploads(['caseAttachment_id']).then((result) => {
+                                                if (result == 'Done') {
+                                                    jQuery(processByteChunkArray('', resultfromcontroller.caseId, 'profileController').then((result) => {
+                                                        console.log(result);
+                                                        if (result.status == true) {
+                                                            $scope.safeApply(function () {
+                                                                $scope.getCases();
+                                                                $scope.caseForm.$setPristine();
+                                                                $scope.openNewCaseFormClose();
+                                                                toaster.pop('success', "Your Case " + resultfromcontroller.subject + " is " + resultfromcontroller.sNe, "Case No :" + resultfromcontroller.caseNumber + "");
+                                                                console.log("success  processByteChunkArray-->", result);
+                                                            });
+                                                        } else {
+                                                            $scope.safeApply(function () {
+                                                                $scope.getCases();
+                                                                $scope.caseForm.$setPristine();
+                                                                $scope.openNewCaseFormClose();
+                                                                toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                                                console.log("error  processByteChunkArray-->", result);
+                                                            });
+                                                        }
+                                                    }).catch((err) => {
+                                                        $scope.safeApply(function () {
+                                                            $scope.getCases();
+                                                            $scope.caseForm.$setPristine();
+                                                            $scope.openNewCaseFormClose();
+                                                            console.log("Erroe in processByteChunkArray-->", err);
+                                                            toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                                        })
+                                                    }));
+                                                } else {
+                                                    $scope.safeApply(function () {
+                                                        $scope.getCases();
+                                                        $scope.caseForm.$setPristine();
+                                                        $scope.openNewCaseFormClose();
+                                                        console.log("Erroe in checkForUploads-->", err);
+                                                        toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                                    })
+                                                }
+                                            }));
+                                        } else {
+                                            console.log('Not Printed')
+                                            $scope.safeApply(function () {
+                                                $scope.getCases();
+                                                $scope.caseForm.$setPristine();
+                                                $scope.openNewCaseFormClose();
+                                                toaster.pop('success', "Your Case " + resultfromcontroller.subject + " is " + resultfromcontroller.sNe, "Case No :" + resultfromcontroller.caseNumber + "");
+                                                console.log("success  processByteChunkArray-->", resultfromcontroller);
+                                            });
+                                        }
+                                    } else {
+                                        $scope.safeApply(function () {
+                                            $scope.getCases();
+                                            $scope.caseForm.$setPristine();
+                                            $scope.openNewCaseFormClose();
+                                            console.log("Erroe in checkForUploads-->", err);
+                                            toaster.pop('error', "Error in case " + resultfromcontroller.sNe, "");
+                                        })
+                                    }
+                                } else {
+                                    $scope.safeApply(function () {
+                                        $scope.getCases();
+                                        $scope.routeTo($scope.salesforceSiteLabel);
+                                        $scope.caseForm.$setPristine();
+                                        $scope.openNewCaseFormClose();
+                                        console.log("Erroe in checkForUploads-->", err);
+                                        toaster.pop('error', "Error in case submission (", "");
+                                    })
+                                }
+                            });
+                        
+                    }else{
+                        $scope.showOverlay = false;
+                    }
+                }
+
+                $scope.caseDelete = function(param){
+                    console.log(param);
+                    $scope.showOverlay = true;
+                    $scope.openconfirmDialogClose();
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.deleteCase}',
+                        param,
+                        localStorage.getItem('UserId'),
+                        localStorage.getItem("AccessToken"),
+                        function(result, event){
+                            if(result != null ){
+                                if(result == true){
+                                    toaster.pop('success','Case '+param+' Deleted Successfully','Case Deleted');
+                                    $scope.getCases();
+                                    $scope.showOverlay = false;
+                                    console.log(result);
+                                }else{
+                                    toaster.pop('error','Case '+param+' failed to delete','Case Deletion Failed');
+                                    $scope.getCases();
+                                    $scope.showOverlay = false;
+                                    console.log(result);
+                                }
+                            }else{
+                                toaster.pop('error','Case '+param+' failed to delete','Case Deletion Failed');
+                                $scope.getCases();
+                                $scope.routeTo($scope.salesforceSiteLabel);
+                                $scope.showOverlay = false;
+                                console.log(result);
+                            }
+                        }
+                    );
+
+                }
+
+                $scope.openNewCaseForm = function (param) {
+                    console.log(param);
+                    $scope.chnagesCaseSubType = [];
+                    $scope.chnagesCaseSubTypeOne = [];
+                    $scope.caseCategory = undefined;
+                    $scope.caseType = undefined;
+                    $scope.caseSubType = undefined;
+                    $scope.caseSubTypeOne = undefined;
+                    $scope.editedCase = undefined;
+                    $scope.CreatingACaseForLabel = undefined;
+                    $scope.caseComplain = undefined;
+                    $scope.caseSubject = undefined;
+                    $scope.caseDescription = undefined;
+                    $scope.caseAttachment = undefined;
+                    jQuery(refreshFileField('caseAttachment_id'));
+                    var modal = document.getElementById("newCaseWindow");
+                    modal.style.display = "block";
+                    $scope.caseSubject = param;
+                }
+
+                $scope.openNewCaseFormClose = function () {
+                    var modal = document.getElementById("newCaseWindow");
+                    modal.style.display = "none";
+                }
+
+                $scope.openCaseDetails = function (param) {
+                    // console.log(param);
+                    $scope.caseCategory = undefined;
+                    $scope.caseType = undefined;
+                    $scope.caseSubType = undefined;
+                    $scope.caseSubTypeOne = undefined;
+                    $scope.editedCase = undefined;
+                    $scope.caseSubject = undefined;
+                    $scope.caseDescription = undefined;
+                    $scope.caseAttachment = undefined;
+                    jQuery(refreshFileField('caseAttachment_id'));
+                    $scope.editedCase = param;
+                    console.log(param);
+                    var modal = document.getElementById("newCaseWindow");
+                    $scope.caseCategory = param.Case_Category__c;
+                    if($scope.caseCategory == 'Customer'){
+                        console.log('Customer',param.Case_Complaints__c);
+                        $scope.caseComplainpickList = $scope.customerComplainPickList;
+                        var st = _.findWhere($scope.customerComplainPickList, { key: param.Case_Complaints__c });
+                        $scope.caseComplain = st.key;
+                        console.log($scope.caseComplain);
+                    }else{
+                        $scope.caseComplainpickList = $scope.consumerComplainPickList;
+                        console.log('Consumer',param.Case_Complaints__c);
+                        var st = _.findWhere($scope.consumerComplainPickList, { key: param.Case_Complaints__c });
+                        $scope.caseComplain = st.key;
+                    }
+
+                    // if (_.findWhere($scope.dpndntPcklstValue.caseType, { cName: param.Case_Type__c })) {
+                    //     $scope.caseType = _.findWhere($scope.dpndntPcklstValue.caseType, { cName: param.Case_Type__c });
+                    // }
+                    // console.log($scope.dpndntPcklstValue);
+                    // $scope.caseType = $scope.dpndntPcklstValue.caseType
+                    // if (_.findWhere($scope.dpndntPcklstValue.caseType, { cName: param.Case_Type__c })) {
+                    //     $scope.caseType = _.findWhere($scope.dpndntPcklstValue.caseType, { cName: param.Case_Type__c });
+                    // }
+                    // if (_.findWhere($scope.dpndntPcklstValue.caseType, { cName: param.Case_Type__c })) {
+                    //     $scope.chnagesCaseSubType = _.findWhere($scope.dpndntPcklstValue.caseType, { cName: param.Case_Type__c });
+                    // }
+                    // if ($scope.chnagesCaseSubType.cSubType) {
+                    //     $scope.chnagesCaseSubType = $scope.chnagesCaseSubType.cSubType;
+                    // }
+                    // if (_.findWhere($scope.chnagesCaseSubType, { cSName: param.Sub_Type__c })) {
+                    //     $scope.caseSubType = _.findWhere($scope.chnagesCaseSubType, { cSName: param.Sub_Type__c });
+                    // }
+                    // if ($scope.caseSubType.cSSType) {
+                    //     $scope.chnagesCaseSubTypeOne = $scope.caseSubType.cSSType;
+                    // }
+                    // // console.log($scope.chnagesCaseSubType);
+                    // if (_.findWhere($scope.caseSubType.cSSType, { cSSName: param.Sub_Type_1__c })) {
+                    //     $scope.caseSubTypeOne = _.findWhere($scope.caseSubType.cSSType, { cSSName: param.Sub_Type_1__c });
+                    // }
+                    if (param.Subject) {
+                        $scope.caseSubject = param.Subject;
+                    }
+                    if (param.Description) {
+                        $scope.caseDescription = param.Description;
+                    }
+                    // console.log($scope.chnagesCaseSubTypeOne)
+                    modal.style.display = "block";
+
+                }
+
+                $scope.openconfirmDialog = function(param){
+                    $scope.chnagesCaseSubType = [];
+                    $scope.chnagesCaseSubTypeOne = [];
+                    $scope.caseCategory = '';
+                    $scope.caseType = '';
+                    $scope.caseSubType = '';
+                    $scope.caseSubTypeOne = '';
+                    $scope.editedCase = undefined;
+                    $scope.caseSubject = '';
+                    $scope.caseDescription = '';
+                    $scope.caseAttachment = undefined;
+                    jQuery(refreshFileField('caseAttachment_id'));
+                    var modal = document.getElementById("confirmDialog");
+                    modal.style.display = "block";
+
+                    $scope.deleteCaseNumber = param;
+
+                }
+
+                $scope.openconfirmDialogClose = function(){
+                    var modal = document.getElementById("confirmDialog");
+                    modal.style.display = "none";
+                }
+
+                $scope.openCaseDetailsClose = function () {
+                    var modal = document.getElementById("detailsCaseWindow");
+                    modal.style.display = "none";
+                }
+
+                var mainInfo = $http.get("{!URLFOR($Resource.portalAssets,'/assets/js/dependenPicklistValue.json')}").then(function (response) {
+                    console.log('response',response);
+                    $scope.dpndntPcklstValue = response.data;
+                    console.log($scope.dpndntPcklstValue);
+                    return response;
+                });
+
+            });
+            app.config(function(IdleProvider, KeepaliveProvider) {
+                    KeepaliveProvider.interval(18000);
+                    IdleProvider.windowInterrupt('focus');
+                })
+            app.run(function($rootScope, Idle, $log, Keepalive){
+                    Idle.watch();
+                    $log.debug('app started.');
+            });
+
+            app.$inject = ['$scope', '$filter'];
+
+        </script>
+    </body>
+
+    </html>
+</apex:page>

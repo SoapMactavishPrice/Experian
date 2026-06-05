@@ -1,0 +1,11 @@
+.time-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.time-toggle .email-time {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}

@@ -1,0 +1,105 @@
+<template>
+
+    <lightning-card title="Post PPAC Meeting Update">
+
+        <div class="slds-p-around_large">
+
+            <!-- GRID -->
+            <div class="slds-grid slds-wrap slds-gutters">
+
+                <!-- MOM RELEASE DATE -->
+                <div class="slds-col slds-size_1-of-2">
+
+                    <lightning-input
+                        type="date"
+                        label="MOM Release Date"
+                        value={momReleaseDate}
+                        onchange={handleChange}
+                        data-field="momReleaseDate"
+                        required>
+                    </lightning-input>
+
+                </div>
+
+                <!-- SUB CATEGORY -->
+                <div class="slds-col slds-size_1-of-2">
+
+                    <lightning-combobox
+                        label="Sub Category"
+                        value={subCategory}
+                        options={subCategoryOptions}
+                        onchange={handleChange}
+                        data-field="subCategory"
+                        required>
+                    </lightning-combobox>
+
+                </div>
+
+                <!-- BU HEAD -->
+                <div class="slds-col slds-size_1-of-2 slds-m-top_medium">
+
+                    <lightning-combobox
+                        label="Select BU Head"
+                        value={buHead}
+                        options={buHeadOptions}
+                        onchange={handleChange}
+                        data-field="buHead"
+                        required>
+                    </lightning-combobox>
+
+                </div>
+
+            </div>
+
+            <!-- MOM FILES -->
+            <div class="slds-m-top_large">
+
+                <h3 class="section-title">
+                    Upload MOM Documents
+                </h3>
+
+                <lightning-file-upload
+                    label="Upload MOM Files"
+                    name="momUploader"
+                    record-id={recordId}
+                    multiple
+                    accept={acceptedFormats}
+                    onuploadfinished={handleMomUpload}>
+                </lightning-file-upload>
+
+            </div>
+
+            <!-- REVISED PPAC -->
+            <div class="slds-m-top_large">
+
+                <h3 class="section-title">
+                    Upload Revised PPAC Note
+                </h3>
+
+                <lightning-file-upload
+                    label="Upload Revised PPAC Files"
+                    name="ppacUploader"
+                    record-id={recordId}
+                    multiple
+                    accept={acceptedFormats}
+                    onuploadfinished={handlePPACUpload}>
+                </lightning-file-upload>
+
+            </div>
+
+            <!-- BUTTON -->
+            <div class="slds-align_absolute-center slds-m-top_x-large">
+
+                <lightning-button
+                    variant="brand"
+                    label="Save Update"
+                    onclick={handleSave}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+    </lightning-card>
+
+</template>

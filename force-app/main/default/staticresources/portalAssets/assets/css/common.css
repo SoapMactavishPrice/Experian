@@ -1,0 +1,334 @@
+.wrapper-progressBar {
+  width: 100%;
+}
+
+.progressBar {
+}
+
+.progressBarb {
+}
+
+.progressBar li {
+  list-style-type: none;
+  float: left;
+  width: 11%;
+  position: relative;
+  text-align: center;
+}
+
+.progressBarb li {
+  list-style-type: none;
+  float: left;
+  width: 11%;
+  position: relative;
+  text-align: center;
+}
+
+.progressBar li:before {
+  content: ' ';
+  line-height: 30px;
+  border-radius: 50%;
+  width: 30px;
+  height: 31px;
+  border: 1px solid #ddd;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px;
+  background-color: white;
+}
+
+.progressBarb li:before {
+  content: ' ';
+  line-height: 30px;
+  border-radius: 50%;
+  width: 30px;
+  height: 31px;
+  border: 1px solid #ddd;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px;
+  background-color: white;
+}
+
+.progressBar li:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #ddd;
+  top: 15px;
+  left: -50%;
+  z-index: -1;
+}
+
+.progressBarb li:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #ddd;
+  top: 15px;
+  left: -50%;
+  z-index: -1;
+}
+
+.progressBar li i {
+  position: absolute;
+  display: block;
+  color: #ddd;
+  margin-top: -34px;
+  margin-left: 42%;
+}
+
+
+.progressBarb li i {
+  position: absolute;
+  display: block;
+  color: #ddd;
+  margin-top: -33px;
+  margin-left: 46%;
+}  
+.progressBar li span {
+  font-size: 12px;
+}
+
+.progressBarb li span {
+  font-size: 12px;
+}
+.progressBar li:first-child:after {
+  content: none;
+}
+
+.progressBarb li:first-child:after {
+  content: none;
+}
+
+.progressBar li.active {
+  color: #982881;
+}
+
+.progressBarb li.active {
+  color: #982881;
+}
+
+.successAdd {
+  color: rgb(20 141 103);
+}
+
+.errorRemove {
+  color: rgb(255, 0, 0);
+}
+
+
+
+.progressBar li.active:before {
+  border-color: #982881;
+  background-color: #982881;
+}
+
+.progressBar .active:after {
+  background-color: #982881;
+}
+
+.progressBarb li.active:before {
+  border-color: #982881;
+  background-color: #982881;
+}
+
+.progressBarb .active:after {
+  background-color: #982881;
+}
+
+.heading {
+  margin: 0px 0px 0px 15px;
+  font-size: 35px;
+}
+.instruction p {
+  margin: 0px 20px;
+}
+.form-control {
+  height: calc(1.2em + 0.7rem + 2px) !important;
+  border-radius: 0px !important;
+}
+
+.form-controlv {
+  height: calc(1.2em + 1.2rem + 1px) !important;
+  border-radius: 0px !important;
+}
+.form-group label {
+  display: inline-block;
+  margin-bottom: 0.2rem !important;
+  font-size: 13px;
+}
+
+.section-wise {
+  background-color: #f6f2f2;
+  color: #333;
+  width: 100%;
+  padding: 0.5%;
+  margin: 0px 5px;
+  /* margin-left: 2.5%; */
+}
+
+.btn-disabled{
+    background-color: #ccc !important;
+    color: #333 !important;
+    border: none !important;
+}
+
+
+.welcome-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.7); 
+}
+.alert-model{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 0px 10px #000;   
+}
+.fa-close {
+  cursor: pointer;
+  font-size: 28px !important;
+  color: #444;
+}
+
+.fa-close:hover {
+  color: #888;
+}
+
+/* Modal Content */
+.welcome-modal-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  /* padding-top: .5px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 35px;
+  width: 80%;
+  display: block;
+  box-shadow: 0px 0px 20px #000;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.new-window-heading{
+  text-align: center;
+  border-top: .5px solid #ccc;
+  border-bottom: .5px solid #ccc;
+}
+.new-window-heading img{
+  width: 25px;
+}
+.new-window-heading span{
+  text-align: center;
+}
+.new-window-box{
+  width: 90%;
+  margin: 5%;
+  border: 1px solid #ccc;
+}
+.new-window-button{
+  width: 90%;
+  margin-left: 5%;
+}
+.new-window-box img{
+  width: 70%;
+  margin: 15%;
+}
+.new-window-button button{
+  width: 98%;
+  padding: 1%;
+  outline: 0;
+  border: 1px solid #982881;
+  background: #982881;
+  color: white;
+}
+.new-window-button button:hover{
+  background-color: #7d256b;
+}
+.new-windpw-border-left{
+  border-left: 1px solid #982881;
+}
+
+/* =======new css : 06-10-2021 ================= */
+ul.upload-list{
+padding: 0px !important;
+margin: 0px !important;
+}
+
+ul.upload-list li{
+  align-items: baseline;
+  float: left;
+  width: max-content;
+  margin: 0px !important;
+  padding: 0px 5px;
+  list-style: none;
+  }
+/* .checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #ccc;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #982881;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 9px;
+  top: 4px;
+  width: 8px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+} */

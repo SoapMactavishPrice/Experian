@@ -1,0 +1,386 @@
+<apex:page standardStylesheets="false" controller="becomeMemberController" showHeader="false" sidebar="false" applyHtmlTag="false"
+    applyBodyTag="false" docType="html-5.0">
+    <html ng-app="ngApp">
+
+    <head>
+        <title>SalesForce | Portal Profile </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/header.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/becomemember.css')}" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" rel="stylesheet" />
+        <link rel="icon" href="{!URLFOR($Resource.portalAssets,'/assets/image/expLogo.png')}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></apex:includeScript>
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></apex:includeScript>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></apex:includeScript>
+        <apex:includescript value="https://code.angularjs.org/1.7.9/angular-messages.js"></apex:includescript>
+        <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.js"></apex:includescript>
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+        <!--  If necessary, please modify the charset parameter to specify the        -->
+        <!--  character set of your HTML page.                                        -->
+        <!--  ----------------------------------------------------------------------  -->
+
+        <!-- <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/angular.js') }" /> -->
+        <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+    </head>
+
+
+    <body ng-controller="profileCtrl">
+        <div ng-show="showOverlay" class="overlay">
+            <div class="loader">
+                <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/loading.gif')}" title="Please Wait..." />
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand ml-5" href="#">
+                <img src="{!URLFOR($Resource.portalAssets,'/assets/image/Experian_logo.png')}" alt="Logo" style="width:130px;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-4" ng-click="routeTo('Case')">
+                        <a class="nav-link" href="#">Case</a>
+                    </li>
+                    <li class="nav-item mr-4" ng-click="routeTo('Invoice')">
+                        <a class="nav-link" href="#">Invoice</a>
+                    </li>
+                    <li class="nav-item mr-4" ng-click="routeTo('Download')">
+                        <a class="nav-link" href="#">Links</a>
+                    </li>
+                    <li class="nav-item mr-4" ng-click="routeTo('DQR')">
+                        <a class="nav-link" href="#">DQR</a>
+                    </li>
+                    <li class="nav-item mr-4" ng-click="routeTo('BecomeMember')">
+                        <a class="nav-link" href="#">Become Member</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i style="padding:6px;font-size:20px;" class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item  l-active" ng-click="routeTo('Profile')">Profile</a>
+                            <a class="dropdown-item" ng-click="routeTo('CompanyInfo')">Company Information</a>
+                            <a class="dropdown-item" ng-click="routeTo('PortalLogin')">Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">{{userDetail.Name}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div> -->
+            <toaster-container toaster-options="{'time-out': 4000}"></toaster-container>
+        </nav>
+
+        <div ng-show="!showThankU" class="container bg-img shadow-lg mt-5">
+            <div class="row page-row"></div>
+            <div class="row">
+                <div class="space-20px"></div>
+            </div>
+            <div class="row instruction">
+                <div class="heading">
+                    Become A Member
+                </div>
+                <p>Want to become a member, please fill the form below and we will contact you shortly.</p>
+            </div>
+            <div class="row">
+                <div class="space-20px"></div>
+                <div class="space-20px"></div>
+            </div>
+            <form name="leadForm" novalidate="leadForm">
+                <div class="form-row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="company_Name">Company Name &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <input type="text" id="company_Name_id" name="company_Name" ng-model="leadDetails.CompanyName" class="form-control" required="true"
+                            />
+                            <div ng-if="(leadForm.company_Name.$dirty || leadForm.$submitted)" ng-messages="leadForm.company_Name.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please enter company name</div>
+                                <!-- <div class="text-danger" ng-message="minlength">Your field is too short</div>
+                                            <div class="text-danger" ng-message="maxlength">Your field is too long</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="member_Type">Type of Member &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <select class="form-control" required="true" id="memberType_id" name="member_Type" ng-model="leadDetails.Type_of_Member__c" ng-change="onChangeMemberType(leadDetails.Type_of_Member__c)">
+                                <option value="{{tom.label}}" ng-repeat="tom in type_of_member">{{tom.label}}</option>
+                            </select>
+                        </div>
+                        <div ng-if="(leadForm.member_Type.$dirty || leadForm.$submitted)" ng-messages="leadForm.member_Type.$error" style="color:maroon"
+                            role="alert">
+                            <div class="text-danger" ng-message="required">please select Type of case</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="space-20px"></div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="title">Title &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <select class="form-control" id="caseSubTypeOne_id" name="title" ng-model="leadDetails.Title" required="true">
+                                <option>Mr.</option>
+                                <option>Mrs.</option>
+                                <option>Miss.</option>
+                                <option>Dr.</option>
+                            </select>
+                        </div>
+                        <div ng-if="(leadForm.title.$dirty || leadForm.$submitted)" ng-messages="leadForm.title.$error" style="color:maroon" role="alert">
+                            <div class="text-danger" ng-message="required">please select title</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="member_Type">NBFCs Type &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <select class="form-control" id="nbfcsType_id" name="nbfcs_Type" ng-model="leadDetails.nbfcs_types" ng-disabled="leadDetails.Type_of_Member__c != 'NBFCs'"
+                                ng-required="leadDetails.Type_of_Member__c == 'NBFCs'">
+                                <option value="{{nbfc.label}}" ng-repeat="nbfc in nbfcs_types_options">{{nbfc.label}}</option>
+                            </select>
+                        </div>
+                        <div ng-if="(leadForm.member_Type.$dirty || leadForm.$submitted)" ng-messages="leadForm.member_Type.$error" style="color:maroon"
+                            role="alert">
+                            <div class="text-danger" ng-message="required">please select Type of case</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="space-20px"></div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="first_Name">First Name &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <input type="text" id="firstName_id" name="first_Name" ng-model="leadDetails.FirstName" class="form-control" required="true"
+                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || retrun(event.charCode == 32 )"
+                            />
+                            <div ng-if="(leadForm.first_Name.$dirty || leadForm.$submitted)" ng-messages="leadForm.first_Name.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please enter first name</div>
+                                <!-- <div class="text-danger" ng-message="minlength">Your field is too short</div>
+                                    <div class="text-danger" ng-message="maxlength">Your field is too long</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="last_Name">Last Name &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <input type="text" id="last_Name_id" name="last_Name" ng-model="leadDetails.LastName" class="form-control" required="true"
+                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || retrun(event.charCode == 32 )"
+                            />
+                            <div ng-if="(leadForm.last_Name.$dirty || leadForm.$submitted)" ng-messages="leadForm.last_Name.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please enter last name</div>
+                                <!-- <div class="text-danger" ng-message="minlength">Your field is too short</div>
+                                        <div class="text-danger" ng-message="maxlength">Your field is too long</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="space-20px"></div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="email_address">Email Address &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <input type="text" id="email_address_id" name="email_address" ng-model="leadDetails.Email" class="form-control" required="true"
+                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode > 47 && event.charCode < 57) || ( event.charCode == 64 || event.charCode == 46 )"
+                            />
+                            <div ng-if="(leadForm.email_address.$dirty || leadForm.$submitted)" ng-messages="leadForm.email_address.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please enter email address</div>
+                                <div class="text-danger" ng-message="pattern">email should be valid</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="first_Name">Phone number &nbsp;
+                                <span style="color: red">*</span>
+                            </label>
+                            <!-- <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">+91</div>
+                        </div> -->
+                            <input type="text" id="phone_no_id" name="phone_no" ng-model="leadDetails.Phone" class="form-control" required="true" onkeypress="return (event.charCode > 47 && event.charCode < 58)"
+                                minlength="10" maxlength="10" />
+                            <div ng-if="(leadForm.phone_no.$dirty || leadForm.$submitted)" ng-messages="leadForm.phone_no.$error" style="color:maroon"
+                                role="alert">
+                                <div class="text-danger" ng-message="required">please enter phone number</div>
+                                <div class="text-danger" ng-message="minlength">phone number should be 10 digit</div>
+                                <div class="text-danger" ng-message="maxlength">phone number should be 10 digit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="space-20px"></div>
+                </div>
+
+                <div class="space-20px"></div>
+                <div class="space-20px"></div>
+
+                <div class="form-row float-right mr-5">
+                    <button class="mr-5" type="submit" ng-click="submitLead(leadForm)">Submit &nbsp;
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="space-20px"></div>
+                    <div class="space-20px"></div>
+                    <div class="space-20px"></div>
+                    <div class="space-20px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="space-20px"></div>
+        <div class="space-20px"></div>
+
+        <div ng-show="showThankU" class="container mt-4 shadow-lg pb-4 bg-img">
+
+            <div class="row page-row"></div>
+            <div class="space-30px"></div>
+            <div class="row mt-5">
+                <div class="thank-u-heading">
+                    <i style="color:#7d256b" class="{{serverResponse.sing}}"></i> {{serverResponse.msg}}
+                    <p style="font-size:20px;text-align:center">{{serverResponse.instruction}}</p>
+                </div>
+            </div>
+        </div>
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <FORM> element to your page.             -->
+        <!--  ----------------------------------------------------------------------  -->
+        <script>
+            var app = angular.module('ngApp', ['toaster', 'ngMessages']);
+            app.controller('profileCtrl', function ($scope, toaster) {
+                $scope.userDetail = undefined;
+                $scope.showOverlay = false;
+                $scope.leadDetails = {
+                    Title: undefined,
+                    FirstName: undefined,
+                    LastName: undefined,
+                    CompanyName: undefined,
+                    Phone: undefined,
+                    Email: undefined,
+                    Type_of_Member_c: undefined,
+                    nbfcs_types : undefined
+                };
+                $scope.showThankU = false;
+                $scope.serverResponse = '';
+                console.log('{!type_of_member}');
+                console.log('{!nbfcs_types_options}');
+                $scope.type_of_member = JSON.parse('{!type_of_member}');
+                $scope.nbfcs_types_options = JSON.parse('{!nbfcs_types_options}');
+                console.log($scope.type_of_member);
+                console.log($scope.nbfcs_types_options);
+
+                $scope.userId = sessionStorage.getItem("UserId");
+                toaster.pop('success', "Document Uploaded : )", "text");
+
+                $scope.onChangeMemberType = function (param) {
+                    console.log(param);
+                    if(param != 'NBFCs'){
+                        $scope.leadDetails.nbfcs_types = undefined;
+                    }
+                }
+
+                $scope.submitLead = function (param) {
+                    $scope.showOverlay = true;
+                    if (param.$valid) {
+                        console.log("Valid", param);
+                        var leadDetails = [];
+                        leadDetails[0] = $scope.leadDetails;
+                        console.log(JSON.stringify(leadDetails));
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.becomeMemberController.SubmitLead}',
+                            JSON.stringify(leadDetails),
+                            function (result, event) {
+                                console.log(result);
+                                if (result) {
+                                    if (result.status == true) {
+                                        $scope.safeApply(function () {
+                                            toaster.pop('success', "Success fully data Submitted");
+                                            $scope.showThankU = true;
+                                            $scope.serverResponse = result;
+                                            $scope.showOverlay = false;
+                                        });
+                                    } else {
+                                        $scope.safeApply(function () {
+                                            toaster.pop('success', "Already registerd");
+                                            $scope.showThankU = true;
+                                            $scope.serverResponse = result;
+                                            $scope.showOverlay = false;
+                                        });
+                                    }
+                                } else {
+                                    $scope.safeApply(function () {
+                                        toaster.pop('error', "Failed to submit data !");
+                                        $scope.showOverlay = false;
+                                        $scope.showThankU = false;
+                                    });
+                                }
+                            });
+                    } else {
+                        $scope.showOverlay = false;
+                        $scope.showThankU = false;
+                    }
+                }
+
+                $scope.routeTo = function (param) {
+                    if (param == 'PortalLogin') {
+                        sessionStorage.clear();
+                    }
+                    console.log('Route To');
+                    // window.location.replace('/apex/' + param);
+                    window.location.replace('PortalLogin/' + param);
+                }
+
+                $scope.safeApply = function (fn) {
+                    var phase = this.$root.$$phase;
+                    if (phase == '$apply' || phase == '$digest') {
+                        if (fn && (typeof (fn) === 'function')) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
+                    }
+                };
+
+
+            });
+        </script>
+    </body>
+
+    </html>
+</apex:page>

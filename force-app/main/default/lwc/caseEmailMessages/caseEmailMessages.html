@@ -1,0 +1,60 @@
+<template>
+  <lightning-card title="Emails" icon-name="standard:email">
+    <div class="slds-p-horizontal_small slds-p-top_small">
+      <lightning-input type="search" value={searchKey} label="Search" onchange={handleSearch}></lightning-input>
+    </div>
+
+    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
+      <template for:each={displayRows} for:item="row">
+        <lightning-accordion-section key={row.id} name={row.id} label={row.subject}>
+          <span slot="label" class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-has-flexi-truncate" style="width:100%">
+            <span class="slds-truncate slds-p-right_small" title={row.subject}>{row.messageDate}</span>
+            <span class="slds-text-color_weak slds-no-flex slds-nowrap slds-m-left_small" title={row.messageDate}>
+              dgdf
+              <lightning-formatted-date-time value={row.messageDate} year="numeric" month="short" day="2-digit" hour="2-digit" minute="2-digit"></lightning-formatted-date-time>
+            </span>
+          </span>
+          <div class="meta">
+            <div class="row"><span class="label">Fromm</span><span class="value">{row.fromAddress}</span></div>
+            <div class="row"><span class="label">To</span><span class="value">{row.toAddress}</span></div>
+            <div class="row"><span class="label">Date</span><span class="value"><lightning-formatted-date-time value={row.messageDate} year="numeric" month="short" day="2-digit" hour="2-digit" minute="2-digit"></lightning-formatted-date-time></span></div>
+            <div class="row"><span class="label">Status</span><span class="value">{row.status}</span></div>
+          </div>
+
+          <template if:true={row.detail}>
+            <template if:true={row.detail.attachments}>
+              <h3 class="slds-text-title_caps slds-m-top_small slds-m-bottom_x-small">Attachments</h3>
+              <template for:each={row.detail.attachments} for:item="att">
+                <div key={att.contentDocumentId} class="slds-m-vertical_x-small">
+                  <lightning-icon icon-name="doctype:attachment" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                  <a href={att.downloadUrl} target="_blank">{att.title}</a>
+                  <span class="slds-text-color_weak">({att.fileType}, {att.contentSize} bytes)</span>
+                </div>
+              </template>
+            </template>
+
+            <div class="body slds-m-top_small">
+              <template if:true={row.detail.htmlBody}>
+                <lightning-formatted-rich-text value={row.detail.htmlBody}></lightning-formatted-rich-text>
+              </template>
+              <template if:false={row.detail.htmlBody}>
+                <pre class="plain">{row.detail.textBody}</pre>
+              </template>
+            </div>
+          </template>
+          <template if:false={row.detail}>
+            <div class="slds-p-vertical_medium slds-align_absolute-center">
+              <lightning-spinner size="small" alternative-text="Loading"></lightning-spinner>
+            </div>
+          </template>
+        </lightning-accordion-section>
+      </template>
+    </lightning-accordion>
+
+    <div class="slds-p-around_small slds-grid slds-grid_align-spread">
+      <lightning-button label="Prev" onclick={prevPage} variant="neutral"></lightning-button>
+      <span>Page {page}</span>
+      <lightning-button label="Next" onclick={nextPage} variant="neutral"></lightning-button>
+    </div>
+  </lightning-card>
+</template>

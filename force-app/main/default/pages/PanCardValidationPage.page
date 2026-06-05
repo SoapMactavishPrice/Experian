@@ -1,0 +1,16 @@
+<apex:page controller="PanCardValidationRESTController" action="{!getTokenAPI}">
+    <apex:form >
+        <div>
+            <apex:pageBlock >
+                <apex:pageMessages >
+                </apex:pageMessages>
+            </apex:pageBlock>
+        </div>
+        <div>
+            
+            <apex:commandButton value="Back"  action="{!Cancel}"/>
+            <!--<apex:param name="thisParam1" value="{!a.Phone}" assignTo="{!paramValue}"/>-->
+            
+        </div>
+    </apex:form>
+</apex:page>

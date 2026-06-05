@@ -1,0 +1,1036 @@
+<apex:page controller="AgreementVFController" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<html>
+<head>
+<style>
+@page {
+    size: A4;
+    margin-top: 15mm;
+    margin-bottom: 15mm;
+    margin-left: 10mm;
+    margin-right: 10mm;
+
+    @bottom-right {
+        content: "Page " counter(page);
+        font-family: Arial;
+        font-size: 10px;
+    }
+}
+body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;}
+.page1{width:100%;text-align:center;}
+.logo-section{padding-top:40px;}
+.logo{width:220px;height:auto;}
+.title-section{padding-top:70px;width:100%;}
+.title-line{color:#005EB8;font-size:15px;font-weight:bold;text-transform:uppercase;line-height:1.15;margin:0;padding:0;}
+.page-break{page-break-after:always;}
+</style>
+</head>
+<body>
+<div class="page1 page-break">
+<div class="logo-section"><img src="{!URLFOR($Resource.experianLogo)}" class="logo"/></div>
+<div class="title-section">
+<div class="title-line">AGREEMENT FOR</div>
+<div class="title-line">CREDIT INFORMATION SERVICES AND TO BECOME A MEMBER OF CAIS DATABASE</div>
+</div>
+</div>
+    <div class="page-break" style="padding:40px 45px 20px 45px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000;">
+<div style="font-weight:bold;font-size:14px;line-height:1.2;margin-bottom:35px;">AGREEMENT FOR THE PROVISION OF CREDIT INFORMATION SERVICES AND TO BECOME A MEMBER OF CAIS DATABASE</div>
+
+<div style="text-align:center;margin-bottom:20px;">This Agreement is made between:</div>
+
+<table style="width:100%;border-collapse:collapse;font-size:10px;">
+<tr>
+<td style="border:1px solid #000;padding:4px;width:35%;"></td>
+<td style="border:1px solid #000;padding:4px;width:30%;text-align:center;font-weight:bold;">“ECICI”</td>
+<td style="border:1px solid #000;padding:4px;width:35%;text-align:center;font-weight:bold;">“Company”</td>
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:4px;">Full company name</td>
+<td style="border:1px solid #000;padding:4px;">Experian Credit Information Company of India Private Limited</td>
+<td style="border:1px solid #000;padding:4px;">{!leadRecord.Company}</td>
+<!-- <td style="border:1px solid #000;padding:4px;"></td> -->
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:4px;">Registered Office<br/>(or, if applicable, principal place of business)</td>
+<td style="border:1px solid #000;padding:4px;">5th Floor, East Wing, Tower 3, Equinox Business Park, LBS Marg, Kurla (West), Mumbai - 400070</td>
+<td style="border:1px solid #000;padding:4px;">{!leadRecord.Billing_Street__c}</td>
+<!-- <td style="border:1px solid #000;padding:4px;"></td> -->
+</tr>
+</table>
+
+<div style="margin-top:20px;">This Agreement shall comprise the following:</div>
+
+<div style="margin-top:12px;">(I)&nbsp;&nbsp;&nbsp;&nbsp;This signature sheet; and</div>
+<div style="margin-top:10px;">(II)&nbsp;&nbsp;ECICI Terms and Conditions (“the Terms and Conditions”)</div>
+<div style="margin-top:10px;">(III)&nbsp;The attached Schedules (“the Schedule”) and any Appendices to the Schedule; and</div>
+
+<div style="margin-top:22px;text-align:justify;">
+The Company acknowledges that it has read and understood the Terms and Conditions and agrees to be bound by them as varied by the Schedule attached. The date of this Agreement shall be the latest date of signature below.
+</div>
+
+<table style="width:85%;margin:40px auto 0 auto;border-collapse:collapse;font-size:10px;">
+<tr>
+<td style="border:1px solid #000;padding:8px;width:20%;"></td>
+<td style="border:1px solid #000;padding:8px;width:40%;text-align:center;font-weight:bold;">ECICI</td>
+<td style="border:1px solid #000;padding:8px;width:40%;text-align:center;font-weight:bold;">{!leadRecord.Company}</td>
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:14px;text-align:center;">Name</td>
+<td style="border:1px solid #000;padding:14px;text-align:center;">RESHMA SURI</td>
+<td style="border:1px solid #000;padding:14px;text-align:center;">{!leadRecord.Name}</td>
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:14px;text-align:center;">Position</td>
+<td style="border:1px solid #000;padding:14px;text-align:center;">HEAD – CLIENT SUCCESS</td>
+<td style="border:1px solid #000;padding:14px;text-align:center;">{!leadRecord.Title}</td>
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:14px;text-align:center;">Date</td>
+<td style="border:1px solid #000;padding:14px;text-align:center;">date</td>
+<td style="border:1px solid #000;padding:14px;text-align:center;">date</td>
+</tr>
+</table>
+</div>
+<!--- 3rd Page Start -->  
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="text-align:center;font-size:12px;font-weight:bold;margin-bottom:18px;">GENERAL TERMS AND CONDITIONS</div>
+
+<div style="margin-bottom:10px;"><b>1.&nbsp;&nbsp;&nbsp;Definitions:</b></div>
+<div style="margin-bottom:10px;">In this Agreement the following expressions shall bear the following meanings:-</div>
+
+<div style="margin-bottom:12px;">
+<b>1.1&nbsp;&nbsp;&nbsp;Agreed Purposes:</b>
+The entitlement of Experian to use the Company Data for the purposes of enhancing the databases used to provide the Services (if applicable), any compliance with Applicable Law, and in order to provide services similar to the Services to the extent permitted under the terms of the Credit Information Companies (Regulation) Act, 2005 and guidelines issued by the Reserve Bank of India.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.2&nbsp;&nbsp;&nbsp;Applicable Law:</b>
+Any statute, law, regulation, ordinance, rule, judgment, order, decree, bye-law, approval, resolution, order, directive, guideline, policy or other similar form of decision of, or determination by, or any interpretation or adjudication, in each case, by any concerned Government Authority having jurisdiction over the matter in question in India, as may be applicable, and having force of law.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.3&nbsp;&nbsp;&nbsp;Company Data:</b>
+Any of the data and/or databases owned by the Company and provided to Experian India in connection with this Agreement including information derived from completed applications for credit products.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.4&nbsp;&nbsp;&nbsp;Company Materials:</b>
+Any of the items provided to Experian by the Company in connection with this Agreement and includes Company Data.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.5&nbsp;&nbsp;&nbsp;Company Products:</b>
+Those products set out in Schedule II (and such other products as Experian and the Company may agree from time to time) in respect of which the Services are provided.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.6&nbsp;&nbsp;&nbsp;Commencement Date:</b>
+The Commencement Date set out in Schedule II in respect of the Services covered by Schedule II or, in the absence of such date, the date that the individual signature sheet identifying this Agreement is signed by both parties.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.7&nbsp;&nbsp;&nbsp;Confidential Information:</b>
+Any and all information relating to the trade secrets, operations, processes, plans, intentions, product information, pricing, know-how, designs, customer lists, market opportunities, transactions, affairs and/or business of the parties and/or to their customers, suppliers, Companies or Group Companies in any medium or format.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.8&nbsp;&nbsp;&nbsp;Contract Year:</b>
+A twelve calendar month period from the Commencement Date or any anniversary of the Commencement Date.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.9&nbsp;&nbsp;&nbsp;Credit Product:</b>
+Shall mean the products as set out in Schedule II to this Agreement.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.10&nbsp;&nbsp;&nbsp;Derivative Output:</b>
+Information, data and materials derived, prepared or generated by Experian and/or its subcontractors within Experian’s environment pursuant to or as a consequence of the Services.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.11&nbsp;&nbsp;&nbsp;Documentation:</b>
+Any or all specification, user documentation, product documentation, technical documentation including data security and access guidelines.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.12&nbsp;&nbsp;&nbsp;Experian:</b>
+Experian Credit Information Company of India Private Limited.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.13&nbsp;&nbsp;&nbsp;Experian Data:</b>
+Any data and/or databases supplied by Experian in connection with this Agreement.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.14&nbsp;&nbsp;&nbsp;Experian Materials:</b>
+Any items developed and/or licensed by Experian to the Company including software and documentation.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.15&nbsp;&nbsp;&nbsp;Experian Group Company:</b>
+Any company controlling, controlled by, or under common control with Experian.
+</div>
+
+<div style="margin-bottom:12px;">
+<b>1.16&nbsp;&nbsp;&nbsp;Force Majeure:</b>
+Any act of government, civil commotion, explosion, flood, industrial action, war, terrorism, system failure, or events beyond reasonable control.
+</div>
+</div>    
+<!--- 3rd Page End -->  
+<!--- 4th Page Start -->  
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+
+<div style="margin-bottom:12px;"><b>1.17&nbsp;&nbsp;&nbsp;General:</b> Terms and Conditions means these terms and conditions as varied by Experian from time to time in accordance with Clause 8 of Schedule I.</div>
+
+<div style="margin-bottom:12px;"><b>1.18&nbsp;&nbsp;&nbsp;Government Authority:</b> shall mean the government of India, any state or local government of India, or any political subdivision thereof, or any agency, court, tribunal or body or authority, whether named global, in India, exercising executive, legislative, judicial, regulatory or administrative functions.</div>
+
+<div style="margin-bottom:12px;"><b>1.19&nbsp;&nbsp;&nbsp;Group Company:</b> any company which is in relation to Experian (or as the case may be) the Company a subsidiary, holding company or subsidiary of a holding company.</div>
+
+<div style="margin-bottom:12px;"><b>1.20&nbsp;&nbsp;&nbsp;Initial Contract Value:</b> The greater of the Minimum Fee (and/or any fixed fees) and the actual amounts invoiced and payable by the Company as specified in the Schedule III in the first Contract Year (excluding Service Tax, withholding taxes and all such applicable taxes).</div>
+
+<div style="margin-bottom:12px;"><b>1.21&nbsp;&nbsp;&nbsp;Intentionally omitted;</b></div>
+
+<div style="margin-bottom:12px;"><b>1.22&nbsp;&nbsp;&nbsp;Intellectual Property Rights:</b> Copyright, database right, domain names, patents, registered and unregistered design rights, registered and unregistered trademarks, and all other industrial, commercial or intellectual property rights existing in any jurisdiction in the world and all the rights to apply for the same.</div>
+
+<div style="margin-bottom:12px;"><b>1.23&nbsp;&nbsp;&nbsp;Minimum Fee:</b> The minimum fee in respect of any particular part of the Services as set out in the Schedule.</div>
+
+<div style="margin-bottom:12px;"><b>1.24&nbsp;&nbsp;&nbsp;Minimum Notice Period:</b> The minimum period of notice to be served by either party to terminate this Agreement as set out in the Schedule I (and if none is specified 12 months).</div>
+
+<div style="margin-bottom:12px;"><b>1.25&nbsp;&nbsp;&nbsp;Company means:</b> a Person which Experian has agreed to, or will agree to in future, admit to Membership of CAIS and whose Membership has not terminated.</div>
+
+<div style="margin-bottom:12px;"><b>1.26&nbsp;&nbsp;&nbsp;Person:</b> shall mean any individual, joint venture, company, corporation, partnership whether limited or unlimited, association, trust or other incorporated or unincorporated body, Hindu undivided family, union, association, government (central, state or otherwise), or any agency, department, authority or political subdivision thereof, and shall include their respective successors and in case of an individual shall include his/her legal representatives, administrators, executors and heirs and in case of trust shall include the trustee or its trustees for the time being.</div>
+
+<div style="margin-bottom:12px;"><b>1.27&nbsp;&nbsp;&nbsp;Permitted Purpose:</b> Unless otherwise stated in the Schedule II, the internal business purposes of the Company (as the case may be) in connection with the Company Products in the Territory and not in any event for the provision of any bureau services to any third parties.</div>
+
+<div style="margin-bottom:12px;"><b>1.28&nbsp;&nbsp;&nbsp;Price Indication Date:</b> The dates set out in the Schedule II or, if none, then each anniversary of the Commencement Date.</div>
+
+<div style="margin-bottom:12px;"><b>1.28A&nbsp;&nbsp;Pricing Validity Period:</b> shall mean [insert date] to [insert date].</div>
+
+<div style="margin-bottom:12px;"><b>1.29&nbsp;&nbsp;&nbsp;Project Timeline:</b> Any timeline expressly set out or referred to in the Schedule II or otherwise agreed between the parties from time to time.</div>
+
+<div style="margin-bottom:12px;"><b>1.30&nbsp;&nbsp;&nbsp;Revenue Year:</b> Unless otherwise stated in the Schedule III the period of 12 calendar months commencing on the Live Date or any anniversary of the Live Date.</div>
+
+<div style="margin-bottom:12px;"><b>1.31&nbsp;&nbsp;&nbsp;Special Terms and Conditions:</b> means in relation to any Company any terms and conditions agreed by Experian in accordance with Clause 1.1 of Schedule I below and shall include any variation thereof from time to time agreed between the parties or otherwise required by Experian and if so required the provisions of Schedule I shall apply.</div>
+
+<div style="margin-bottom:12px;"><b>1.32&nbsp;&nbsp;&nbsp;Schedule:</b> The schedule which describe the subject matter and specific terms relating to this Agreement.</div>
+
+<div style="margin-bottom:12px;"><b>1.33&nbsp;&nbsp;&nbsp;Schedule I:</b> The schedule which sets out the specific terms and conditions for Membership of the CAIS database, its schedule will not be applicable to Companies from the Insurance and Telecom Sectors.</div>
+
+<div style="margin-bottom:12px;"><b>1.34&nbsp;&nbsp;&nbsp;Schedule II:</b> The Schedule which sets out the applicable fees, any transaction specific terms and conditions and the Permitted Purpose.</div>
+
+<div style="margin-bottom:12px;"><b>1.35&nbsp;&nbsp;&nbsp;Scorecard:</b> A statistical formula derived to aid decision making and any supporting material in relation to such formula.</div>
+</div>    
+<!--- 4th Page End -->  
+<!--- 5th Page Start -->
+ <div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+
+<div style="margin-bottom:12px;"><b>1.36&nbsp;&nbsp;&nbsp;Services:</b> The services as specified in Schedule II and all other services supplied by Experian to the Company under or in connection with this Agreement including the provision and grant of licences in respect of any Experian Material.</div>
+
+<div style="margin-bottom:12px;"><b>1.37&nbsp;&nbsp;&nbsp;Specification:</b> Any document referred to in Schedule II that sets out details of the agreed functionality to be provided by the Experian Data or any Experian Materials or a detailed description of the Services (as such document is updated by agreement between the parties from time to time).</div>
+
+<div style="margin-bottom:12px;"><b>1.38&nbsp;&nbsp;&nbsp;Term:</b> The duration of this Agreement as determined in accordance with Clause 12;</div>
+
+<div style="margin-bottom:12px;"><b>1.39&nbsp;&nbsp;&nbsp;Territory:</b> India;</div>
+
+<div style="margin-bottom:12px;"><b>1.40&nbsp;&nbsp;&nbsp;Third party:</b> means without prejudice to the generality of sub-Clause 1.15 above any person, firm, company or other body other than Experian and the Company including (without limitation) any holding company or subsidiary of the Company and any subsidiary of any such holding company as such expressions are defined in the Companies Act of 2013;</div>
+
+<div style="margin-bottom:12px;"><b>1.41&nbsp;&nbsp;&nbsp;</b> It has Agreement means the General Terms and Conditions the Special Terms and Conditions and the Schedules hereto;</div>
+
+<div style="margin-bottom:18px;"><b>2.&nbsp;&nbsp;&nbsp;EXPERIAN’S OBLIGATIONS AND WARRANTIES</b></div>
+
+<div style="margin-bottom:12px;"><b>2.1</b>&nbsp;&nbsp;&nbsp;Experian shall:</div>
+<div style="margin-bottom:8px;"><b>2.1.1</b>&nbsp;&nbsp;provide the Services in the Territory in accordance with the Specifications;</div>
+<div style="margin-bottom:8px;"><b>2.1.2</b>&nbsp;&nbsp;use all reasonable care and skill in the performance of the Services;</div>
+<div style="margin-bottom:8px;"><b>2.1.3</b>&nbsp;&nbsp;use all reasonable care and skill in the collection and collation of any data on which the Services are based or which is comprised within the Services; and</div>
+<div style="margin-bottom:16px;"><b>2.1.4</b>&nbsp;&nbsp;Only use personnel in the provision of the relevant Services who are suitably qualified.</div>
+
+<div style="margin-bottom:18px;"><b>3.&nbsp;&nbsp;&nbsp;COMPANY’S OBLIGATIONS AND WARRANTIES</b></div>
+
+<div style="margin-bottom:12px;"><b>3.1</b>&nbsp;&nbsp;&nbsp;The Company shall:</div>
+
+<div style="margin-bottom:10px;"><b>3.1.1</b>&nbsp;&nbsp;provide Experian with any information or assistance which the parties have agreed the Company shall provide in order for Experian to perform its obligations under this Agreement, and shall use all due skill to ensure that any such information provided to Experian is true, complete, and accurate and in the agreed format;</div>
+
+<div style="margin-bottom:10px;"><b>3.1.2</b>&nbsp;&nbsp;Duly acknowledge and sign the Schedule I and Company (as the case may be) and the Services and any Documentation and shall (if applicable) enter into an agreement with Experian in respect of CAIS by signing the Schedule I appended to this Agreement and comply with the conditions within such Schedule;</div>
+
+<div style="margin-bottom:10px;"><b>3.1.3</b>&nbsp;&nbsp;not attempt or appoint any third-party agent for the purpose of accessing any Credit Information under this Agreement;</div>
+
+<div style="margin-bottom:10px;"><b>3.1.4</b>&nbsp;&nbsp;Any costs incurred by any Company in performing its obligations as a Company will be borne and paid by that Company;</div>
+
+<div style="margin-bottom:10px;"><b>3.1.5</b>&nbsp;&nbsp;Each other parties shall use all reasonable endeavours to perform its obligations under this Agreement in accordance with the Project Timeline; ensure that its personnel, while on the premises of the other party, comply with that party’s reasonable regulations governing security and health and safety as have been notified to it;</div>
+
+<div style="margin-bottom:10px;"><b>3.4.1</b>&nbsp;&nbsp;has the full power and authority to enter into this Agreement;</div>
+
+<div style="margin-bottom:10px;"><b>3.4.2</b>&nbsp;&nbsp;it has obtained and will continue to hold all necessary licences, consents, permits and agreements required for the Company with its obligations under this Agreement and for the grant of rights to the other party;</div>
+
+<div style="margin-bottom:10px;"><b>3.4.3</b>&nbsp;&nbsp;the use by the other party as permitted by this Agreement of any information, data, software, documentation, screencasts and/or services which it provides to the other party shall not infringe any Intellectual Property Right;</div>
+
+<div style="margin-bottom:16px;"><b>3.5</b>&nbsp;&nbsp;&nbsp;The warranties in this Agreement are the only warranties that expressly govern the offer in respect of the subject matter of this Agreement. All other warranties, representations or terms whether implied by statute, common law or otherwise are excluded to the extent permitted by Applicable Law.</div>
+
+<div style="margin-bottom:18px;"><b>4.&nbsp;&nbsp;&nbsp;PAYMENTS AND INVOICING</b></div>
+
+<div style="margin-bottom:10px;"><b>4.1</b>&nbsp;&nbsp;&nbsp;The Company shall pay the fees set out in Schedule II.</div>
+
+</div>   
+<!--- 5th Page End --> 
+<!--- 6th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:10px;"><b>4.2</b>&nbsp;&nbsp;&nbsp;Apart from any sums which are stated in Schedule II to be payable in accordance with a specified payment timetable, all sums payable by the Company to Experian will be invoiced monthly in arrears.
+     All invoices are payable in cleared funds within 30 days after the receipt of the relevant invoice by the Company.   Experian’s records of the Companies use of the Services shall be used as the basis for calculation of fees payable for the Services unless there is evidence of such records being incorrect and Experian shall make such records available to the Company for inspection. </div>
+
+<div style="margin-bottom:10px;"><b>4.3</b>&nbsp;&nbsp;&nbsp;Calculation of fees payable for the Services unless there is evidence of such records being incorrect and Experian shall make such records available to the Company for inspection.</div>
+
+<div style="margin-bottom:10px;"><b>4.4</b>&nbsp;&nbsp;&nbsp;Unless stated in the Schedule II, all fees specified shall be exclusive of all applicable out of pocket expenses which shall, where agreed by the Company, be payable in addition by the Company. Experian shall provide receipts or other reasonable evidence to the Company in all such cases.</div>
+
+<div style="margin-bottom:10px;"><b>4.5</b>&nbsp;&nbsp;&nbsp;If any sum payable by the Company to Experian is not paid in full by its due date, Experian shall be entitled to charge interest on the overdue amount at 15% per annum on the overdue amount. Interest will accrue on a daily basis from the due date up to the date of actual payment, after as well as before judgment.</div>
+
+<div style="margin-bottom:10px;"><b>4.6</b>&nbsp;&nbsp;&nbsp;If under this Agreement the Company agrees in the Schedule II to pay a Minimum Fee over any particular period, and if does not meet such Minimum Fee requirement in that period, Experian shall be entitled to invoice the Company the full amount of the relevant Minimum Fee for that period less any payments made and such Minimum Fee. Any such amount shall be payable to Experian as a debt and the provisions of Clause 4.4 shall also apply hereto.</div>
+
+<div style="margin-bottom:10px;"><b>4.7</b>&nbsp;&nbsp;&nbsp;All sums referred to in this Agreement are exclusive of service tax, and duties (present and future) of whatsoever nature with respect to this transaction or any other taxes as may be applicable; such taxes shall be payable on the same payment terms as apply to the sums to which the taxes is referred to hereinabove relate.</div>
+
+<div style="margin-bottom:10px;"><b>4.8</b>&nbsp;&nbsp;&nbsp;The fees set out in Schedule II will be fixed unless renegotiated and mutually agreed between the parties.</div>
+
+<div style="margin-bottom:10px;"><b>4.9</b>&nbsp;&nbsp;&nbsp;The Parties agree that the Company shall continue to make payments to Experian based on the existing fees after the Pricing Validity Period has expired, until the Parties have mutually agreed to the revised fees. Any revised fees shall be applicable from the date of the following month from the date of execution of any new addendum / Agreement. Notwithstanding anything mentioned herein, the validity of this Agreement shall continue unless terminated in accordance with the termination provisions mentioned herein.</div>
+
+<div style="margin-bottom:16px;"><b>4.10</b>&nbsp;&nbsp;Experian reserves the right to increase any fees mentioned in this Agreement in writing, which increase shall be equivalent to the average consumer price index stipulated by the Reserve Bank of India in the first 3 calendar months of each year. This will be over and above any other price increase as per mutual agreement or as otherwise stated in this Agreement.</div>
+
+<div style="margin-bottom:18px;"><b>5.&nbsp;&nbsp;&nbsp;NATURE OF THE SERVICES</b></div>
+
+<div style="margin-bottom:10px;"><b>5.1</b>&nbsp;&nbsp;&nbsp;Experian’s services are not intended to be used as the sole basis for any business decision, and are based upon data which is provided by third parties, the accuracy and/or completeness of which it would not be possible and/or economically viable for Experian to guarantee. Experian’s services also involve models and techniques based on statistical analysis, probability and predictive features. Experian therefore makes no representation or warranty other than under Clause 2 herein.</div>
+
+<div style="margin-bottom:10px;"><b>5.1.1</b>&nbsp;&nbsp;Any inaccuracy, incompleteness or error within the Experian Data and/or Experian Materials which arises as a result of data provided to Experian by the Company or any third party;</div>
+
+<div style="margin-bottom:16px;"><b>5.1.2</b>&nbsp;&nbsp;Any failure of the Services to achieve any particular result or fit the Company.</div>
+
+<div style="margin-bottom:18px;"><b>6.&nbsp;&nbsp;&nbsp;COMPLIANCE AND AUDIT</b></div>
+
+<div style="margin-bottom:10px;"><b>6.1</b>&nbsp;&nbsp;&nbsp;Each party warrants that it shall take appropriate technical and organisational measures against unauthorised or unlawful processing of personal data and against accidental loss or destruction of, or damage to, the personal data of the other party.</div>
+
+<div style="margin-bottom:10px;"><b>6.2</b>&nbsp;&nbsp;&nbsp;Each party shall permit the other (on reasonable notice and during normal working hours) to audit the first party’s compliance with its obligations under this Agreement in relation to the use of any data or other materials as permitted by this Schedule II. The party carrying out the audit shall:</div>
+
+<div style="margin-bottom:8px;"><b>6.2.1</b>&nbsp;&nbsp;observe the other party’s procedures relating to the protection of confidential information about any Companies or customers of the other party;</div>
+
+<div style="margin-bottom:8px;"><b>6.2.2</b>&nbsp;&nbsp;take all reasonable steps to minimise disruption to the other party’s business during such audit;</div>
+
+<div style="margin-bottom:8px;"><b>6.2.3</b>&nbsp;&nbsp;in order to protect the integrity of the data used in connection with the Services, the Company shall comply with Experian’s instructions and guidelines relating to data security;</div>
+
+
+</div>    
+<!--- 6th Page End --> 
+<!--- 7th Page Start --> 
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+    
+<div style="margin-bottom:8px;"><b>6.2.4</b>&nbsp;&nbsp;not copy, interfere with and/or use in any unauthorised way any digital certificate, web certificate or any other security device provided by Experian;</div>
+    
+<div style="margin-bottom:8px;"><b>6.2.5</b>&nbsp;&nbsp;comply with the provisions of the Credit Information Companies (Regulations) Act 2005 (CICRA) and all guidelines, directions, rules and regulations issued by the Reserve Bank of India (RBI) from time to time in relation to the access and use of credit information and personal data in particular as applicable under CICRA.</div>
+    
+<div style="margin-bottom:8px;"><b>6.2.6</b>&nbsp;&nbsp;comply with the provisions of the Credit Information  Company Regulations Act 2005 (CICRA) and all guidelines, directions, rules and regulations issued by the Reserve Bank of India (“RBI”) from time to time (to the extent relevant) and shall have appropriate approved policies and / or procedures as specified in CICRA (including CICRA Rules).</div>
+    
+<div style="margin-bottom:8px;"><b>6.2.7</b>&nbsp;&nbsp;shall ensure that all individuals whose personal data is contained in the Company Materials, have given consent to the processing by Experian of such of their personal data as the Company supplies to Experian or to which Experian has access using its data processing facility which has been duly approved by the RBI and such other data processing facility as may be duly approved by the RBI and notified in writing to the Company.</div>
+    
+<div style="margin-bottom:10px;"><b>6.3</b>&nbsp;&nbsp;&nbsp;If as a result of any changes in Applicable Law (including any reasonable interpretation thereof), Experian concludes it is reasonably impracticable or commercially viable for Experian to continue to provide the Services at all or in accordance with this Agreement, or if any other applicable regulatory directions so require, Experian shall be entitled to do one of the following by giving three months’ prior notice to the Company:</div>
+
+<div style="margin-bottom:8px;"><b>6.4</b>&nbsp;&nbsp;&nbsp;modify the affected Services as necessary to accommodate such changes or interpretations;</div>
+
+<div style="margin-bottom:14px;"><b>6.5</b>&nbsp;&nbsp;&nbsp;terminate this Agreement (without liability) in respect of those Services which are affected by such changes or interpretations.</div>
+
+<div style="margin-bottom:14px;"><b>6.6</b>&nbsp;&nbsp;&nbsp;In exercising its rights under Clause 6.3, Experian will consult with the Company, and act reasonably and in a way which is consistent with its treatment of its other Companies.</div>
+
+<div style="margin-bottom:18px;"><b>7.&nbsp;&nbsp;&nbsp;CONFIDENTIALITY</b></div>
+
+<div style="margin-bottom:10px;"><b>7.1</b>&nbsp;&nbsp;&nbsp;Experian and Company agree to abide with the Confidentiality provisions as mentioned herein.</div>
+
+<div style="margin-bottom:10px;"><b>7.2</b>&nbsp;&nbsp;&nbsp;Experian and Company undertake to observe the requirements of Applicable Law, including the Credit Information Companies Regulation Act, 2005, (“the Act”) and all guidelines, directions, rules and regulations issued by the Reserve Bank of India (“RBI”) from time to time. Without prejudice to the generality of the foregoing Experian and each Company shall ensure that:</div>
+
+<div style="margin-bottom:8px;"><b>7.2.1</b>&nbsp;&nbsp;They only properly licensed under the Act.</div>
+
+<div style="margin-bottom:8px;"><b>7.2.2</b>&nbsp;&nbsp;They only use data derived from the CAIS Database in accordance with the Act and the terms of their respective registrations under the Act.</div>
+
+<div style="margin-bottom:8px;"><b>7.2.3</b>&nbsp;&nbsp;They will comply with the rights of the individuals referred to in the CAIS Database as set out in the Act and the rules and regulations framed thereunder.</div>
+
+<div style="margin-bottom:8px;"><b>7.2.4</b>&nbsp;&nbsp;Comply with and principles established by Experian and the Companies to regulate the sharing of data and information in the user permitted purposes (as may be amended from time to time).</div>
+
+<div style="margin-bottom:14px;"><b>7.2.5</b>&nbsp;&nbsp;And each Company shall act reasonably required by Experian provide Experian with proof of any of the requirements mentioned above.</div>
+
+<div style="margin-bottom:10px;"><b>7.3</b>&nbsp;&nbsp;&nbsp;Each party shall, in respect of the Confidential Information for which it is the recipient:</div>
+
+<div style="margin-bottom:8px;"><b>7.3.1</b>&nbsp;&nbsp;Keep the Confidential Information strictly confidential and not disclose any part of such Confidential Information to any Person except as permitted by or as required for the performance of the recipient’s obligations under this Agreement;</div>
+
+<div style="margin-bottom:8px;"><b>7.3.2</b>&nbsp;&nbsp;Not use such Confidential Information other than for the purposes set out in this Agreement.</div>
+
+<div style="margin-bottom:10px;"><b>7.4</b>&nbsp;&nbsp;&nbsp;The parties may disclose the Confidential Information to, and allow to use it, in accordance with this Agreement by the following (as long as the conditions in Clause 7.3 are met):</div>
+
+<div style="margin-bottom:8px;"><b>7.4.1</b>&nbsp;&nbsp;employees and officers of the recipient who necessarily require it as a consequence of the performance of the recipient’s obligations under this Agreement;</div>
+
+<div style="margin-bottom:12px;"><b>7.4.2</b>&nbsp;&nbsp;the recipient’s auditors and professional advisers solely for the purposes of providing professional advice and any other Persons having a legal right or duty to have access to, or knowledge of, the Confidential Information in connection with the business of the recipient;</div>
+
+
+</div>    
+<!--- 7th Page End -->
+<!--- 8th Page Start --> 
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+    
+<div style="margin-bottom:10px;"><b>7.5</b>&nbsp;&nbsp;&nbsp;In the case of Experian being the recipient:</div>
+
+<div style="margin-bottom:8px;"><b>7.5.1</b>&nbsp;&nbsp;agents and sub-contractors of Experian who necessarily require it as a consequence of the performance of Experian’s obligations under this Agreement, and Experian Group Companies;</div>
+
+<div style="margin-bottom:8px;"><b>7.5.2</b>&nbsp;&nbsp;Any Person as permitted by any applicable statutory provision.</div>
+
+<div style="margin-bottom:14px;"><b>7.6</b>&nbsp;&nbsp;&nbsp;As a condition of the rights set out in Clauses 7.4 (but excluding Clause 7.5.2), the party wishing to exercise the rights must:</div>
+
+<div style="margin-bottom:8px;"><b>7.6.1</b>&nbsp;&nbsp;ensure that any party to whom it discloses Confidential Information is under an obligation of confidentiality in relation to such Confidential Information;</div>
+
+<div style="margin-bottom:14px;"><b>7.6.2</b>&nbsp;&nbsp;Procure that such Persons observe the restrictions in this Clause 7 and under Clause 8.</div>
+
+<div style="margin-bottom:10px;"><b>7.7</b>&nbsp;&nbsp;&nbsp;The restrictions in Clauses 7.3 do not apply to any information to the extent that it:</div>
+
+<div style="margin-bottom:8px;"><b>7.7.1</b>&nbsp;&nbsp;becomes within the public domain other than through a breach of Clause 7.3;</div>
+
+<div style="margin-bottom:8px;"><b>7.7.2</b>&nbsp;&nbsp;is in the recipient’s possession (with full right to disclose) before receipt from the other party;</div>
+
+<div style="margin-bottom:8px;"><b>7.7.3</b>&nbsp;&nbsp;is lawfully received from a third party (with full right to disclose);</div>
+
+<div style="margin-bottom:8px;"><b>7.7.4</b>&nbsp;&nbsp;is independently developed by the recipient without access to or use of the Confidential Information; or</div>
+
+<div style="margin-bottom:14px;"><b>7.7.5</b>&nbsp;&nbsp;is required to be disclosed by Applicable Law or by a court of competent jurisdiction or by any regulatory body.</div>    
+<div style="margin-bottom:10px;"><b>7.8</b>&nbsp;&nbsp;&nbsp;If the Company is a government company or a subsidiary of a government company then the Company acknowledges as follows:</div>
+    
+<div style="margin-bottom:8px;"><b>7.8.1</b>&nbsp;&nbsp;the provisions of Clause 7.4.2 are not intended to allow the Company under the Right to Information Act, 2005 to: </div>
+
+<div style="margin-bottom:8px;"><b>7.8.2</b>&nbsp;&nbsp;the details (if any) contained in section 8 of Right to Information Act, 2005 reflect the broad categories of information that the parties are agreed in principle should not be an obligation to disclose in response to a request under section 6 (request for information) or section 3 (right to information and corresponding duties Agreement);</div>
+
+<div style="margin-bottom:14px;"><b>7.8.3</b>&nbsp;&nbsp;If the Company is a government company or a subsidiary of a government company the Company agrees that upon receiving any request about or relating to Experian under the Right to Information Act, 2005 (including a request relating to this Agreement) or otherwise it shall:</div>
+
+<div style="margin-left:20px;margin-bottom:8px;">(a)&nbsp;&nbsp;give full details of such request to Experian as soon as reasonably practicable;</div>
+<div style="margin-left:20px;margin-bottom:8px;">(b)&nbsp;&nbsp;consult with Experian in relation to the response to such request;</div>
+<div style="margin-left:20px;margin-bottom:8px;">(c)&nbsp;&nbsp;refer to section 8 of the Right to Information Act, 2005 in considering such request;</div>
+<div style="margin-left:20px;margin-bottom:16px;">(d)&nbsp;&nbsp;consider in good faith any comments or suggestions from Experian as to which information should be provided as part of the response to such request.</div>
+
+<div style="margin-bottom:18px;"><b>8.&nbsp;&nbsp;&nbsp;LICENCE AND USE</b></div>
+
+<div style="margin-bottom:10px;"><b>8.1</b>&nbsp;&nbsp;&nbsp;The following terms shall lay down the licensing and usage related terms and conditions.</div>
+
+<div style="margin-bottom:10px;"><b>8.2</b>&nbsp;&nbsp;&nbsp;Experian grants the Company a non-exclusive, non-transferable licence to use any Experian Data and/or Experian Materials provided as part of the Services in the Territory for the Permitted Purpose only including terms identified in the Schedule II. The licence granted under this Clause is made separately in respect of each individual element of the Experian Data or Experian Materials and commences on the day that each such element of the Experian Data or Experian Materials is first made available to the Company.</div>
+
+<div style="margin-bottom:10px;"><b>8.3</b>&nbsp;&nbsp;&nbsp;The licence granted under Clause 8.2 will automatically expire on termination of this Agreement for any reason (unless the licence is expressed in the Schedule III to be perpetual in which case the licence shall continue only upon the terms and conditions of the licence itself remain in force notwithstanding termination of this Agreement, except if termination is by Experian under Clause 12.2.1).</div>
+
+<div style="margin-bottom:10px;"><b>8.4</b>&nbsp;&nbsp;&nbsp;The Company may not (except as permitted under Clause 8.2.1):</div>
+
+<div style="margin-bottom:8px;"><b>8.4.1</b>&nbsp;&nbsp;promptly, rectify errors, non-exclusive, non-transferable licence to use and copy the Company Data while provided to Experian or its agents only if Experian’s databases and/or in accordance with Applicable Law and with the terms of this Agreement for the Company Products and/or in order for Experian to comply with any requests made to Experian by the Company;</div>
+
+<div style="margin-bottom:8px;"><b>8.4.2</b>&nbsp;&nbsp;Subject to Clause 8.4.1 to 8.4.3 copy, reproduce, sub-license and non-transferable licence to copy and use any Company Materials in order to perform its obligations under this Agreement.</div>
+
+
+</div>    
+<!--- 8th Page End -->
+<!--- 9th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:14px;"><b>8.5</b>&nbsp;&nbsp;&nbsp;The Company agrees that it will:</div>
+
+<div style="margin-bottom:8px;"><b>8.5.1</b>&nbsp;&nbsp;use the Services, Experian Data and/or Experian Materials for the Permitted Purpose only and in accordance with this Documentation;</div>
+
+<div style="margin-bottom:8px;"><b>8.5.2</b>&nbsp;&nbsp;not sell, transfer, sub-license, distribute, commercially exploit or otherwise make available to, or use for the benefit of, any third party any of the Services, Experian Data and/or Experian Materials;</div>
+
+<div style="margin-bottom:8px;"><b>8.5.3</b>&nbsp;&nbsp;not (and will not allow any third party) alter, modify, reverse engineer, de-compile or otherwise interfere with the Experian Data and/or Materials, whether by prior written consent of Experian or as otherwise permitted by Applicable Law;</div>
+
+<div style="margin-bottom:8px;"><b>8.5.4</b>&nbsp;&nbsp;only take such copies of the Experian Data and/or Experian Materials as are reasonably required for the use of the Experian Data or Experian Materials in accordance with this Agreement;</div>
+
+<div style="margin-bottom:16px;"><b>8.6</b>&nbsp;&nbsp;&nbsp;Experian shall not in breach of its obligations under Clause 7 and shall not in breach of its obligations under Clause 7 and shall not in breach of its obligations under Clause 7.</div>
+
+<div style="margin-bottom:18px;"><b>9.&nbsp;&nbsp;&nbsp;INTELLECTUAL PROPERTY RIGHTS</b></div>
+
+<div style="margin-bottom:10px;"><b>9.1</b>&nbsp;&nbsp;&nbsp;All Intellectual Property Rights in the Company Materials will remain vested in the Company (or its relevant licensors) and to the extent that any rights in such materials vest in Experian by operation of Applicable Law, Experian hereby assigns such rights to the Company.</div>
+
+<div style="margin-bottom:10px;"><b>9.2</b>&nbsp;&nbsp;&nbsp;All Intellectual Property Rights in the Experian Data, Experian Materials and the Derivative Output will remain vested in Experian (or its relevant licensors) and to the extent that any rights in such materials and data vest in the Company by operation of Applicable Law, the Company hereby assigns such rights to Experian.</div>
+<div style="margin-bottom:12px;"><b>9.3.3</b>&nbsp;&nbsp;agrees not to remove, suppress or modify in any way any proprietary marking, including any trade mark or copyright notice, on or in the materials of the other party and agrees to incorporate any such proprietary markings in any copies it makes of such materials.</div>
+
+<div style="margin-bottom:18px;"><b>10.&nbsp;&nbsp;&nbsp;THIRD PARTY CLAIMS</b></div>
+
+<div style="margin-bottom:10px;"><b>10.1</b>&nbsp;&nbsp;&nbsp;Subject to Clause 10.3, Experian shall fully indemnify the Company against:</div>
+
+<div style="margin-bottom:8px;"><b>10.1.1</b>&nbsp;&nbsp;any amount paid by the Company to any third party as a result of or in connection with any claim which that third party brings against the Company alleging that its Intellectual Property Rights are infringed by the provision by Experian to the Company of the Experian Materials or the use of the Experian Materials by the Company as permitted by the terms of this Agreement; and</div>
+
+<div style="margin-bottom:14px;"><b>10.1.2</b>&nbsp;&nbsp;Any associated legal expenses reasonably and properly incurred.</div>
+
+<div style="margin-bottom:10px;"><b>10.2</b>&nbsp;&nbsp;&nbsp;Subject to Clause 10.3 the Company shall fully indemnify Experian against:</div>
+
+<div style="margin-bottom:8px;"><b>10.2.1</b>&nbsp;&nbsp;any amounts paid by Experian to any third party as a result of or in connection with any claim which that third party brings against Experian alleging that its Intellectual Property Rights are infringed by the provision by the Company to Experian of the Company Materials or the use of the Company Materials by Experian as permitted by the terms of this Agreement; and</div>
+
+<div style="margin-bottom:14px;"><b>10.2.2</b>&nbsp;&nbsp;Any associated legal expenses reasonably and properly incurred.</div>
+
+<div style="margin-bottom:10px;"><b>10.3</b>&nbsp;&nbsp;&nbsp;The indemnification obligations covered under Clause 10.1 and 10.2 shall not apply, to the extent the indemnified party has provided any intellectual property resulting in the alleged claim or infringement of such intellectual property. Further, any indemnification obligation will be subject to notifying the indemnifying party promptly on becoming aware of any matter or claim to which the indemnity might relate;</div>
+
+<div style="margin-bottom:8px;"><b>10.3.2</b>&nbsp;&nbsp;not making any admission, settlement or payment in respect of such matter or claim, other than a payment made pursuant to a court order, without the prior written consent of the indemnifying party (such consent not to be unreasonably withheld or delayed); and</div>
+
+<div style="margin-bottom:8px;"><b>10.3.3</b>&nbsp;&nbsp;Allowing the indemnifying party, where appropriate, to appoint legal advisers of its choice and to conduct and/or settle negotiations and/or proceedings relating to such matter or claim and the indemnified party shall comply with the indemnifying party’s reasonable requests in the conduct of any such negotiations and/or proceedings.</div>
+
+<div style="margin-bottom:10px;"><b>10.4</b>&nbsp;&nbsp;&nbsp;If any claims are made, or in Experian’s reasonable opinion are likely to be made, by any third party alleging that the Intellectual Property Rights are infringed by the Company’s use of the Experian Materials as permitted by the terms of this Agreement, Experian may at its sole option and expense:</div>
+
+<div style="margin-bottom:8px;"><b>10.4.1</b>&nbsp;&nbsp;procure for the Company the right to continue using the relevant Experian Materials (or any part of them) in accordance with the terms of this Agreement;</div>
+
+</div>    
+<!--- 9th Page End -->
+<!--- 10th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:8px;"><b>10.4.2</b>&nbsp;&nbsp;Modify the relevant Experian Materials so as to avoid the infringement or replace the relevant Experian Materials with non-infringing materials, which will provide the same, or substantially similar, functionality to the infringing materials.</div>
+    
+<div style="margin-bottom:14px;"><b>10.5</b>&nbsp;&nbsp;&nbsp;Clause 11 sets out the entire liability of both parties and the sole remedy of both parties with respect to the infringement of a third party’s Intellectual Property Rights and any claims relating to the indemnities given in Clause 10.</div>
+
+<div style="margin-bottom:18px;"><b>11.&nbsp;&nbsp;&nbsp;LIMITS ON LIABILITY</b></div>
+
+<div style="margin-bottom:10px;"><b>11.1</b>&nbsp;&nbsp;&nbsp;Neither party excludes or limits its liability to the other for any of the following (and nothing in this Agreement shall be construed as excluding or limiting such liability):</div>
+
+<div style="margin-bottom:8px;"><b>11.1.1</b>&nbsp;&nbsp;for personal injury or death resulting from its negligence or that of its employees, agents and/or sub-contractors;</div>
+
+<div style="margin-bottom:8px;"><b>11.1.2</b>&nbsp;&nbsp;in breach of Clause 7;</div>
+
+<div style="margin-bottom:8px;"><b>11.1.3</b>&nbsp;&nbsp;for the case of the Company for any intentional breach of Clause 8.5.2;</div>
+
+<div style="margin-bottom:8px;"><b>11.1.4</b>&nbsp;&nbsp;for any matter which it would be illegal for that party to exclude and/or limit, or attempt to exclude and/or limit, its liability; or</div>
+
+<div style="margin-bottom:14px;"><b>11.1.5</b>&nbsp;&nbsp;for fraud.</div>
+
+<div style="margin-bottom:10px;"><b>11.2</b>&nbsp;&nbsp;&nbsp;Except as provided in Clauses 11.1, and 11.4, the liability of each party to the other in respect of any claims arising out of or in connection with this Agreement shall be limited as follows:</div>
+
+<div style="margin-bottom:8px;"><b>11.2.1</b>&nbsp;&nbsp;for all claims arising in the first Contract Year, liability shall be limited in aggregate to the Initial Contract Value;</div>
+
+<div style="margin-bottom:8px;"><b>11.2.2</b>&nbsp;&nbsp;for all claims arising in any subsequent Contract Year liability shall be limited in aggregate to the fees (excluding service tax, withholding tax (TDS) and other taxes as may be applicable) paid by the Company to Experian under this Agreement in the previous Contract Year.</div>
+
+<div style="margin-bottom:8px;"><b>11.3</b>&nbsp;&nbsp;&nbsp;The limitations in Clause 11.2:</div>
+
+<div style="margin-bottom:8px;"><b>11.3.1</b>&nbsp;&nbsp;shall not apply to the indemnities given by the parties under Clause 10.1 and 10.2;</div>
+
+<div style="margin-bottom:8px;"><b>11.3.2</b>&nbsp;&nbsp;shall be in addition to the obligation of the Company to pay fees and charges under this Agreement.</div>    
+
+<div style="margin-bottom:8px;"><b>11.4</b>&nbsp;&nbsp;&nbsp;Subject to Clause 11.1, neither party shall be liable to the other (whether in contract, negligence, for breach of statutory duty or under any indemnity or otherwise) for:</div>
+
+<div style="margin-bottom:8px;"><b>11.4.1</b>&nbsp;&nbsp;any indirect or consequential loss;</div>
+<div style="margin-bottom:8px;"><b>11.4.2</b>&nbsp;&nbsp;the following types of financial loss: loss of profit; loss of savings; loss of business or goodwill; even if that party had notice of the possibility of the other party incurring such losses;</div>
+<div style="margin-bottom:14px;"><b>11.4.3</b>&nbsp;&nbsp;the following types of anticipated or incidental losses: loss of anticipated savings; increase in bad debt; failure to reduce bad debt; even if that party had notice of the possibility of the other party incurring such losses.</div>
+
+<div style="margin-bottom:18px;"><b>12.&nbsp;&nbsp;&nbsp;TERM AND TERMINATION</b></div>
+
+<div style="margin-bottom:10px;"><b>12.1</b>&nbsp;&nbsp;&nbsp;This Agreement shall be deemed to have commenced on the Commencement Date and subject to the provisions of this Agreement shall continue in force in this Agreement, shall continue unless terminated by either party.</div>
+
+<div style="margin-bottom:10px;"><b>12.2</b>&nbsp;&nbsp;&nbsp;Either party shall be entitled to terminate this Agreement immediately by serving written notice on the other party in the following circumstances:</div>
+
+<div style="margin-bottom:8px;"><b>12.2.1</b>&nbsp;&nbsp;either other party commits a material breach of any of its obligations under this Agreement which is not capable of remedy;</div>
+
+<div style="margin-bottom:8px;"><b>12.2.2</b>&nbsp;&nbsp;If the other party commits a material breach of any of its obligations under this Agreement which is not remedied within 28 days after receipt of a notice from the party not in breach specifying the breach, requiring its remedy and making clear that failure to remedy may result in termination;</div>
+
+<div style="margin-bottom:10px;"><b>12.2.3</b>&nbsp;&nbsp;If the other party has passed a resolution for its winding up (save for a voluntary winding-up for the purposes of a voluntary reconstruction or amalgamation), is subject to a petition presented to any court for its winding-up, or for a voluntary winding-up for the purpose of a voluntary reconstruction or amalgamation, is the subject of an application for administration filed at any court or a notice of appointment of an administrator filed at any court or a notice of intention to appoint an administrator given by the Person entitled to appoint such an administrator, has an administrative receiver or receiver appointed over all or part of its assets, or enters into an arrangement with its creditors, or is unable to pay its debts or ceases to carry on business or suffers any similar action.</div>
+
+<div style="margin-bottom:10px;"><b>12.3</b>&nbsp;&nbsp;&nbsp;Termination of this Agreement (or of any element of it) shall not affect any rights, obligations or liabilities of either party:</div>
+
+
+</div>    
+<!--- 10th Page End -->    
+<!--- 11th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:8px;"><b>12.4.1</b>&nbsp;&nbsp;which have accrued before termination; or</div>
+<div style="margin-bottom:14px;"><b>12.4.2</b>&nbsp;&nbsp;which are intended to continue to have effect beyond termination.</div>
+
+<div style="margin-bottom:10px;"><b>12.5</b>&nbsp;&nbsp;&nbsp;Upon termination of this Agreement (or the relevant elements of it) and subject to Clause 12.6:</div>
+
+<div style="margin-bottom:8px;"><b>12.5.1</b>&nbsp;&nbsp;the parties shall each promptly return the Confidential Information of the other party to its owner;</div>
+
+<div style="margin-bottom:8px;"><b>12.5.2</b>&nbsp;&nbsp;the Company shall, at Experian’s request either return the Experian Materials to Experian or destroy such materials and if destruction, provide a certificate stating that such materials have been destroyed;</div>
+
+<div style="margin-bottom:10px;"><b>12.5.3</b>&nbsp;&nbsp;Experian shall promptly return the Company Materials and Company Data to the Company.</div>
+
+<div style="margin-bottom:10px;"><b>12.6</b>&nbsp;&nbsp;&nbsp;Experian’s obligations under Clause 12.5 shall not apply when it is necessary to retain any Confidential Information or materials of the Company to exercise any rights granted under this Agreement which are intended to survive termination of this Agreement and/or to be entitled to retain any Confidential Information or materials retained under this Agreement in order for Experian to provide the Services or for Experian to exercise any rights granted under this Agreement.</div>
+
+<div style="margin-bottom:14px;"><b>12.7</b>&nbsp;&nbsp;&nbsp;If any Confidential Information or materials are retained pursuant to the above, such retention shall remain subject to Clause 7.</div>
+
+<div style="margin-bottom:18px;"><b>13.&nbsp;&nbsp;&nbsp;PERSONNEL</b></div>
+
+<div style="margin-bottom:10px;"><b>13.1</b>&nbsp;&nbsp;&nbsp;Each party undertakes that for the Term and for a period of six months afterwards it will not, without the other party’s prior written consent, directly or indirectly solicit any of the other party’s employees who were in direct contact with the employees of the other party in connection with this Agreement.</div>
+
+<div style="margin-bottom:18px;"><b>14.&nbsp;&nbsp;&nbsp;FORCE MAJEURE</b></div>
+
+<div style="margin-bottom:10px;"><b>14.1</b>&nbsp;&nbsp;&nbsp;Neither party will be liable for any delay or failure in the performance of its obligations, except an obligation to pay sums due under this Agreement if such delay or failure is due to an event of Force Majeure.</div>
+<div style="margin-bottom:18px;"><b>15.&nbsp;&nbsp;&nbsp;ASSIGNMENT AND SUB-CONTRACTING</b></div>
+
+<div style="margin-bottom:10px;"><b>15.1</b>&nbsp;&nbsp;&nbsp;Except as provided in Clause 15.2 neither party may assign, transfer, charge or deal in any other manner with its obligations or any of its rights under this Agreement, or any of the benefits under this Agreement, or all of its obligations under this Agreement without the prior written consent of the other party (such consent not to be unreasonably withheld or delayed).</div>
+
+<div style="margin-bottom:14px;"><b>15.2</b>&nbsp;&nbsp;&nbsp;Experian shall be entitled to sub-contract any or all of its obligations under this Agreement to a sub-contractor but by doing so Experian shall be responsible for the act and omissions of the sub-contractor to the same extent as if it had carried out the obligations itself pursuant to this Agreement.</div>
+
+<div style="margin-bottom:18px;"><b>16.&nbsp;&nbsp;&nbsp;SEVERANCE</b></div>
+
+<div style="margin-bottom:10px;"><b>16.1</b>&nbsp;&nbsp;&nbsp;If any part of this Agreement or any provision thereof is found to be invalid or unenforceable by any Court or other competent body, such invalidity or unenforceability shall not affect the other provisions and/or the remainder of such provision of this Agreement and such other provisions and/or unaffected portion of such provision shall remain in full force and effect.</div>
+
+<div style="margin-bottom:10px;"><b>16.2</b>&nbsp;&nbsp;&nbsp;If any part of this Agreement is found to be invalid or unenforceable by any Court or other competent body but would be valid or enforceable if some part of the provision was deleted, the provision in question shall be treated as having been amended as necessary to make it valid and enforceable.</div>
+
+<div style="margin-bottom:14px;"><b>16.3</b>&nbsp;&nbsp;&nbsp;In the circumstances referred to in Clauses 16.1 and 16.2 above, the parties agree to attempt to substitute for any invalid or unenforceable provision a valid and enforceable provision which achieves to the greatest extent possible the same effect as would have been achieved by the invalid or unenforceable provision.</div>
+
+</div> 
+<!--- 11th Page End -->
+<!--- 12th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:18px;"><b>17.&nbsp;&nbsp;&nbsp;CREATION OF USER IDs</b></div>
+
+<div style="margin-bottom:10px;"><b>17.1</b>&nbsp;&nbsp;&nbsp;Experian will create additional User IDs for the Client only on receiving instruction from a person with the following designation and/or the following email address as populated below:</div>
+
+<div style="margin-left:20px;margin-bottom:8px;">Name of the Person: ________________________</div>
+<div style="margin-left:20px;margin-bottom:8px;">Designation of Person: Email</div>
+<div style="margin-left:20px;margin-bottom:14px;">Address: ________________________</div>
+
+<div style="margin-bottom:14px;"><b>17.2</b>&nbsp;&nbsp;&nbsp;Client shall inform Experian of any change in the information in 17.1 by giving a notice in line with Clause 18 of this Agreement or by written communication from authorised signatory of Company as populated in Clause 17.1 of this Agreement.</div>
+
+<div style="margin-bottom:18px;"><b>18.&nbsp;&nbsp;&nbsp;NOTICES</b></div>
+
+<div style="margin-bottom:10px;"><b>18.1</b>&nbsp;&nbsp;&nbsp;Any notices to be sent by one party to the other in connection with this Agreement except for the service of Court proceedings shall be in writing and shall be delivered personally or sent by special delivery post (or equivalent service offered by the postal service from time to time) or fax to the addresses of each party as set out on the front page or as otherwise notified in accordance with the provisions of this Clause.</div>
+
+<div style="margin-bottom:8px;"><b>18.2.1</b>&nbsp;&nbsp;delivered personally, upon delivery;</div>
+<div style="margin-bottom:8px;"><b>18.2.2</b>&nbsp;&nbsp;if sent by post, two clear days after the date of posting;</div>
+<div style="margin-bottom:14px;"><b>18.2.3</b>&nbsp;&nbsp;if sent by fax, when transmitted provided that a confirmation copy is sent by special delivery by the end of the next business day after transmission.</div>
+
+<div style="margin-bottom:14px;"><b>18.3</b>&nbsp;&nbsp;&nbsp;If either party notifies the other party of a change to its details for the purposes of Clause 17.1, such notification shall only be effective on the date specified in such notice or seven days after notice is given, whichever is later.</div>
+
+<div style="margin-bottom:18px;"><b>19.&nbsp;&nbsp;&nbsp;GENERAL</b></div>
+
+<div style="margin-bottom:10px;"><b>19.1</b>&nbsp;&nbsp;&nbsp;If either party fails to exercise a right or remedy that it has or which arises in relation to this Agreement, such failure shall not prevent that party from exercising that right or remedy subsequently in respect of that or any other matter.</div>
+
+<div style="margin-bottom:10px;"><b>19.2</b>&nbsp;&nbsp;&nbsp;A waiver of any breach or provision of this Agreement shall only be effective if it is made in writing and signed on behalf of the party who is waiving the breach or provision. Any waiver of a breach of any term of this Agreement shall not be deemed a waiver of any subsequent breach and shall not affect the enforceability of any other term of this Agreement.</div>
+
+<div style="margin-bottom:10px;"><b>19.3</b>&nbsp;&nbsp;&nbsp;This Agreement and all matters arising out of it shall be governed by, and construed in accordance with, the laws of India. Any disputes arising out of or in connection with this Agreement shall be resolved in the manner specified in Credit Information Companies (Regulation) Act, 2005.</div>
+
+<div style="margin-bottom:10px;"><b>19.4</b>&nbsp;&nbsp;&nbsp;Variations of this Agreement shall not be effective unless recorded in writing signed by the parties; variations in electronic form shall not create or vary binding contractual rights. However, variations to the Schedules made in accordance with any agreed change control procedure shall be effective.</div>    
+
+<div style="margin-bottom:10px;"><b>19.5</b>&nbsp;&nbsp;&nbsp;This Agreement sets out all the terms agreed between the parties relating to the subject matter of this Agreement and supersedes any previous agreement between the parties relating to the same subject matter. Neither of the parties shall be liable to the other for any loss arising from reliance on any representation (other than fraudulent misrepresentation) made by or by any agent or Person on its behalf which is not expressly contained in this Agreement.</div>
+
+<div style="margin-bottom:10px;"><b>19.6</b>&nbsp;&nbsp;&nbsp;The parties hereby agree that nothing in this Agreement shall be construed as creating a right which is enforceable by any Person who is not a party to this Agreement or a permitted assignee of such a party.</div>
+
+<div style="margin-bottom:10px;"><b>19.7</b>&nbsp;&nbsp;&nbsp;Each party shall, at the reasonable request and cost of the other party, do whatever is reasonably required to give the other party the full benefit of all the provisions of this Agreement (including but not limited to ensuring that Experian may use any Company Data in accordance with the Permitted Purpose).</div>
+
+<div style="margin-bottom:8px;"><b>19.8</b>&nbsp;&nbsp;&nbsp;Nothing in this Agreement is intended to, or shall, operate to:</div>
+<div style="margin-left:20px;margin-bottom:6px;">Create a partnership or joint venture of any kind between the Company and Experian;</div>
+<div style="margin-left:20px;margin-bottom:6px;">Authorise either party to act as agent for the other party;</div>
+<div style="margin-left:20px;margin-bottom:14px;">Authorise either party to act in the name or on behalf of, or otherwise bind, the other party in any way.</div>
+
+
+</div>    
+<!--- 12th Page End -->
+<!--- 13th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.3;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:8px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:10px;"><b>19.9</b>&nbsp;&nbsp;&nbsp;This Agreement:</div>
+
+<div style="margin-bottom:8px;"><b>19.9.1</b>&nbsp;&nbsp;any reference to a statutory provision includes a reference to any modification or re-enactment of it from time to time;</div>
+
+<div style="margin-bottom:8px;"><b>19.9.2</b>&nbsp;&nbsp;references to Clauses and schedules are to the Clause so of and the Schedule to this Agreement;</div>
+
+<div style="margin-bottom:8px;"><b>19.9.3</b>&nbsp;&nbsp;the singular includes the plural and vice versa;</div>
+
+<div style="margin-bottom:8px;"><b>19.9.4</b>&nbsp;&nbsp;the headings are for ease of reference only and shall not affect the construction or interpretation of this Agreement;</div>
+
+<div style="margin-bottom:8px;"><b>19.9.5</b>&nbsp;&nbsp;where any material is to be agreed, such agreement must be recorded in writing;</div>
+
+<div style="margin-bottom:8px;"><b>19.9.6</b>&nbsp;&nbsp;where the words “including”, “include”, “includes” or “included” are used they shall be deemed to be followed by the words “without limitation” unless the context otherwise requires.</div>
+
+<div style="margin-bottom:14px;"><b>19.10</b>&nbsp;&nbsp;The contents of the Schedule (as contractually applicable) shall override the contents of these Terms and Conditions to the extent of any conflict or inconsistency.</div>
+
+<div style="margin-top:28px;margin-bottom:16px;">
+_____________________________<br/>
+(on behalf of Experian)
+</div>
+
+<div style="margin-bottom:16px;">
+_____________________________<br/>
+(on behalf of the Company)
+</div>
+
+<div style="text-align:center;font-weight:bold;margin-bottom:18px;">Schedule I<br/>To become a Member of the CAIS Database</div>
+
+<div style="margin-bottom:12px;">Between</div>
+
+<div style="margin-bottom:8px;">(1)&nbsp;&nbsp;&nbsp;Experian Credit Information Company of India Private Limited</div>
+
+<div style="margin-bottom:14px;">and</div>
+
+<div style="margin-bottom:14px;">(2)&nbsp;&nbsp;&nbsp;Name of the Company</div>
+
+<div style="margin-bottom:14px;font-weight:bold;">
+This schedule shall be applicable to Companies who shall be sharing data with ECICI and shall be entitled to Membership of the CAIS Schedule
+</div>
+
+<div style="margin-bottom:10px;"><b>1.&nbsp;&nbsp;&nbsp;Definitions:</b></div>
+
+<div style="margin-bottom:8px;"><b>(i)</b>&nbsp;&nbsp;“Initial Data Load” means (in relation to each Member) the first secure data transmission or such other medium (as may be agreed between the parties) comprising such Companies FI file which is delivered after the date hereof;</div>
+
+<div style="margin-bottom:8px;"><b>(ii)</b>&nbsp;&nbsp;“CAIS” (pronounced “Kays”) means the system whereby in accordance with the terms of this Agreement, Experian will provide to a Member access to other Companies’ Files;</div>
+
+<div style="margin-bottom:8px;"><b>(iii)</b>&nbsp;&nbsp;“Companies’ Files” means all of the Companies’ Files as recorded on electronic media by Experian for the purposes of CAIS;</div>
+
+<div style="margin-bottom:8px;"><b>(iv)</b>&nbsp;&nbsp;“File” means in relation to the Company that Companies file or files relating to the Credit Products (as may be amended from time to time by agreement of Experian and the Company in writing) which shall include information from some particular vendor to Schedule I relating to the customers of that Company included therein who have or have had credit accounts with that Company and which information Experian requires such Company on its admission to make available for use under CAIS;</div>
+<div style="margin-bottom:12px;">
+In this Schedule, the references to Company / Member have been interchangeably and contextually made.
+For the purposes of this schedule any reference to the Member shall mean and include as a reference to the Company and vice versa.
+</div>
+
+<div style="margin-bottom:18px;"><b>II.&nbsp;&nbsp;&nbsp;Terms of Membership:</b></div>
+
+<div style="margin-bottom:14px;"><b>1.&nbsp;&nbsp;&nbsp;Admission to Membership</b></div>
+
+<div style="margin-bottom:8px;"><b>(i)</b>&nbsp;&nbsp;CAIS shall at all times be administered by Experian.</div>
+
+<div style="margin-bottom:10px;"><b>(ii)</b>&nbsp;&nbsp;Experian may also prescribe terms and conditions as an addition to and/or which may have the effect of modifying the General Terms and Conditions to apply to individual Companies of CAIS (the “Special Terms and Conditions”). The extent of any inconsistency between such Special Terms and Conditions and these General Terms and Conditions, the Special Terms and Conditions shall prevail.</div>
+
+</div>    
+<!--- 13th Page End -->
+<!--- 14th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10px;line-height:1.22;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:6px;">Experian Credit Information Company of India Private Limited</div>
+<div style="margin-bottom:14px;"><b>2.&nbsp;&nbsp;&nbsp;Period of Membership:</b></div>
+
+<div style="margin-bottom:10px;">Subject as provided in Clause 12.2 of the Agreement a Company shall remain a Member of the CAIS Database following the Commencement Date (and thereafter until such Membership is terminated by either the Company or Experian).</div>
+
+<div style="margin-bottom:14px;"><b>3.&nbsp;&nbsp;&nbsp;The File:</b></div>
+
+<div style="margin-bottom:10px;"><b>(i)</b>&nbsp;&nbsp;In this Schedule and Special Terms and Conditions, each Company’s File shall comprise the levels of information specified in the Table contained in the Schedule hereto which levels of information shall comprise the following:</div>
+
+<div style="margin-left:20px;margin-bottom:8px;"><b>(a)</b>&nbsp;&nbsp;active credit accounts and settled credit accounts including closed accounts and its bad debt information together with any related information;</div>
+
+<div style="margin-left:20px;margin-bottom:8px;"><b>(b)</b>&nbsp;&nbsp;the information shall be as could be held and be recorded as such format as such classifications (including without limitation account status indicators);</div>
+
+<div style="margin-left:20px;margin-bottom:10px;"><b>(c)</b>&nbsp;&nbsp;the Company shall at regular time in each calendar month following the delivery of the Initial Data Load deliver to Experian a further secured data transmission or such other agreed medium updating the information contained in its File (the “Update Data Load”).</div>
+
+<div style="margin-bottom:14px;"><b>4.&nbsp;&nbsp;&nbsp;Access to the CAIS Database:</b></div>
+
+<div style="margin-bottom:10px;"><b>(i)</b>&nbsp;&nbsp;By joining CAIS (but subject to any Special Terms and Conditions and to Clause 8 below) the Company authorises Experian to provide each other Member of CAIS with access to its File for any purpose whatsoever that the purpose of such access is consistent with Applicable Law. It is further agreed by each Member, subject to any Special Terms and Conditions and to Clause 9 below and not being inconsistent with the purposes of this Agreement and/or in violation of Applicable Laws, in relation to access to its File, by Experian and/or other Companies, it shall not claim any privilege, immunity, defect of confidentiality, fiduciary duty, which would prevent Experian and/or such Company from accessing the File and for utilising the information contained therein.</div>
+
+<div style="margin-bottom:10px;"><b>(ii)</b>&nbsp;&nbsp;Such access shall be provided by whichever method Experian shall consider necessary or desirable to preserve the confidentiality of CAIS Members’ File.</div>
+
+<div style="margin-bottom:14px;"><b>(iii)</b>&nbsp;&nbsp;For the avoidance of doubt and without prejudice to any other provisions of this Agreement, Experian may provide the Company and each other CAIS Member with a procedure which enables the Company to make available to Experian notwithstanding such Company’s failure to provide or delay in providing the File of information to Experian in accordance with the provisions of this Agreement.</div>
+<div style="margin-bottom:14px;"><b>5.&nbsp;&nbsp;&nbsp;Undertaking by the Company:</b></div>
+
+<div style="margin-bottom:10px;">By joining CAIS, each Member undertakes both with Experian and with each other Member of CAIS that:</div>
+
+<div style="margin-bottom:8px;"><b>(a)</b>&nbsp;&nbsp;it shall at all times comply strictly with any and all directions given by Experian whether as to the detail of information to be contained in that Company’s File, the classifications to be used therein, the format in which such information is to be presented or otherwise as Experian shall consider necessary or desirable for the efficient administration of CAIS and/or the protection of Companies’ Files;</div>
+
+<div style="margin-bottom:8px;"><b>(b)</b>&nbsp;&nbsp;it shall procure that its File contains all information required by Experian in accordance with the CAIS Layout file and the terms of this Agreement and the latest information is true, accurate and complete in all respects and that all classifications applied thereto are correctly applied;</div>
+
+<div style="margin-bottom:8px;"><b>(c)</b>&nbsp;&nbsp;CAIS inspect that its officers, servants and agents shall keep any information supplied to it or them under such strict conditions and such arrangements as required by the Company to its officers, servants and agents as is necessary for the proper exercise of the Company’s rights hereunder and that subject to the requirements of statute or a Court of competent jurisdiction none of such information is disclosed or otherwise made available to any third party including for the avoidance of doubt the subject of the information.</div>
+<div style="margin-bottom:8px;"><b>(d)</b>&nbsp;&nbsp;the information derived by it from the CAIS Database will be used only for those purposes specified in Clause 4 and for any other purpose which has been agreed between Experian and the Company and in particular (where the purpose is for the assessment of creditworthiness) in relation only to applications for that Credit Products.</div>
+
+<div style="margin-bottom:8px;"><b>(e)</b>&nbsp;&nbsp;The information provided to Experian has been or will be validly sourced in compliance with all Applicable Laws. All individuals whose personal data is contained in the Initial Data Load and the Update Data Load (collectively the “Data Load”), have given consent to the processing by Experian of such data for personal data as the Company supplies to Experian or to which Experian has access using its data processing facility which has been duly approved by the RBI and such other data processing facility as may be duly approved by the RBI and notified in writing to the Company.</div>
+
+<div style="margin-bottom:8px;"><b>(f)</b>&nbsp;&nbsp;It is fully, validly and legally entitled to transmit/share the Data Load with Experian (including but not limited to taking maintenance and renewal of any permits, approvals or licences from individuals, concerned Government Authority, as may be required) and that it will promptly implement or any other circumstances, whether under or under Applicable Law, which would prevent or otherwise adversely affect Experian’s ability to utilise the Data Load provided by the Company, to permit access to the CAIS and/or create any liabilities upon Experian and/or the other Companies, whether third party or otherwise.</div>
+
+<div style="margin-bottom:8px;"><b>(g)</b>&nbsp;&nbsp;The Company further undertakes with Experian that it will indemnify Experian its officers, servants and agents and keep Experian harmless from any losses, damages, liabilities, claims, costs and expenses brought or made against or suffered or incurred by Experian its officers, servants and agents as a result of that Company’s failure to comply with its obligations under this Agreement.</div>
+
+<div style="margin-bottom:10px;"><b>(h)</b>&nbsp;&nbsp;The Company acknowledges that the weekly accuracy and completeness of the information contained in the Data Load (whether procured from the Companies, third parties, or otherwise) and hosted in the CAIS Database is not the responsibility of Experian and Experian is not required to verify the same and any losses or claims suffered by another Company will be to the account of the Company and such Company who has suffered loss shall have no claim to or remedies this Agreement for breach.</div>
+
+
+</div>    
+<!--- 14th Page End -->
+<!--- 15th Page Start -->
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10px;line-height:1.22;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:6px;">Experian Credit Information Company of India Private Limited</div>
+
+<div style="margin-bottom:14px;"><b>6.&nbsp;&nbsp;&nbsp;Undertaking by Experian:</b></div>
+
+<div style="margin-bottom:8px;"><b>6.1</b>&nbsp;&nbsp;Experian undertakes with each Member that it shall arrange for its employees to sign a suitable declaration of fidelity and secrecy and shall procure that all officers, employees, servants and agents shall keep such Company’s File in strict confidence and that neither the File nor any part thereof will, without the consent of such Company, be used by Experian otherwise than for the purposes of CAIS or be disclosed to any person other than a Company of CAIS save when such disclosure is required by Applicable Law or in accordance with a contract to which Experian other than by breach of these obligations contained herein.</div>
+
+<div style="margin-bottom:8px;"><b>6.2</b>&nbsp;&nbsp;Experian hereby indicates that all Companies providing Data Load have and/or will have made similar representations and provided and/or will provide similar warranties to Experian (and the other Companies) as are contained in this Agreement to Experian (and the other Companies) including but not limited to the warranties provided in Clause 5. The Company acknowledges that Experian shall accept the Data Load in good faith. The Company further acknowledges and agrees that any claims against Experian and/or the Company arising out of the hosting and utilisation of such Data Load (other than arising out of a breach by Experian of its obligations contained in this Agreement) whether that Data Load would not constitute a breach by Experian of this Agreement and the Company shall not be entitled to call upon Experian for any indemnity, and/or right of loss to claim from Experian, any amount incurred but not limited to any losses, whether or not arising out of any claims made against the Company and required to be discharged by them in this regard.</div>
+
+<div style="margin-bottom:10px;"><b>6.3</b>&nbsp;&nbsp;The Company shall:</div>
+
+<div style="margin-bottom:8px;">provide Experian with any information or assistance which the parties have agreed the Company shall provide in order for Experian to perform its obligations under this Agreement, and shall use all due skill to ensure that any such information provided to Experian is true, complete, and accurate and in the agreed format. If the Company discovers that such information is incorrect or inaccurate it will as soon as reasonably practicable after it becomes aware notify Experian and take all possible and lawful measures to amend the position.</div>
+
+<div style="margin-bottom:14px;"><b>7.&nbsp;&nbsp;&nbsp;Data Protection:</b></div>
+
+<div style="margin-bottom:8px;"><b>7.1</b>&nbsp;&nbsp;Experian and each Member undertake to observe the requirements of Applicable Law, including the Credit Information Companies Regulation Act, 2005 (“the Act”) and all guidelines, directions, rules and regulations issued by the Reserve Bank of India (“RBI”) from time to time insofar as such requirements are applicable to CAIS. Without prejudice to the generality of the foregoing Experian and each Member shall ensure that:</div>
+
+<div><b>(a)</b>&nbsp;&nbsp;They are properly licensed under the Act.</div>
+<div style="margin-bottom:8px;"><b>(b)</b>&nbsp;&nbsp;The manner and purpose of collection of personal data shall be as prescribed under the rules and regulations framed under the Act.</div>
+
+<div style="margin-bottom:8px;"><b>(c)</b>&nbsp;&nbsp;All individuals whose personal data is included in its File have been notified that their data is being processed and have given consent to such processing and the sharing of such data with other Companies. The wording of such consent and associated notifications to be in the form approved by Applicable Law (and shall be copied to Experian if so requested).</div>
+
+<div style="margin-bottom:8px;"><b>(d)</b>&nbsp;&nbsp;They only use data derived from the CAIS Database in accordance with the Act and the terms of their respective registrations under the Act.</div>
+
+<div style="margin-bottom:8px;"><b>(e)</b>&nbsp;&nbsp;They will comply with the rights of the individuals referred to in the CAIS Database as set out in the Act and the rules and regulations framed thereunder.</div>
+
+<div style="margin-bottom:8px;"><b>(f)</b>&nbsp;&nbsp;Comply with such principles established by Experian and the Companies to regulate the sharing of data and proportion of its use for specified purposes (as may be amended from time to time).</div>
+
+<div style="margin-bottom:14px;">And the Company shall if reasonably required by Experian provide Experian with proof of (a), (b), (c) and (f) above.</div>
+
+<div style="margin-bottom:18px;"><b>8.&nbsp;&nbsp;&nbsp;Variation:</b></div>
+
+<div style="margin-bottom:10px;">Experian shall be entitled, from time to time, by a reasonable period of written notice in the Company to vary the General Terms and Conditions and/or the Special Terms and Conditions in such manner as Experian shall reasonably consider necessary or desirable for the efficient development of CAIS. Any such variation shall take effect either immediately (if necessary) or within the stated period in such notice. In the event of any such variation, Companies shall be entitled within 30 days of receiving written notice thereof to give written notice to Experian of termination of its Membership of CAIS and this Agreement such termination to take effect on the 30th day following the date of receipt of that notice by Experian or such later date as is specified therein.</div>
+
+<div style="margin-bottom:18px;"><b>9.&nbsp;&nbsp;&nbsp;Overriding of File:</b></div>
+
+<div style="margin-bottom:10px;"><b>(i)</b>&nbsp;&nbsp;Subject to sub-paragraph (ii) below each Member’s File shall at all times remain the property of that Member and upon termination of a Member of CAIS, the File shall be removed from the CAIS Database as soon as is reasonably practicable and in any event within 30 days from the date of termination of this Agreement. Any reports may be other media referring to the Member and the assessment of Experian at the date of termination shall be returned to the Member within 30 days from the date of termination of this Agreement.</div>
+
+<div style="margin-bottom:14px;"><b>(ii)</b>&nbsp;&nbsp;Any File or part thereof which has been archived and is not available to the use of other Members shall be retained at Experian’s discretion to enable Experian to comply with any relevant statutory obligations.</div>
+
+<div style="margin-bottom:18px;"><b>10.&nbsp;&nbsp;&nbsp;Charges and Costs:</b></div>
+
+<div style="margin-bottom:14px;">Any costs incurred by any Member in performing its obligations as a Member will be borne and paid by that Member.</div>
+
+</div>    
+<!--- 15th Page End -->
+<!--- 16th Page Start -->  
+<div class="page-break" style="padding:18px 28px 18px 28px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10px;line-height:1.22;text-align:justify;">
+<div style="text-align:center;font-size:9px;margin-bottom:6px;">Experian Credit Information Company of India Private Limited</div>
+
+
+<div style="margin-bottom:18px;"><b>11.&nbsp;&nbsp;&nbsp;Warranties and Liability:</b></div>
+
+<div style="margin-bottom:10px;"><b>(i)</b>&nbsp;&nbsp;Save as expressly provided in this Agreement, Experian makes no representations or warranties (whether express or implied) in connection with CAIS and without prejudice to the generality of the foregoing, which Experian agrees not use all reasonable care and skill in the collection and collation of the data it otherwise gives no warranty or representation as to the accuracy of the data from time to time contained in the CAIS Database.</div>
+
+<div style="margin-bottom:10px;"><b>(ii)</b>&nbsp;&nbsp;For the avoidance of doubt Experian shall not be liable (whether in contract or in negligence or other tort or otherwise) for any indirect or consequential losses (including without limitation any loss of sales, loss of business, loss of profits or revenue or failure to reduce the level of bad debt) suffered by the Member arising out of or in connection with this Agreement.</div>
+</div>     
+<!--- 16th Page End -->  
+<!--- 16th Page Start -->  
+<div class="page-break" style="padding:20px 32px 20px 32px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10px;line-height:1.2;">
+
+<div style="text-align:center;font-size:11px;font-weight:bold;margin-bottom:10px;">SCHEDULE II:</div>
+
+<div style="text-align:center;font-size:11px;font-weight:bold;margin-bottom:18px;">SECTION 1: CONTRACT INFORMATION</div>
+
+<table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:18px;">
+<tr>
+<td colspan="2" style="border:1px solid #000;background:#bfbfbf;font-weight:bold;text-align:center;padding:5px;">SERVICES</td>
+</tr>
+
+<tr>
+<td style="border:1px solid #000;padding:6px;">
+Use access to the following products by interface / interface:
+</td>
+<td style="border:1px solid #000;width:35px;text-align:center;">&nbsp;</td>
+</tr>
+
+<tr>
+<td style="border:1px solid #000;padding:6px;">
+Credit Reference Service<br/>
+Access to the computerized database maintained by ECICI for the purposes of providing its Companies with consumer credit reference bureau services.
+</td>
+<td style="border:1px solid #000;text-align:center;font-weight:bold;">☒</td>
+</tr>
+
+<tr>
+<td style="border:1px solid #000;padding:6px;">
+Experian Customer Management Suite<br/>
+Products for customer life cycle management to review and monitor existing portfolio to minimize risk and maximize revenue.
+</td>
+<td style="border:1px solid #000;text-align:center;font-weight:bold;">☒</td>
+</tr>
+
+<tr>
+<td style="border:1px solid #000;padding:6px;">
+Credit Bureau Score<br/>
+Bureau score for customer acquisition and customer management.
+</td>
+<td style="border:1px solid #000;text-align:center;font-weight:bold;">☒</td>
+</tr>
+</table>
+
+<table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:30px;">
+<tr>
+<td colspan="2" style="border:1px solid #000;background:#bfbfbf;font-weight:bold;text-align:center;padding:5px;">TIMING AND DATES</td>
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:8px;width:50%;font-weight:bold;">Commencement Date:</td>
+<td style="border:1px solid #000;padding:8px;"></td>
+</tr>
+</table>
+
+<div style="text-align:center;font-size:10px;margin-bottom:14px;">Schedule 2 - Part B</div>
+
+<table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:16px;">
+<tr>
+<td colspan="2" style="border:1px solid #000;background:#d9d9d9;text-align:center;font-weight:bold;padding:5px;">
+FEES<br/>
+(All fees exclusive of Service Tax)
+</td>
+</tr>
+
+<tr>
+<td colspan="2" style="border:1px solid #000;padding:6px;">Membership Fee: ₹ 10,000/-</td>
+</tr>
+
+<tr>
+<td colspan="2" style="border:1px solid #000;padding:6px;">Annual Fee: ₹ 5,000/-</td>
+</tr>
+
+<tr>
+<td colspan="2" style="border:1px solid #000;padding:6px;">Transaction Fees:</td>
+</tr>
+
+<tr>
+<td colspan="2" style="border:1px solid #000;padding:6px;">
+• Fees are payable monthly in arrears<br/>
+• The unit fee applicable is determined by the monthly volume of enquiries undertaken in any given month
+</td>
+</tr>
+</table>
+
+<div style="font-weight:bold;margin-bottom:8px;">Consumer Credit Information Report</div>
+
+<table style="width:60%;border-collapse:collapse;font-size:10px;margin-bottom:10px;">
+<tr style="background:#d9d9d9;font-weight:bold;text-align:center;">
+<td style="border:1px solid #000;padding:5px;">Monthly Volumes</td>
+<td style="border:1px solid #000;padding:5px;">Price per Report (INR)</td>
+</tr>
+
+<tr><td style="border:1px solid #000;padding:4px;">Up to 1000</td><td style="border:1px solid #000;padding:4px;text-align:center;">28.00</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 5,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">22.00</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 10,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">20.00</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 30,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">17.00</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 50,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">14.50</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 75,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">12.00</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 1,00,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">9.50</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Above 1,00,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">8.00</td></tr>
+</table>
+
+<div style="font-size:9px;margin-bottom:8px;">
+For example, if a Company draws 40,000 reports in a month, the fee payable would be INR 14.5 × 40,000 = INR 5,80,000
+</div>
+
+<div style="font-size:9px;">
+<b>A.</b> All prices are on a “no-hit no-fee” basis.<br/>
+<b>B.</b> No charge will be levied in the event the search does not return any data.<br/>
+Enquiries with scored and without score will both contribute to the total monthly volume of CIR reports, used to calculate the appropriate slab for invoicing purposes.
+</div>
+
+</div>    
+<!--- 16th Page End -->    
+<!--- 17th Page Start -->  
+<div class="page-break" style="padding:20px 32px 20px 32px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10px;line-height:1.2;">
+
+<div style="font-weight:bold;margin-bottom:8px;">Delphi for New Business Score</div>
+
+<table style="width:55%;border-collapse:collapse;font-size:10px;margin-bottom:18px;">
+<tr style="background:#d9d9d9;font-weight:bold;text-align:center;">
+<td style="border:1px solid #000;padding:5px;">Monthly Volumes</td>
+<td style="border:1px solid #000;padding:5px;">Price per score (INR)</td>
+</tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 1000</td><td style="border:1px solid #000;padding:4px;text-align:center;">15.60</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 5,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">12.10</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 10,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">11.00</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 30,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">9.35</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 50,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">8.80</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 75,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">6.60</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 1,00,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">5.20</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Above 1,00,000</td><td style="border:1px solid #000;padding:4px;text-align:center;">4.40</td></tr>
+</table>
+
+<div style="font-size:9px;margin-bottom:8px;">
+A. Delphi for New Business score fee is payable for all CIR’s with score.
+</div>
+
+<div style="font-size:9px;margin-bottom:8px;">
+The fee for the Delphi for New Business score is payable in addition to the price of the CIR.
+</div>
+
+<div style="font-size:9px;margin-bottom:8px;">
+For example, if a Company draws 40,000 CIR’s with score in a month, the fee payable would be INR 8 × 40,000 = INR 3,20,000, and INR 14.5 × 40,000 = INR 5,80,000. Total fee of INR 9,00,000
+</div>
+
+<div style="font-weight:bold;margin-top:16px;margin-bottom:8px;">CIR +</div>
+
+<div style="font-size:9px;text-align:justify;margin-bottom:10px;">
+CIR+ is a product which is an addition to the regular Credit Information Report that provides a detailed credit profile in an individual, giving an objective picture of how the financial obligations are handled by the individual. With CIR+ in addition to the unique enhanced information in Experian CIR+, the bureau advanced credit score is provided applicant. For every credit account that a consumer had, details for up to previous history up to 6 months are provided on the following:
+</div>
+
+<div style="margin-left:20px;font-size:9px;margin-bottom:6px;">• Current Balance</div>
+<div style="margin-left:20px;font-size:9px;margin-bottom:6px;">• Amount Overdue</div>
+<div style="margin-left:20px;font-size:9px;margin-bottom:6px;">• Credit Limit</div>
+<div style="margin-left:20px;font-size:9px;margin-bottom:12px;">• Actual Payment</div>
+
+<div style="font-size:9px;margin-bottom:14px;">
+There will be additional 20% incremental charges to the CIR rack rate (slab wise) mentioned above.
+</div>
+
+<div style="font-weight:bold;margin-bottom:8px;">Commercial Special Information Report</div>
+
+<table style="width:60%;border-collapse:collapse;font-size:10px;margin-bottom:12px;">
+<tr style="background:#d9d9d9;font-weight:bold;text-align:center;">
+<td style="border:1px solid #000;padding:5px;">Monthly Report Volume</td>
+<td style="border:1px solid #000;padding:5px;">Price per Report (INR)</td>
+</tr>
+<tr><td style="border:1px solid #000;padding:4px;">Up to 50</td><td style="border:1px solid #000;padding:4px;text-align:center;">450</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">51–200</td><td style="border:1px solid #000;padding:4px;text-align:center;">425</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">201–500</td><td style="border:1px solid #000;padding:4px;text-align:center;">400</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">501–1000</td><td style="border:1px solid #000;padding:4px;text-align:center;">375</td></tr>
+<tr><td style="border:1px solid #000;padding:4px;">Above 1000</td><td style="border:1px solid #000;padding:4px;text-align:center;">350</td></tr>
+</table>
+
+<div style="font-size:9px;margin-bottom:12px;">
+For example, if a Member draws 300 reports in a month, the fee payable would be INR 400 × 300 = INR 1,20,000
+</div>
+
+<div style="font-weight:bold;font-size:9px;margin-bottom:6px;">Online Account Review</div>
+
+<div style="font-size:9px;text-align:justify;">
+Online Account Review is provided on real time basis, which provides the redline level information and score of a consumer to the Client to identify high risk customers. It is priced at 20% of the CIR price.
+</div>
+
+</div>    
+<!--- 17th Page End -->
+<!--- 18th Page Start -->  
+<div class="page-break" style="padding:20px 32px 20px 32px;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10px;line-height:1.2;">
+
+<div style="font-size:9px;margin-bottom:6px;">• All prices are exclusive of applicable taxes.</div>
+
+<div style="font-size:9px;margin-bottom:18px;">
+• At all times ECICI shall have the right to amend or otherwise vary the above-mentioned pricing terms with prior notice.
+</div>
+
+<div style="text-align:center;font-size:10px;font-weight:bold;margin-bottom:16px;">
+SECTION 3: FURTHER CONTRACTUAL PROVISIONS
+</div>
+
+<table style="width:88%;margin:0 auto 28px auto;border-collapse:collapse;font-size:9px;">
+<tr>
+<td style="border:1px solid #000;background:#bfbfbf;text-align:center;font-weight:bold;padding:5px;">
+PERMITTED PURPOSE
+</td>
+</tr>
+<tr>
+<td style="border:1px solid #000;padding:10px;text-align:justify;">
+The Company is permitted to use the products and services offered under this Agreement for the purposes specified under The Credit Information Companies (Regulation) Act, 2005 and for any other purpose which has been agreed between ECICI and the Company.
+</td>
+</tr>
+</table>
+
+<table style="width:88%;margin:0 auto 8px auto;border-collapse:collapse;font-size:9px;">
+<tr>
+<td colspan="2" style="border:1px solid #000;background:#bfbfbf;text-align:center;font-weight:bold;padding:5px;">
+COMPANY ACCOUNTS TEAM CONTACT INFORMATION
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border:1px solid #000;padding:10px;line-height:1.5;">
+Name (Name of the Billing Person Details)<br/>
+Designation:<br/>
+Phone number:<br/>
+Email:
+</td>
+</tr>
+</table>
+
+<div style="text-align:center;font-size:10px;font-weight:bold;margin-top:10px;">
+END OF SCHEDULE
+</div>
+
+</div>    
+<!--- 18th Page End -->
+<!--- 19th Page Start -->    
+    
+<!--- 19th Page End -->    
+</body>
+</html>
+</apex:page>

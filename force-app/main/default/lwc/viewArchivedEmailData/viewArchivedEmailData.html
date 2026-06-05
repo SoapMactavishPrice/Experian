@@ -1,0 +1,58 @@
+<template>
+    <lightning-card title="Archived Emails" icon-name="standard:email">
+
+        <!-- If no emails -->
+        <template if:true={noEmails}>
+            <p class="slds-p-around_medium slds-text-align_center">
+                No archived emails found.
+            </p>
+        </template>
+
+        <!-- Emails List -->
+        <template if:true={emails}>
+            <template for:each={emails} for:item="email">
+                <div key={email.Id} class="slds-box slds-box_xx-small slds-m-around_x-small slds-card email-item">
+
+                    <!-- Header Row -->
+                    <div class="slds-grid slds-wrap slds-p-around_x-small slds-align_absolute-center">
+
+                        <!-- Left Icon -->
+                        <div class="slds-col slds-size_1-of-12 slds-text-align_center">
+                            <lightning-icon icon-name="standard:email" size="medium" alternative-text="Email"></lightning-icon>
+                       </div>
+
+                       
+                        <div class="slds-col slds-size_6-of-12">
+                            <p class="slds-text-title_bold">{email.from_name_c__c}</p>
+                            <p class="slds-truncate slds-text-body_regular">{email.subject_c__c}</p>
+                        </div>
+
+                        <!-- Time and toggle -->
+                        <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                            <div class="time-toggle">
+                                <span class="email-time" title={email.formattedFull}>{email.formattedFull}</span>
+                                <lightning-button-icon
+                                    icon-name={email.iconName}
+                                    variant="border-filled"
+                                    alternative-text="Toggle Email"
+                                    onclick={handleToggle}
+                                    data-id={email.Id}>
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+                    </div>                    <!-- Expanded body -->
+                    <template if:true={email.isExpanded}>
+                        <div class="slds-box slds-theme_default slds-m-top_x-small email-body">
+                            <div class="email-content" lwc:dom="manual" data-emailid={email.Id}></div>
+                            <p class="slds-text-link slds-m-top_small slds-cursor_pointer slds-text-color_brand"
+                               onclick={handleToggle}
+                               data-id={email.Id}>
+                                Collapse Email
+                            </p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

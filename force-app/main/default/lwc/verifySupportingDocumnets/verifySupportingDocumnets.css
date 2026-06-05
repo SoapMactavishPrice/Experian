@@ -1,0 +1,72 @@
+.itemlayout{
+    padding: 5px;
+        margin-left: 10%;
+        margin-right: 10%;
+        border: 1px solid;
+        margin-top: 20px;
+        background-color: #642156;
+}
+
+.itemlayoutv2{
+    padding: 2px;
+        margin-left: 10%;
+        margin-right: 10%;
+        border: 0.5px solid;
+}
+
+.datacls{
+    font-size: larger;
+}
+
+
+.ribbonone {
+    padding: 5px 10px 6px;
+  }
+  
+  .ribbon {
+    font-size: 16px;
+    width: auto;
+    color: #000;
+    background: #A4DBEB;
+    padding: 4.4px 20px;
+    line-height: 25.5px;
+    /*margin: 0 137px 11px -25px;
+   */
+  }
+
+  .common-modal-slide-animation {
+    animation-duration: 1s;
+    animation-name: slidein;
+  }
+  
+  @keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 100%;
+    }
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
+
+
+ /* .ribbonone:after {
+    content: "";
+    position: absolute;
+    
+    border: 17px solid #A4DBEB;
+    top: 64px;
+    left: 404px;
+    border-right-color: transparent;
+    z-index: 2;
+    padding :0px;
+  }*/
+
+
+  .slds-modal__container {
+    margin: 0 auto;
+    width: 50%;
+    max-width: 52rem;
+    min-width: 37rem;
+}

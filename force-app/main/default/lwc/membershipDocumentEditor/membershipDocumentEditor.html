@@ -1,0 +1,216 @@
+<template>
+    <lightning-quick-action-panel header="Verify & Edit Membership Documents">
+        
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <lightning-spinner alt="Loading..." size="medium" variant="brand"></lightning-spinner>
+        </template>
+        
+        <!-- Table container -->
+        <div class="table-outer-container">
+            <template if:true={hasRecords}>
+                <div class="table-responsive slds-scrollable_x">
+                    <table class="slds-table slds-table_bordered slds-table_col-bordered custom-table">
+                        <thead>
+                            <tr class="header-row">
+                                <th scope="col" class="hdr-grey col-sr">
+                                    <div class="slds-truncate slds-text-align_center" title="Sr. No.">Sr. No.</div>
+                                </th>
+                                <th scope="col" class="hdr-grey col-name">
+                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                </th>
+                                <th scope="col" class="hdr-yellow col-status">
+                                    <div class="slds-truncate" title="Executive Document Status">Executive Document Status</div>
+                                </th>
+                                <th scope="col" class="hdr-yellow col-comment">
+                                    <div class="slds-truncate" title="Executive Comments">Executive Comments</div>
+                                </th>
+                                <th scope="col" class="hdr-blue col-status">
+                                    <div class="slds-truncate" title="TL Document Status">TL Document Status</div>
+                                </th>
+                                <th scope="col" class="hdr-blue col-comment">
+                                    <div class="slds-truncate" title="TL Comments">TL Comments</div>
+                                </th>
+                                <th scope="col" class="hdr-orange col-status">
+                                    <div class="slds-truncate" title="Admin Document Status">Admin Document Status</div>
+                                </th>
+                                <th scope="col" class="hdr-orange col-comment">
+                                    <div class="slds-truncate" title="Admin Comments">Admin Comments</div>
+                                </th>
+                                <th scope="col" class="hdr-teal col-exception">
+                                    <div class="slds-truncate slds-text-align_center" title="Is Exception?">Is Exception?</div>
+                                </th>
+                                <th scope="col" class="hdr-teal col-date">
+                                    <div class="slds-truncate" title="Exception Valid Till">Exception Valid Till</div>
+                                </th>
+                                <th scope="col" class="hdr-teal col-notes">
+                                    <div class="slds-truncate" title="Exception Notes">Exception Notes</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={documentList} for:item="doc">
+                                <tr key={doc.Id} class="data-row">
+                                    <!-- Sr No -->
+                                    <td class="cell-center text-bold">
+                                        {doc.srNo}
+                                    </td>
+                                    <!-- Document Name -->
+                                    <td class="text-bold cell-doc-name">
+                                        <div class="slds-truncate" title={doc.Document_Name__c}>
+                                            {doc.Document_Name__c}
+                                        </div>
+                                    </td>
+                                    <!-- Executive Status -->
+                                    <td>
+                                        <select 
+                                            data-id={doc.Id} 
+                                            data-field="Executive_Document_Status__c" 
+                                            class="custom-select select-yellow" 
+                                            onchange={handleInputChange}>
+                                            <option value="">-- None --</option>
+                                            <template for:each={doc.executiveOptions} for:item="opt">
+                                                <option 
+                                                    key={opt.value} 
+                                                    value={opt.value} 
+                                                    selected={opt.selected}>
+                                                    {opt.label}
+                                                </option>
+                                            </template>
+                                        </select>
+                                    </td>
+                                    <!-- Executive Comments -->
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            data-id={doc.Id} 
+                                            data-field="Executive_Comments__c" 
+                                            value={doc.Executive_Comments__c} 
+                                            class="custom-input input-yellow" 
+                                            oninput={handleInputChange} />
+                                    </td>
+                                    <!-- TL Status -->
+                                    <td>
+                                        <select 
+                                            data-id={doc.Id} 
+                                            data-field="TL_Document_Status__c" 
+                                            class="custom-select select-blue" 
+                                            onchange={handleInputChange}>
+                                            <option value="">-- None --</option>
+                                            <template for:each={doc.tlOptions} for:item="opt">
+                                                <option 
+                                                    key={opt.value} 
+                                                    value={opt.value} 
+                                                    selected={opt.selected}>
+                                                    {opt.label}
+                                                </option>
+                                            </template>
+                                        </select>
+                                    </td>
+                                    <!-- TL Comments -->
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            data-id={doc.Id} 
+                                            data-field="TL_Comments__c" 
+                                            value={doc.TL_Comments__c} 
+                                            class="custom-input input-blue" 
+                                            oninput={handleInputChange} />
+                                    </td>
+                                    <!-- Admin Status -->
+                                    <td>
+                                        <select 
+                                            data-id={doc.Id} 
+                                            data-field="Admin_Document_Status__c" 
+                                            class="custom-select select-orange" 
+                                            onchange={handleInputChange}>
+                                            <option value="">-- None --</option>
+                                            <template for:each={doc.adminOptions} for:item="opt">
+                                                <option 
+                                                    key={opt.value} 
+                                                    value={opt.value} 
+                                                    selected={opt.selected}>
+                                                    {opt.label}
+                                                </option>
+                                            </template>
+                                        </select>
+                                    </td>
+                                    <!-- Admin Comments -->
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            data-id={doc.Id} 
+                                            data-field="Admin_Comments__c" 
+                                            value={doc.Admin_Comments__c} 
+                                            class="custom-input input-orange" 
+                                            oninput={handleInputChange} />
+                                    </td>
+                                    <!-- Is Exception? -->
+                                    <td class="cell-center">
+                                        <div class="checkbox-wrapper">
+                                            <input 
+                                                type="checkbox" 
+                                                data-id={doc.Id} 
+                                                data-field="Is_Exception__c" 
+                                                checked={doc.Is_Exception__c} 
+                                                class="checkbox-input" 
+                                                onchange={handleInputChange} />
+                                            <span class="checkbox-btn"></span>
+                                        </div>
+                                    </td>
+                                    <!-- Exception Valid Till -->
+                                    <td>
+                                        <input 
+                                            type="date" 
+                                            data-id={doc.Id} 
+                                            data-field="Exception_Valid_Till__c" 
+                                            value={doc.Exception_Valid_Till__c} 
+                                            class="custom-input input-teal date-input" 
+                                            onchange={handleInputChange} />
+                                    </td>
+                                    <!-- Exception Notes -->
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            data-id={doc.Id} 
+                                            data-field="Exception_Notes__c" 
+                                            value={doc.Exception_Notes__c} 
+                                            class="custom-input input-teal" 
+                                            oninput={handleInputChange} />
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+
+            <!-- Empty State screen -->
+            <template if:false={hasRecords}>
+                <div class="empty-container">
+                    <div class="empty-illustration">
+                        <lightning-icon icon-name="utility:open_folder" size="large" variant="warning"></lightning-icon>
+                    </div>
+                    <h2 class="empty-title">No Membership Documents Found</h2>
+                    <p class="empty-subtitle">This Lead record does not have any membership documents associated with it.</p>
+                    <button class="action-btn-primary slds-m-top_medium" onclick={handleInitialize}>
+                        <lightning-icon icon-name="utility:add" size="xx-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                        Initialize Default Documents
+                    </button>
+                </div>
+            </template>
+        </div>
+
+        <!-- Action Footer -->
+        <div slot="footer" class="footer-actions">
+            <template if:true={hasRecords}>
+                <button class="action-btn-secondary slds-m-right_small" onclick={handleCancel}>Cancel</button>
+                <button class="action-btn-primary" onclick={handleSave}>Save Changes</button>
+            </template>
+            <template if:false={hasRecords}>
+                <button class="action-btn-secondary" onclick={handleCancel}>Close</button>
+            </template>
+        </div>
+        
+    </lightning-quick-action-panel>
+</template>

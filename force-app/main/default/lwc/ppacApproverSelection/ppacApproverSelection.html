@@ -1,0 +1,29 @@
+<template>
+
+    <lightning-card title="Select Approvers">
+
+        <div class="slds-p-around_medium">
+
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}
+                selected-rows={selectedRows}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+
+            <div class="slds-m-top_medium slds-align_absolute-center">
+
+                <lightning-button
+                    label="Assign Approvers"
+                    variant="brand"
+                    onclick={handleSave}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+    </lightning-card>
+
+</template>

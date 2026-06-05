@@ -1,0 +1,13 @@
+.tableCls_customer_ledger tbody td{
+    white-space:inherit;
+}
+
+
+.slds-modal__container {
+    max-width: 90rem !important;
+    width: 90% !important;
+}
+
+.modalBody {
+    position: relative;
+}

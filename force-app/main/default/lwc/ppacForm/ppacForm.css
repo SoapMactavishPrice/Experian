@@ -1,0 +1,146 @@
+/* PAGE BACKGROUND */
+:host {
+    display: block;
+    background: linear-gradient(135deg, #77127b, #77127b);
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+/* MAIN FORM TITLE */
+.form-main-title {
+    text-align: center;
+    color: #4b0082;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ececec;
+    padding-bottom: 15px;
+}
+
+/* FORM WRAPPER */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* CARD */
+.form-card {
+    background: white;
+    width: 100%;
+    border-radius: 15px;
+    padding: 25px 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+    
+
+/* SECTION TITLE */
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4b0082;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* GRID (2 columns) */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+}
+
+/* BUTTON */
+.button-container {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* BUTTON STYLE OVERRIDE */
+lightning-button {
+    --slds-c-button-brand-color-background: #77127b;
+    --slds-c-button-brand-color-background-hover: #77127b;
+}
+
+.main-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px 20px;
+    align-items: stretch;
+    width: 100%;
+    max-width: 1600px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+/* LEFT SECTION */
+.left-section {
+    width: 60%;
+    min-width: 0;
+}
+
+/* RIGHT SECTION */
+.right-section {
+    width: 40%;
+}
+
+.left-section,
+.right-section {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+
+/* SAMPLE CARD */
+.sample-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.sample-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #4b0082;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.right-section lightning-datatable {
+    width: 100%;
+}
+
+.approver-section {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.spinner-container {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(255, 255, 255, 0.6);
+
+    z-index: 9999;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    backdrop-filter: blur(2px);
+}

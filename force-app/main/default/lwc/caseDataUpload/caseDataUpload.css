@@ -1,0 +1,54 @@
+.swapper {
+    white-space: normal;  /* Allow text to wrap */
+    overflow-wrap: break-word; /* Break long words when necessary */
+    word-wrap: break-word; /* Legacy support for older browsers */
+    text-overflow: clip; /* Prevent text overflow clipping */
+}
+
+
+.progress-container {
+    width: 60px;
+    height: 60px;
+}
+
+.circular-progress {
+    transform: rotate(-90deg); /* To start the progress at the top */
+}
+
+.circle-bg {
+    stroke: #f3f3f3;
+}
+
+.circle {
+    stroke: #4db8ff;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease-out;
+}
+
+.percentage {
+    font-size: 10px;
+    font-weight: bold;
+    fill: #333;
+    pointer-events: none;
+}
+
+/* Increase modal width */
+.wide-modal-container {
+    width: 40rem !important;
+    max-width: 40rem !important;
+}
+
+/* Keep footer buttons in one line */
+.slds-modal__footer {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Make all buttons same height */
+.slds-modal__footer .slds-button,
+.slds-modal__footer lightning-button button {
+    height: 2.5rem !important;
+    line-height: 2.5rem !important;
+}

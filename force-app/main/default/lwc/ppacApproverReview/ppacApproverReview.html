@@ -1,0 +1,66 @@
+<template>
+
+    <lightning-card title="PPAC Review">
+
+        <div class="slds-p-around_medium">
+
+            <!-- PPAC DETAILS -->
+
+            <div class="detail-box">
+
+                <p><b>PPAC ID:</b> {ppacId}</p>
+                <p><b>PPAC Name:</b> {ppacName}</p>
+                <p><b>Business Unit:</b> {subCategory}</p>
+                <p><b>Submitted By:</b> {submittedBy}</p>
+
+            </div>
+
+            <!-- OBSERVATION HISTORY -->
+
+            <template if:true={observations.length}>
+
+                <h3 class="slds-text-heading_small slds-m-top_medium">
+                    Observation History
+                </h3>
+
+                <lightning-datatable
+                    key-field="Id"
+                    data={observations}
+                    columns={columns}>
+                </lightning-datatable>
+
+            </template>
+
+            <!-- NEW OBSERVATION -->
+
+            <lightning-textarea
+                class="slds-m-top_large"
+                label="Observation"
+                value={observation}
+                onchange={handleObservationChange}>
+            </lightning-textarea>
+
+            <!-- BUTTONS -->
+
+            <div class="slds-m-top_large slds-align_absolute-center">
+
+                <lightning-button
+                    variant="neutral"
+                    label="Raise Observation"
+                    onclick={handleRaiseObservation}>
+                </lightning-button>
+
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="brand"
+                    label="Approve"
+                    onclick={handleApprove}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+    </lightning-card>
+
+</template>

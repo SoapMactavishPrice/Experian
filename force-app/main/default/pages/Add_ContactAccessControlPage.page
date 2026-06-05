@@ -1,0 +1,51 @@
+<apex:page controller="Add_ContactAccessControl" showHeader="false" lightningstylesheets="true" sidebar="false" docType="html-5.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <br/>
+    <div>
+        <p class="slds-text-title_caps" style="text-align:center; font-size:20px;">Contact Access Control</p>
+        <br/>
+    </div>
+
+    <apex:form id="fm">
+
+        <apex:pageBlock id="pb">
+            <apex:variable var="rowNumber" value="{!0}" />
+            <apex:pageBlockTable value="{!accList}" var="ac">
+                <apex:column headerValue="Tabs Name">
+                    <apex:inputField value="{!ac.Tabs_Name__c}" />
+                </apex:column>
+
+                <apex:column headerValue="None Access">
+                    <apex:inputField value="{!ac.None_Access__c}" />
+                </apex:column>
+                <apex:column headerValue="Read Access">
+                    <apex:inputField value="{!ac.Read_Access__c}" />
+                </apex:column>
+                <apex:column headerValue="Read/Write Access">
+                    <apex:inputField value="{!ac.ReadWrite_Access__c}" />
+                </apex:column>
+                <apex:column headerValue="Delete Access">
+                    <apex:inputField value="{!ac.Delete_Access__c}" />
+                </apex:column>
+
+                <apex:column headerValue="Action">
+                    <apex:commandButton value="Add Row" action="{!addRow}" />
+                    <apex:commandButton value="Delete" action="{!deleteRow}" reRender="pb">
+                        <apex:param name="rowIndex" value="{!rowNumber}" />
+                    </apex:commandButton>
+                    <apex:variable var="rowNumber" value="{!rowNumber+1}" />
+                </apex:column>
+            </apex:pageBlockTable>
+            <br/>
+            <br/>
+
+            <apex:commandButton value="Submit" action="{!saveAccount}" styleClass="slds-button slds-button__icon_right slds-button--brand slds-m-top--medium"
+                style="background-color:rgb(57, 137, 91);color:white;padding-left: 24px;" />
+
+            <apex:commandButton action="{!Cancel}" value="Cancel" styleClass="slds-button slds-button__icon_right slds-button--destructive slds-m-top--medium"
+            />
+
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

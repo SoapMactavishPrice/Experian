@@ -1,0 +1,166 @@
+<template>
+    <template if:false={isInitialized}>
+        <div class="slds-align_absolute-center" style="height:200px;">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- AFTER DATA LOAD -->
+    <template if:true={isInitialized}>
+        <template if:true={isAlreadySubmitted}>
+            <div class="info-box slds-text-align_center">
+                <h2>Your response has already been saved.</h2>
+            </div>
+        </template>
+
+        <template if:false={isAlreadySubmitted}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="1"></lightning-layout-item>
+
+                <lightning-layout-item size="10">
+                    <div class="container" style="border:1px solid black !important;">
+
+                        <!-- HEADER -->
+                        <div style="background-color:#ffffff; height: 6rem;" class="slds-p-around_large">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                                    <h1 class="main-heading">Compensation Settlement Details</h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BODY -->
+                        <div style="background-color:#90b1f3; overflow-y:auto; height:69vh;"
+                            class="slds-p-around_large">
+
+                            <!-- INFO -->
+                            <div class="info-box">
+                                Complaints not resolved within 30 calendar days are eligible for compensation of ₹100
+                                per
+                                day for each day beyond this period, as per RBI's Framework for Compensation*.
+                            </div>
+
+                            <!-- RADIO -->
+                            <div class="slds-m-top_medium">
+                                <label class="section-title">Please select your compensation preference</label>
+
+                                <lightning-radio-group name="compChoice" options={options} value={selectedOption}
+                                    onchange={handleOptionChange}>
+                                </lightning-radio-group>
+                            </div>
+
+                            <!-- OPT OUT -->
+                            <template if:true={isOptOut}>
+                                <div class="info-box slds-m-top_medium">
+                                    By opting out, you confirm that no payment details will be provided for compensation
+                                    processing. As a result, the party responsible for compensation (Credit institution
+                                    and/or Experian) will
+                                    not be able to transfer any amount, and no follow-up will be undertaken for account
+                                    details after this choice.
+                                </div>
+                            </template>
+
+                            <!-- OPT IN FORM -->
+                            <template if:true={isOptIn}>
+                                <div class="case-number-box">
+                                    Compensation Parent Case Number: <b>{caseNumber}</b>
+                                </div>
+                                <div class="form-grid slds-m-top_medium">
+
+                                    <!-- Consumer Name -->
+                                    <lightning-input label="Consumer Name (As per the Bank Account)" value={name}
+                                        data-field="name" onchange={handleChange} required>
+                                    </lightning-input>
+
+                                    <!-- Bank Name -->
+                                    <lightning-input label="Bank Name" value={bank} data-field="bank"
+                                        onchange={handleChange} required disabled={isBankDisabled}>
+                                    </lightning-input>
+
+                                    <!-- <lightning-input label="Account Number"
+                                value={acc}
+                                data-field="acc"
+                                onchange={handleChange}
+                                required
+                                disabled={isAccDisabled}>
+                            </lightning-input>
+
+                            <lightning-input label="Confirm Account Number"
+                                value={confirmAcc}
+                                data-field="confirmAcc"
+                                onchange={handleChange}
+                                required
+                                disabled={isConfirmAccDisabled}>
+                            </lightning-input> -->
+
+                                    <!-- Account Number -->
+                                    <lightning-input label="Account Number" value={acc} data-field="acc"
+                                        onchange={handleChange} required type="text" disabled={isAccDisabled}>
+                                    </lightning-input>
+
+                                    <!-- Confirm Account Number -->
+                                    <lightning-input label="Confirm Account Number" value={confirmAcc}
+                                        data-field="confirmAcc" onchange={handleChange} required type="text"
+                                        disabled={isConfirmAccDisabled}>
+                                    </lightning-input>
+
+                                    <!-- IFSC -->
+                                    <lightning-input label="IFSC Code" value={ifsc} data-field="ifsc"
+                                        onchange={handleChange} required disabled={isIfscDisabled}>
+                                    </lightning-input>
+
+                                    <!-- Confirm IFSC -->
+                                    <lightning-input label="Confirm IFSC Code" value={confirmIfsc}
+                                        data-field="confirmIfsc" onchange={handleChange} required
+                                        disabled={isConfirmIfscDisabled}>
+                                    </lightning-input>
+                                </div>
+
+                                <!-- DISCLAIMER -->
+                                <div class="disclaimer slds-m-top_medium">
+                                    <p>
+                                        By opting in and providing these details, you confirm that the information
+                                        submitted
+                                        is accurate. You agree to indemnify and hold Experian harmless against any
+                                        claims,
+                                        liabilities, or losses arising from incorrect or incomplete account details
+                                        provided
+                                        by you. Experian will not be responsible for any errors in the provided data or
+                                        for
+                                        delays or non-payment resulting from inaccurate information.
+                                    </p>
+
+                                    <lightning-input type="checkbox" label="I Accept" checked={accepted}
+                                        onchange={handleAccept} disabled={isDisclaimerDisabled}>
+                                    </lightning-input>
+
+                                    <div class="error" if:true={disclaimerError}>
+                                        You must accept the disclaimer
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- GLOBAL ERROR -->
+                            <div class="error slds-m-top_small" if:true={error}>{error}</div>
+
+                        </div>
+
+                        <template if:true={isLoading}>
+                            <lightning-spinner alternative-text="Processing" size="medium"></lightning-spinner>
+                        </template>
+
+                        <!-- FOOTER -->
+                        <div class="slds-p-around_medium slds-text-align_right">
+                            <lightning-button label="Submit" variant="brand" onclick={handleSubmit}
+                                disabled={isSubmitDisabled}>
+                            </lightning-button>
+                        </div>
+
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="1"></lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </template>
+</template>

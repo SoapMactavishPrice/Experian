@@ -1,0 +1,36 @@
+<template>
+
+    <lightning-quick-action-panel
+        header="Assign Approvers">
+
+        <div class="slds-p-around_medium">
+
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}
+                selected-rows={selectedRows}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+
+        </div>
+
+        <div slot="footer">
+
+            <lightning-button
+                label="Cancel"
+                onclick={handleCancel}>
+            </lightning-button>
+
+            <lightning-button
+                class="slds-m-left_small"
+                variant="brand"
+                label="Save"
+                onclick={handleSave}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-quick-action-panel>
+
+</template>

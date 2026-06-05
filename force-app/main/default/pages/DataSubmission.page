@@ -1,0 +1,311 @@
+<apex:page standardStylesheets="false" controller="profileController" showHeader="false" sidebar="false" applyHtmlTag="false"
+    applyBodyTag="false" docType="html-5.0">
+    <html ng-app="ngApp">
+
+    <head>
+        <title>SalesForce | Portal Case </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" /> -->
+        <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+        <apex:stylesheet value="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/dataSubmission.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/header.css')}" />
+
+        <link href="{!URLFOR($Resource.portalAssets,'/assets/image/expLogo.png')}" rel="icon" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+        <apex:includeScript value="http://code.jquery.com/jquery-2.1.4.min.js"></apex:includeScript>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/ng-idle/1.3.2/angular-idle.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></apex:includeScript>
+        <apex:includeScript value="https://rawgit.com/l-lin/angular-datatables/v0.4.3/dist/angular-datatables.min.js"></apex:includeScript>
+
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"> </apex:includeScript>
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></apex:includeScript>
+
+        <apex:includescript value="https://code.angularjs.org/1.2.0/angular-animate.min.js"></apex:includescript>
+        <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.js"></apex:includescript>
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+        <!--  If necessary, please modify the charset parameter to specify the        -->
+        <!--  character set of your HTML page.                                        -->
+        <!--  ----------------------------------------------------------------------  -->
+
+        <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/angular.js') }" />
+        <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/FileUploadJS.js') }" />
+        <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+    </head>
+
+
+    <body ng-controller="LinkCtrl">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand ml-5" href="#">
+                <img src="{!URLFOR($Resource.portalAssets,'/assets/image/Experian_logo.png')}" alt="Logo" style="width:130px;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <div class="inner-navbar" ng-repeat="t in tabs">
+                        <li class="nav-item mr-4" ng-if="(t.Tab_Url__c == 'Home' || t.Tab_Url__c == 'DataSubmission' || t.Tab_Url__c == 'Case')" ng-click="routeTo(t.Tab_Url__c)">
+                            <a class="nav-link" ng-class="t.Active ? 'l-active' : '' " href="#">{{t.Name}}</a>
+                        </li>
+                    </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i style="padding:6px;font-size:20px;" class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <!-- <li > -->
+                            <div class="inner-navbar" ng-repeat-start="t in tabs">
+                                <a class="dropdown-item" ng-if="(t.Tab_Url__c != 'Home' && t.Tab_Url__c != 'DataSubmission' && t.Tab_Url__c != 'Case')" ng-class="t.Active ? 'l-active' : '' "
+                                    ng-click="routeTo(t.Tab_Url__c)">{{t.Name}}</a>
+                            </div>
+                            <div ng-repeat-end="t in tabs"></div>
+                            <!-- </li> -->
+                            <!-- <a class="dropdown-item" ng-click="routeTo('CompanyInfo')" >Company Information</a> -->
+                            <a class="dropdown-item" ng-click="routeTo(salesforceSiteLabel)">Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">{{userDetail.Name}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div ng-show="showOverlay" class="overlay">
+            <div class="loader">
+                <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/loading.gif')}" title="Please Wait..." />
+            </div>
+        </div>
+
+        <div class="container-fluid bg-img shadow-lg mt-4">
+            <div class="row page-row"></div>
+            <div class="row m-4">
+                <div class="col-sm-3 text-center">
+                    <div ng-click="routeTo(salesforceSiteLabel+'/DataFormatPdfPage')"  class="link-tab-box">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/DataFormat.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        Data Format
+                    </div>
+                </div>
+                <div class="col-sm-3 text-center">
+                    <div class="link-tab-box" ng-click="routeTo(salesforceSiteLabel+'/DataUploadPdfPage')">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/mothlyDataUpload.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        Data Submission Procedure
+                    </div>
+                </div>
+                <div class="col-sm-3 text-center">
+                    <div class="link-tab-box">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/DataReceipent.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        Data Receipt confirmation &amp; Load status
+                    </div>
+                </div>
+                <div class="col-sm-3 text-center">
+                    <div class="link-tab-box">
+                        <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/DQR.PNG')}" title="Please Wait..." />
+                    </div>
+                    <div class="mt-2">
+                        Data Quality Report
+                    </div>
+                </div>
+            </div>
+            <div class="space-20px"></div>
+        </div>
+
+        <div class="space-20px"></div>
+        <div class="space-20px"></div>
+        <div class="footer-sticky mt-4 mb-2">
+            <div class="row">
+                <div class="col-sm-9">
+                    <span>&copy; 2017 - 2019 Experian Information Solutions, Inc. All rights reserved.
+                        <a> Terms &amp; Conditions </a>
+                    </span>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div class="col-sm-12">
+                        <span>Stay connected</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <i class="fa fa-linkedin p-1" style="font-size:20px"></i>&nbsp;
+                        <i class="fa fa-facebook p-1" style="font-size:20px"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <FORM> element to your page.             -->
+        <!--  ----------------------------------------------------------------------  -->
+        <script>
+            var app = angular.module('ngApp', ['toaster', 'datatables','ngIdle']);
+            app.controller('LinkCtrl', function ($scope, $filter, toaster, $http, $timeout,Idle) {
+
+                $scope.userDetail = undefined;
+                $scope.showOverlay = true;
+                $scope.salesforceSiteLabel = '/'+'{!force_site_label}';
+
+                $scope.safeApply = function (fn) {
+                    var phase = this.$root.$$phase;
+                    if (phase == '$apply' || phase == '$digest') {
+                        if (fn && (typeof (fn) === 'function')) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
+                    }
+                };
+
+                $scope.events = [];
+                $scope.idle = 180; //seconds
+                $scope.timeout = 5; //seconds
+
+                $scope.$on('IdleStart', function() {
+                    console.log('Log IdleStart');
+                    addEvent({event: 'IdleStart', date: new Date()});
+                });
+
+                $scope.$on('IdleEnd', function() {
+                    console.log('Log IdleEnd');
+                    addEvent({event: 'IdleEnd', date: new Date()});
+                });
+
+                $scope.$on('IdleWarn', function(e, countdown) {
+                    console.log('Log IdleWarn');
+                    addEvent({event: 'IdleWarn', date: new Date(), countdown: countdown});
+                });
+
+                $scope.$on('IdleTimeout', function() {
+                    console.log('Log IdleTimeout');
+                    $scope.routeTo($scope.salesforceSiteLabel);
+                    addEvent({event: 'IdleTimeout', date: new Date()});
+                });
+
+                $scope.$on('Keepalive', function() {
+                    console.log('Log Keepalive');
+                    addEvent({event: 'Keepalive', date: new Date()});
+                });
+
+                function addEvent(evt) {
+                    $scope.$evalAsync(function() {
+                        $scope.events.push(evt);
+                    })
+                }
+
+                $scope.reset = function() {
+                    Idle.watch();
+                }
+
+                $scope.$watch('idle', function(value) {
+                    if (value !== null) Idle.setIdle(value);
+                });
+
+                $scope.$watch('timeout', function(value) {
+                    if (value !== null) Idle.setTimeout(value);
+                });
+
+                $scope.routeTo = function (param) {
+                    if (param == $scope.salesforceSiteLabel) {
+                        localStorage.clear();
+                        Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.expire_session}',
+                        $scope.userId,
+                        function (result, event) {
+                            if (result) {
+                                window.location.href = param;
+                            } else {
+                                window.location.href = param;
+                            }
+                        });
+                    }else{
+                        window.location.href = param;
+                    }                    
+                }
+
+                $scope.userId = localStorage.getItem("UserId");
+                $scope.tabs = [];
+                $scope.docsLinks = [];
+                $scope.docsNames = [];
+                $scope.tabsAccessController = undefined;
+                $scope.sessionData = JSON.parse(localStorage.getItem("ControllAccess"));
+                $scope.accId = localStorage.getItem("AccountId");
+
+                if ($scope.userId) {
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.getInforamtion}',
+                        $scope.userId,
+                        localStorage.getItem("AccessToken"),
+                        function (result, event) {
+                            if (result != null ) {
+                                $scope.userDetail = result;
+                                $scope.safeApply(function () {
+                                    console.log($scope.userDetail);
+                                    // $scope.getCases();
+                                })
+                                // localStorage.setItem("AccountId", result.AccountId);
+                                // window.location.replace('/apex/Profile');
+                                // event.preventDefault();
+                                return false;
+                            } else {
+                                $scope.routeTo($scope.salesforceSiteLabel);
+                                console.log('else', result);
+                            }
+                        });
+                } else {
+                    $scope.safeApply(function(){
+                        $scope.routeTo($scope.salesforceSiteLabel);
+                    })
+                }
+
+
+                $scope.pageReady = function () {
+                    $scope.safeApply(function () {
+                        _.each($scope.sessionData, function (someThing) {
+                            if (someThing.None_Access__c == false) {
+                                $scope.tabs.push(someThing.Tabs_Name__r);
+                                if (someThing.Tabs_Name__r.Name == 'Data Submission') {
+                                    $scope.tabsAccessController = someThing
+                                    someThing.Tabs_Name__r.Active = true;
+                                    $scope.showOverlay = false;
+                                } else {
+                                    someThing.Tabs_Name__r.Active = false;
+                                    $scope.showOverlay = false;
+                                    // $scope.tabs.push(someThing.Tabs_Name__r);
+                                    // window.location.replace('/apex/' + 'PortalLogin');
+                                }
+                            }
+                        });
+                    })
+                }
+
+                $scope.pageReady();
+
+            });
+            app.config(function(IdleProvider, KeepaliveProvider) {
+                    KeepaliveProvider.interval(18000);
+                    IdleProvider.windowInterrupt('focus');
+                })
+            app.run(function($rootScope, Idle, $log, Keepalive){
+                    Idle.watch();
+                    $log.debug('app started.');
+            });
+
+            app.$inject = ['$scope', '$filter'];
+
+        </script>
+    </body>
+
+    </html>
+</apex:page>

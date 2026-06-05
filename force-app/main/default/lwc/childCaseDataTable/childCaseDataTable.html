@@ -1,0 +1,35 @@
+<template> 
+    <lightning-layout multiple-rows> 
+        <lightning-layout-item size="1"></lightning-layout-item>
+        <lightning-layout-item size="10">
+            <div class="container"> 
+                <!-- HEADER -->
+                <div class="header">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                            <h1 class="main-heading">Cases Summary</h1>
+                        </div> 
+                    </div>
+                </div> 
+                <!-- TABLE -->
+                <div class="body">
+                    <div class="table-wrapper"> 
+                        <template if:true={data}> 
+                            <lightning-datatable key-field="Id"
+                                data={data} columns={columns} hide-checkbox-column> 
+                            </lightning-datatable> 
+                        </template>
+                    </div> 
+                    <template if:true={error}>
+                        <div class="error">{error}</div>
+                    </template>
+                </div> 
+                <!-- <template if:true={data}>
+                    <div class="subtotal"> <span>Subtotal (Liable Amount):</span> <span
+                            class="amount">{formattedTotal}</span> </div>
+                </template> -->
+            </div>
+        </lightning-layout-item> 
+        <lightning-layout-item size="1"></lightning-layout-item> 
+    </lightning-layout>
+</template>

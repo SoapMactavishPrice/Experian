@@ -1,0 +1,28 @@
+<apex:page showHeader="false"
+    sidebar="false">
+
+    <apex:includeLightning />
+
+    <div id="container"></div>
+
+    <script>
+
+        $Lightning.use(
+            "c:PPACUserPublicApp",
+
+            function(){
+
+                $Lightning.createComponent(
+
+                    "c:ppacUserObservationResponseWrapper",
+
+                    {},
+
+                    "container"
+                );
+            }
+        );
+
+    </script>
+
+</apex:page>

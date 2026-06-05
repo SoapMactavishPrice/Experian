@@ -1,0 +1,15 @@
+/* Brown header container */
+.header-container {
+    background-color: #642156; 
+    padding: 2px;
+    text-align: center;
+    border-radius: 4px 4px 0 0;
+}
+
+/* Header Title (white text) */
+.header-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+}

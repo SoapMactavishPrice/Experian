@@ -1,0 +1,9 @@
+.swapper {
+    white-space: normal;  /* Allow text to wrap */
+    overflow-wrap: break-word; /* Break long words when necessary */
+    word-wrap: break-word; /* Legacy support for older browsers */
+    text-overflow: clip; /* Prevent text overflow clipping */
+}
+.custom-container{
+	color : black;
+}

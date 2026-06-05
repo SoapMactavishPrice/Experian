@@ -1,0 +1,206 @@
+<template>
+
+    <template if:true={isLoading}>
+
+        <div class="spinner-container">
+
+            <lightning-spinner
+                alternative-text="Submitting..."
+                size="large"
+                variant="brand">
+            </lightning-spinner>
+
+        </div>
+
+    </template>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+
+        <!-- LEFT SIDE -->
+        <div class="left-section">
+
+            <div class="form-card">
+
+                <h1 class="form-main-title">PPAC REQUEST</h1>
+
+                <!-- BASIC INFO -->
+                <h2 class="section-title">Basic Information</h2>
+
+                <div class="grid">
+
+                    <lightning-combobox
+                        label="Select Entity"
+                        value={entity}
+                        options={entityOptions}
+                        onchange={handleChange}
+                        data-field="entity"
+                        required>
+                    </lightning-combobox>
+
+                    <lightning-combobox
+                        label="Select Document Type"
+                        value={documentType}
+                        options={documentOptions}
+                        onchange={handleChange}
+                        data-field="documentType"
+                        required>
+                    </lightning-combobox>
+
+                    <lightning-combobox
+                        label="Select Category"
+                        value={category}
+                        options={categoryOptions}
+                        onchange={handleChange}
+                        data-field="category"
+                        required>
+                    </lightning-combobox>
+
+                    <!-- SUB CATEGORY -->
+                    <lightning-combobox
+                        label="Select Sub Category"
+                        value={subCategory}
+                        options={subCategoryOptions}
+                        onchange={handleChange}
+                        data-field="subCategory"
+                        required>
+                    </lightning-combobox>
+
+                    <!-- PPAC NOTE NAME -->
+                    <lightning-input
+                        type="text"
+                        label="PPAC Name"
+                        value={ppacName}
+                        onchange={handleChange}
+                        data-field="ppacName"
+                        required>
+                    </lightning-input>
+
+                    <lightning-input
+                        type="date"
+                        label="Date of PPAC Meeting"
+                        value={ppacDate}
+                        onchange={handleChange}
+                        data-field="ppacDate"
+                        required>
+                    </lightning-input>
+
+                    <lightning-input
+                        type="email"
+                        label="Requestor Email"
+                        value={requestorEmail}
+                        onchange={handleChange}
+                        data-field="requestorEmail"
+                        required>
+                    </lightning-input>
+
+                </div>
+
+                <!-- ARB -->
+                <h2 class="section-title">ARB Details</h2>
+
+                <div class="grid">
+
+                    <lightning-combobox
+                        label="ARB Applicability"
+                        value={arbApplicability}
+                        options={arbOptions}
+                        onchange={handleArbChange}
+                        required>
+                    </lightning-combobox>
+
+                    <template if:true={showArbNumber}>
+                        <lightning-input
+                            type="text"
+                            label="ARB Number"
+                            value={arbNumber}
+                            onchange={handleChange}
+                            data-field="arbNumber">
+                        </lightning-input>
+                    </template>
+
+                </div>
+
+                <!-- PSA -->
+                <h2 class="section-title">PSA Details</h2>
+
+                <div class="grid">
+
+                    <lightning-combobox
+                        label="PSA Applicability"
+                        value={psaApplicability}
+                        options={psaOptions}
+                        onchange={handlePsaChange}
+                        required>
+                    </lightning-combobox>
+
+                    <template if:true={showPsaNumber}>
+                        <lightning-input
+                            type="text"
+                            label="PSA Number"
+                            value={psaNumber}
+                            onchange={handleChange}
+                            data-field="psaNumber">
+                        </lightning-input>
+                    </template>
+
+                </div>
+
+                <!-- FILE UPLOAD -->
+                <h2 class="section-title">Upload Documents</h2>
+
+                <lightning-file-upload
+                    label="Upload Supporting Documents"
+                    name="fileUploader"
+                    accept={acceptedFormats}
+                    multiple
+                    onuploadfinished={handleUploadFinished}>
+                </lightning-file-upload>
+
+                <!-- BUTTON -->
+                <div class="button-container">
+
+                    <lightning-button
+                        label="Submit"
+                        variant="brand"
+                        onclick={handleSubmit}>
+                    </lightning-button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-section">
+
+            <div class="sample-card">
+                <h2 class="sample-title">Sample Documents</h2>
+                <lightning-datatable
+                    key-field="id"
+                    data={sampleDocuments}
+                    columns={sampleColumns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </div>
+
+            <div class="approver-section">
+                <h2 class="sample-title">
+                    Select Approvers
+                </h2>
+                <lightning-datatable
+                    key-field="Id"
+                    data={approverData}
+                    columns={approverColumns}
+                    selected-rows={selectedApproverIds}
+                    onrowselection={handleApproverSelection}>
+                </lightning-datatable>
+            </div>
+            
+        </div>
+
+    </div>
+
+</template>

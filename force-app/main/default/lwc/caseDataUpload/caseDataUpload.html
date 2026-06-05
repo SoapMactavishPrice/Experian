@@ -1,0 +1,230 @@
+<template>
+    <lightning-card>
+        <template if:true={showSpinnerDownload}>
+
+            <lightning-spinner size="medium"></lightning-spinner>
+        </template>
+        <lightning-layout>
+            <lightning-layout-item size="12" large-device-size="3">
+                <label style="margin-left: 20px;
+                font-weight: bold;
+                font-size: 17px;">Case Data Upload</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" large-device-size="7">
+                <lightning-button label="File Upload" variant="brand" onclick={handleOpenModel} disabled={isFileUpload}></lightning-button>
+                <lightning-button label="Run Update" variant="brand" onclick={sendDataInChunks} class="slds-m-left_small" disabled={isUpdateData}></lightning-button>
+                <!-- <lightning-button label="Download Result" variant="brand" onclick={downloadCsv} class="slds-m-left_small"></lightning-button> -->
+
+                <!-- <lightning-button label="Pause" variant="brand"  onclick={pause} disabled={isPause} class="slds-m-left_small" ></lightning-button>
+                <lightning-button label="Resume" variant="brand"  onclick={resume} disabled={isResume} class="slds-m-left_small" ></lightning-button> -->
+                <!-- <lightning-button label={buttonLabel} variant="brand"  onclick={reRun} disabled={isReRun} class="slds-m-left_small" ></lightning-button> -->
+                <lightning-button label="Refresh" variant="brand"  onclick={Refresh} disabled={isRefresh} class="slds-m-left_small" ></lightning-button>
+                <lightning-button label="Download All (CSV)" variant="brand"  onclick={downloadBeforeCsv} disabled={isDownloadResult} class="slds-m-left_small" ></lightning-button>
+                <lightning-button label="Download Error (CSV)" variant="brand"  onclick={downloadErrorCsv} disabled={isDownloadError} class="slds-m-left_small" ></lightning-button>
+
+                <!-- disabled={isDownloadResult} -->
+                <!-- <lightning-input type="file" class="slds-float_left" accept={acceptedFormats} variant="label-hidden"
+                                    onchange={handleFileChange} label="Name Change">
+                                </lightning-input> -->
+            </lightning-layout-item>
+            <lightning-layout-item size="12" large-device-size="1">
+
+                <!-- <div class="progress-container">
+                    <svg class="circular-progress" viewBox="0 0 36 36">
+                        <path class="circle-bg" stroke="#e6e6e6" stroke-width="2" fill="none" d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 0 0 0-31.831" />
+                        <path class="circle" stroke="#4db8ff" stroke-width="2" fill="none" stroke-dasharray="0, 100" d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 0 0 0-31.831" />
+                        <text class="percentage" x="50%" y="50%" text-anchor="middle" dy=".3em">{percentage}%</text>
+                    </svg>
+                </div> -->
+                <c-progress-bar percentage={percentage}></c-progress-bar>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" large-device-size="1">
+     
+                
+                                <label><span style="width:30%"><strong>Total Cases </strong></span>: {totalLoadedCase}</label><br/>
+                                <label><span style="width:30%"><strong>Success </strong></span> : {successCase}</label><br/>
+                                <label><span style="width:30%"><strong>Failed </strong></span> : {failedCase}</label><br/>
+                
+        </lightning-layout-item>
+            
+        </lightning-layout>
+
+        <template if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+
+        <template if:true={showTableData}>
+            <table class="slds-table tableCls_customer_ledger slds-table_bordered slds-border_left slds-border_right slds-m-top_small">
+                <thead>
+                    <tr>
+                        <th style="width:2%">Serial No</th>
+                        <template for:each={headerKeysNew} for:item="header">
+                            <th style="" key={header}>{header}</th>
+                        </template>
+                    </tr>
+                </thead>
+                <!-- <label>length is : {csvData.length}</label> -->
+                 <template if:true={csvData.length}>
+                    <tbody>
+                        <template for:each={csvData} for:item="row" for:index="index">
+                            <!-- {row.index} -->
+                            <tr key={row.Id}>
+                                <td>{row.Serial_No}</td>
+                                <td>{row.CaseNumber}</td>
+                                <td>
+                                    <p><lightning-formatted-url value={row.url} tooltip={row.CaseNumber} label={row.Id} target="_blank"></lightning-formatted-url></p>
+                                    </td>
+                                    <td if:true={row.Last_Reply_from_Bank_Team}>{row.Last_Reply_from_Bank_Team}</td>
+                                    <td if:true={row.Origin}>{row.Origin}</td>
+                                    <td if:true={row.Consumer_Dispute_Status}>{row.Consumer_Dispute_Status}</td>
+                                    <td if:true={row.Data_Submission}>{row.Data_Submission}</td>
+                                    <td if:true={row.enquiry_User_Id}>{row.enquiry_User_Id}</td>
+                                    <td if:true={row.enquiry_Loan_Amount}>{row.enquiry_Loan_Amount}</td>
+                                    <td if:true={row.Rejection_Reason}>{row.Rejection_Reason}</td>
+                                    <td if:true={row.OwnerId}>{row.OwnerId}</td>
+                                    <td if:true={row.temp_forward_to_bank}>{row.temp_forward_to_bank}</td>
+                                    <td if:true={row.forward_to_bank}>{row.forward_to_bank}</td>
+                                    <td if:true={row.sendEmailtoConsumer}>{row.sendEmailtoConsumer}</td>
+
+
+                                    <td if:true={row.subtypeOneId}>{row.subtypeOneId}</td>
+
+                                    <td if:true={row.MatchingCommentsub}>{row.MatchingCommentsub}</td>
+
+
+                                    <td if:true={row.LastReplyFromMatchingTeamforSub}>{row.LastReplyFromMatchingTeamforSub}</td>
+
+
+                                    <td if:true={row.LastReplyFromMatchingTeam}>{row.LastReplyFromMatchingTeam}</td>
+
+                                    <td if:true={row.MatchingComment}>{row.MatchingComment}</td>
+
+                                    <td if:true={row.consumerDisputeStatus}>{row.consumerDisputeStatus}</td>
+                                    <td if:true={row.incidentNo}>{row.incidentNo}</td>
+                                    <td if:true={row.forwardToMatechTeam}>{row.forwardToMatechTeam}</td>
+                                    <td if:true={row.sendEmailtoConsumerInc}>{row.sendEmailtoConsumerInc}</td>
+                                    <td if:true={row.lastReplyFromBacnkTeam_ref}>{row.lastReplyFromBacnkTeam_ref}</td>
+                                    <td if:true={row.disputeRejectedRegion_ref}>{row.disputeRejectedRegion_ref}</td>
+                                    
+                                    <td if:true={row.referToIO}>{row.referToIO}</td>
+                                    <td if:true={row.RejectedRegion_ref}>{row.RejectedRegion_ref}</td>
+                                    <td if:true={row.ContentDocumentId}>{row.ContentDocumentId}</td>
+                                    <td if:true={row.ShareType}>{row.ShareType}</td>
+                                    <td if:true={row.Visibility}>{row.Visibility}</td>
+                                    <td class="swapper" if:true={row.caseCSTComment}>{row.caseCSTComment}</td>
+                                    <td class="swapper" if:true={row.caseCSTCommentv1}>{row.caseCSTCommentv1}</td>
+                                    <td if:true={row.telConversionDate}>{row.telConversionDate}</td>
+                                    <td if:true={row.ComplaintConsumerStatus}>{row.ComplaintConsumerStatus}</td>
+                                    <td if:true={row.Junkcase}>{row.Junkcase}</td>
+                                    <td if:true={row.JunkStatus}>{row.JunkStatus}</td>
+                                    <td if:true={row.Update_Open_to_Resolved}>{row.Update_Open_to_Resolved}</td>
+                                    <td if:true={row.Send_Email_Acknowledgement}>{row.Send_Email_Acknowledgement}</td>
+
+
+                                    <td if:true={row.Contact_Name}>{row.Contact_Name}</td>
+                                    <td if:true={row.ContactEmailId}>{row.ContactEmailId}</td>
+                                    <td if:true={row.Contact_Gender}>{row.Contact_Gender}</td>
+                                    <td if:true={row.ContactPan}>{row.ContactPan}</td>
+                                    <td if:true={row.ContactMobileNo}>{row.ContactMobileNo}</td>
+                                    <td if:true={row.Contact_Date_of_Birth}>{row.Contact_Date_of_Birth}</td>
+                                    <td class="swapper" if:true={row.Contact_Address}>{row.Contact_Address}</td>
+                                    
+                                    
+                                    <td>{row.Status}</td>
+                                    <td class="swapper">{row.Message}</td>
+                                     <template if:true={isResolveInFaveor}>
+                                    <td if:true={row.isSuccess}>
+                                        
+                                        <lightning-icon icon-name="action:approval" style="background: green;" size="xx-small" alternative-text="Approved" title="Approved"></lightning-icon>
+                                    </td>
+                                     </template>
+
+                                      <template if:true={isResolveInFaveor}>
+                                    <td if:true={row.isError}>
+
+                                        <lightning-icon style="background: red;" icon-name="action:remove" size="xx-small"  alternative-text="Delete" title="Delete"></lightning-icon>  
+                                    </td>
+                                    </template>
+
+                                    <template if:true={isResolveInFaveor}>
+                                    <td if:true={row.showDash}>
+                                        <span>-</span>
+                                    </td>
+                                    </template>
+                                    <template if:true={isResolveInFaveor}>
+                                    <td class="swapper" if:true={row.logError}>{row.logError}</td>
+                                    </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </template>
+                
+            </table>
+        </template>
+
+
+        <template if:true={openModel}>
+
+            <!--
+                                        I Used SLDS for this code
+                                        Here is link https://www.lightningdesignsystem.com/components/modals/
+                                    -->
+
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <!-- <div class="slds-modal__container" style="width:30%"> -->
+                    <div class="slds-modal__container wide-modal-container">
+                    <!-- modal header start -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={handleCloseModel}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select File Type and File
+                        </h2>
+                    </header>
+
+                    <!-- modal body start -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                        <lightning-combobox label="Select File Type" value={value} options={options}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+
+
+                        <lightning-input type="file" class="slds-float_left" accept={acceptedFormats} style="margin-top:10px"
+                            variant="label-hidden" onchange={handleFileChange} 
+                            onmouseover={handleMouseOver}
+                            onmouseout={handleMouseOut}
+
+                            label="Name Change"> </lightning-input>
+
+
+
+                    </div>
+
+                    <!-- modal footer start-->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_success" if:true={consumer_Status} onclick={handleDownloadModel}>Download Sample file</button>
+                        <!-- Conditionally show Submit for Approval button when Resolved in favour of the Consumer is selected -->
+                        <template if:true={showSubmitForApprovalButton}>
+                            <lightning-button label="Submit for Approval" class="slds-m-left_small" onclick={handleSubmitForApproval} disabled={disabledSubmitApproval}></lightning-button>
+                        </template>
+                        <!-- Hide Done button if Submit for Approval is shown -->
+                        <template if:false={showSubmitForApprovalButton}>
+                            <button class="slds-button slds-button_brand" onclick={handleDoneModel} disabled={disabledDone}>Done</button>
+                        </template>
+                        <button class="slds-button slds-button_neutral" onclick={handleCloseModel}>Cancel</button>
+
+                    </footer>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+
+</template>

@@ -1,0 +1,6 @@
+<aura:component access="GLOBAL">
+
+    <c:ppacApproverReview>
+    </c:ppacApproverReview>
+
+</aura:component>

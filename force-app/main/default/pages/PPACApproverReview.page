@@ -1,0 +1,46 @@
+<apex:page showHeader="false"
+    sidebar="false"
+    standardStylesheets="false">
+
+    <apex:includeLightning />
+
+    <div id="reviewContainer"></div>
+
+    <script>
+
+        var assignmentId =
+            "{!$CurrentPage.parameters.id}";
+
+        $Lightning.use(
+            "c:PPACPublicApp",
+
+            function() {
+
+                $Lightning.createComponent(
+
+                    "c:ppacApproverReviewWrapper",
+
+                    {
+                        assignmentId : assignmentId
+                    },
+
+                    "reviewContainer",
+
+                    function(component) {
+
+                        console.log(
+                            'Component Loaded'
+                        );
+
+                        console.log(
+                            'Assignment Id = ' +
+                            assignmentId
+                        );
+                    }
+                );
+            }
+        );
+
+    </script>
+
+</apex:page>

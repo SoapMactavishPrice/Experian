@@ -1,0 +1,135 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 10-11-2025
+  @last modified by  : 
+-->
+<template>
+    <template if:false={showAccountDetail}>
+
+        <lightning-card title="Search Cases">
+
+            <div class="main-content">
+                <div class="slds-grid slds-m-bottom--large">
+                    <div class="slds-col slds-size--1-of-8">
+                        <div class="slds-form-element">
+                            <lightning-input
+                                name="enter-search"
+                                variant="label-hidden"
+                                data-filter="bmidType"
+                                placeholder="Search By BMID"
+                                onchange={handleChange}
+                                type="search"
+                            ></lightning-input>
+                          </div>
+                    </div>
+                    <div class="slds-col slds-size--1-of-5 slds-m-left--medium">
+                      <div class="slds-form-element">
+                        <lightning-input
+                                name="enter-search"
+                                variant="label-hidden"
+                                placeholder="Search By Case"
+                                onchange={handleChange}
+                                data-filter="caseType"
+                                type="search"
+                        ></lightning-input>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-size--1-of-5 slds-m-left--medium">
+                        <button class="slds-button slds-button_success" onclick={handleSearch}>
+                           Search
+                          </button> 
+                    </div>
+                    
+                  </div>
+                    <div>
+                       <template if:false={showAccountDetail}>
+                           <template if:false={hasSearched}>
+                               <div class="empty-state-message">No results yet—run a search to display records.</div>
+                           </template>
+                           <template if:true={hasResults}>
+                               <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                   <thead>
+                                       <tr>
+                                           <th style="font-size: 13px; background-color: #68217A; font-weight: bold; padding: 10px 10px; color: white;">BMID</th>
+                                           
+                                           <th style="font-size: 13px; background-color: #68217A; font-weight: bold; padding: 10px 10px; color: white;">Account Name</th>
+                                           <th style="font-size: 13px; background-color: #68217A; font-weight: bold; padding: 10px 10px; color: white;">Case Number</th>
+                                           <th style="font-size: 13px; background-color: #68217A; font-weight: bold; padding: 10px 10px; color: white;">Status</th>
+                                           <th style="font-size: 13px; background-color: #68217A; font-weight: bold; padding: 10px 10px; color: white;">Case Category</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <template for:each={filteredData} for:item="row" for:index="index">
+                                           <tr key={row.Id}>
+                                               <td style="padding: 10px;"><a href="javascript:void(0)" data-bmid={row.bmid} onclick={handleBmidClick}>{row.bmid}</a></td>
+                                               
+                                               <td style="padding: 10px;">{row.accountName}</td>
+                                               <td style="padding: 10px;">{row.name}</td>
+                                               <td style="padding: 10px;">{row.status}</td>
+                                               <td style="padding: 10px;">{row.caseCategory}</td>
+                                           </tr>
+                                       </template>
+                                   </tbody>
+                               </table>
+                           </template>
+                           <template if:true={showNoRecords}>
+                               <div class="empty-state-message">No record exist.</div>
+                           </template>
+                       </template>
+    
+                      
+           
+                       
+                        
+                    </div>
+                   
+                </div>
+    
+        </lightning-card>
+
+    </template>
+    <template if:true={showAccountDetail}>
+        <lightning-card>
+            <div class="slds-grid slds-grid_align-spread slds-p-around_medium slds-border_bottom slds-theme_shade">
+                <div>
+                    <div class="slds-text-title_caps slds-text-color_weak">BMID</div>
+                    <div class="slds-text-heading_small slds-m-top_xx-small">{selectedBmid}</div>
+                </div>
+                <div>
+                    <lightning-button variant="neutral" label="Back to Results" onclick={handleBackToSearch}></lightning-button>
+                </div>
+            </div>
+
+            <div class="slds-p-horizontal_medium slds-p-vertical_medium">
+                <template if:true={accountInfo}>
+                    <div class="slds-box slds-theme_default slds-m-bottom_medium">
+                        <div class="slds-text-title_caps slds-m-bottom_small">Account Details</div>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-vertical_x-small">
+                                <div class="slds-text-title slds-text-color_weak">Account Name</div>
+                                <div class="slds-text-body_regular">{accountInfo.accountName}</div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-vertical_x-small">
+                                <div class="slds-text-title slds-text-color_weak">Account Id</div>
+                                <div class="slds-text-body_regular">{accountInfo.accountId}</div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:false={accountInfo}>
+                    <div class="slds-box slds-theme_default slds-text-color_weak">No account found for the selected BMID.</div>
+                </template>
+            </div>
+        </lightning-card>
+
+        
+
+    </template>
+    
+    
+     <!-- <template if:false={caseArchivalLength}>
+         <p>No case archival records found</p>
+     </template> -->
+ </template>

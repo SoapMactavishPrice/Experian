@@ -1,0 +1,558 @@
+<apex:page controller="UpdateContactSitePage" showHeader="false" cache="true" expires="2" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          lang="en" ng-app="SurveyApp">
+        
+        <head>
+            <apex:slds />
+            <apex:stylesheet value="{!URLFOR($Resource.angular_bootstrap, 'css/bootstrap.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.angular_loader, 'loading-bar.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.spinner_css)}" />
+            <apex:stylesheet value="{!$Resource.helper_css}" />
+            <apex:stylesheet value="{!$Resource.ValidationCss}" />
+            <style>
+                html {
+                font-size: unset !important;
+                }
+                .slds-scope .slds-card__body_inner, .slds-scope .slds-card__body--inner {
+                padding: 0 3rem !important;
+                }
+                .panel-gray{
+                background-color: #eee !important;
+                }
+                .slds-scope .slds-card{
+                border: none;
+                background-color: #fff !important;
+                }
+            </style>
+        </head>
+        
+        <div style="margin-top: 5%; margin-left: 5%; margin-right: 30%; display: {!if(isExpired, '', 'none')}">
+            <apex:pageMessages />
+        </div>
+        <apex:outputPanel rendered="{!!isExpired}">
+        <body ng-controller="MasterCtrl">
+            <div class="slds-scope panel-gray" style="min-height: -webkit-fill-available;">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_2-of-12 ">
+                        
+                    </div>
+                    <div class="slds-col slds-size_8-of-12" style="position:relative">
+                        <form  name="surveryForm" id="surveryForm" ng-show="showForm === true" ng-validate="validationOptions">
+                            <article class="slds-card slds-m-around_large">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-grid full-width slds-text-align_center slds-p-bottom_small border-bottom">
+                                        <div class="slds-col  slds-p-around_small">
+                                            <div class="slds-card__header">
+                                                <div class="slds-card__header col-md-9">
+                                                    <!-- <span style="    text-align: left;float: left;">
+{{surveyModel.Company}}
+</span> <br/>
+<span style="    text-align: left;float: left;">
+{{surveyModel.Website}}
+</span> -->
+                                                    <span style="font-size:2vw; text-align:left; float:left;">
+                                                        Contact Updation – Authorised User Id requestor
+                                                    </span>
+                                                </div>
+                                                <div class="slds-card__header col-md-3">
+                                                    <apex:image id="logo3" url="{!$Resource.experianLogo}" style="max-width: initial;width: 100%;"/>                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header>
+                                
+                                <div class="slds-card__body slds-card__body_inner row" style="padding: 2rem 3rem 3rem 3rem !important;background: #90b1f3;margin: 0;">
+                                    <div class="row" style="padding: 0;margin: 0;"> 
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2" Style="padding:0;">
+                                            <label class="slds-form-element__label" style="margin-top: 21px;color:#fff"> Name</label>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2">
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                Salutation
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <span class="select">
+                                                    <select name="Salutation"  ng-model="surveyModel.Salutation" style="width: 90%;height: 30px;border-color: #dddbda;border-radius: 4px;">
+                                                        <option name="Salutation" id="Mr." value="Mr." ng-model="surveyModel.Salutation">Mr.</option>
+                                                        <option name="Salutation" id="Ms." value="Ms." ng-model="surveyModel.Salutation">Ms.</option>
+                                                        <option name="Salutation" id="Mrs." value="Mrs." ng-model="surveyModel.Salutation">Mrs.</option>
+                                                        <option name="Salutation" id="Dr." value="Dr." ng-model="surveyModel.Salutation">Dr.</option>
+                                                        <option name="Salutation" id="Prof." value="Prof." ng-model="surveyModel.Salutation">Prof.</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="slds-form-element slds-m-top_medium col-md-3">
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                First Name
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="FirstName" placeholder="Enter Your First Name?"  ng-model="surveyModel.FirstName"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-3" >
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                Last Name
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="LastName" placeholder="Enter Your Last Name?"  ng-model="surveyModel.LastName"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" style="padding: 0;margin: 0;">
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2" Style="padding:0;">
+                                            <label class="slds-form-element__label" style="color:#fff"> Company Name   
+                                            </label>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-8">
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" value="{{surveyModel.Company}}" disabled="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--
+                                    <div class="row" style="padding: 0;margin: 0;">
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2" Style="padding:0;">
+                                            <label class="slds-form-element__label" style="margin-top:21px;color:#fff;"> </label>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4">
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                Designation
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="Designation" placeholder="Enter Your Designation?" ng-model="surveyModel.Designation" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4" >
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                Job Title
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="Job Title" placeholder="Enter Your Job Title?" ng-model="surveyModel.Job_Title" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    -->
+                                    
+                                    <div class="row" style="padding: 0;margin: 0;"> 
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2" Style="padding:0;">
+                                            <label class="slds-form-element__label" style="margin-top:21px;color:#fff">Email</label>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4">
+                                            <label class="slds-form-element__label" style="color:#fff">Email Id 1<span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="Email" placeholder="Enter Your Email?" ng-model="surveyModel.Email" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4">
+                                            <label class="slds-form-element__label" style="color:#fff">Email Id 2</label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="Personal_Email" placeholder="Enter Your Email?" ng-model="surveyModel.Personal_Email" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" style="padding: 0;margin: 0;">
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2" Style="padding:0;">
+                                            <label class="slds-form-element__label" style="margin-top: 21px;color:#fff">Telephone Number</label>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4">
+                                            <label class="slds-form-element__label" style="color:#fff">Phone 1<span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="test" class="slds-input" name="Mobile" id="Mobile" placeholder="Enter Your Mobile Number?" ng-model="surveyModel.Mobile" maxlength="10"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4">
+                                            <label class="slds-form-element__label" style="color:#fff">Phone 2</label>
+                                            <div class="slds-form-element__control">
+                                                <input  type="text" class="slds-input" name="Alternate_Mobile" id="Alternate_Mobile" placeholder="Enter Your Mobile Number?" ng-model="surveyModel.Alternate_Mobile" maxlength="10"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--
+                                    <div id="allocated_addresss">
+                                        <div class="row" style="padding: 0;margin: 0;"> 
+                                            <div class="slds-form-element slds-m-top_medium  col-md-2" Style="padding:0;">
+                                                <label class="slds-form-element__label" style="margin-top: 21px;color:#fff"> Address</label>
+                                            </div>
+                                            <div class="slds-form-element slds-m-top_medium col-md-8"  style="position: inherit;">
+                                                <label class="slds-form-element__label" style="color:#fff">
+                                                    Building/Street
+                                                    <span class="symbol required"></span>
+                                                </label>
+                                                <div class="slds-form-element__control">
+                                                    <input type="text" class="slds-input" name="MailingStreet" placeholder="Enter Your Mailing Street?" ng-model="surveyModel.MailingStreet" disabled="true" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row" style="padding: 0;margin: 0;"> 
+                                            <div class="slds-form-element slds-m-top_medium  col-md-2">
+                                                <label class="slds-form-element__label" style="margin-top: 21px;"> </label>
+                                            </div>
+                                            <div class="slds-form-element slds-m-top_medium col-md-4" >
+                                                <label class="slds-form-element__label" style="color:#fff">
+                                                    City
+                                                    <span class="symbol required"></span>
+                                                </label>
+                                                <div class="slds-form-element__control">
+                                                    <input type="text" class="slds-input" name="MailingCity" placeholder="Enter Your Mailing City?" ng-model="surveyModel.MailingCity" disabled="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element slds-m-top_medium col-md-4" >
+                                                <label class="slds-form-element__label" style="color:#fff">
+                                                    Pin Code
+                                                    <span class="symbol required"></span>
+                                                </label>
+                                                <div class="slds-form-element__control">
+                                                    <input type="text" class="slds-input" name="MailingPostalCode" placeholder="Enter Your Mailing Postal Code?" ng-model="surveyModel.MailingPostalCode" disabled="true" maxlength="8"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="slds-form-element slds-m-top_medium  col-md-2">
+                                            <label class="slds-form-element__label" style="margin-top: 21px;"> </label>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4" >
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                State
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="MailingState" placeholder="Enter Your Mailing State?" ng-model="surveyModel.MailingState" disabled="true"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-m-top_medium col-md-4" >
+                                            <label class="slds-form-element__label" style="color:#fff">
+                                                Country
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" class="slds-input" name="MailingCountry" placeholder="Enter Your Mailing Country?" ng-model="surveyModel.MailingCountry" disabled="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    -->
+                                    
+                                </div>
+                                <footer class="slds-card__footer  slds-text-align_center border-top" style="margin-top: 0;">
+                                    
+                                    <button type="button" class="slds-button slds-button_brand slds-m-around_medium" ng-click="saveSurvey(surveryForm)">Confirm</button>
+                                </footer>
+                            </article>
+                        </form>
+                        
+                        <article class="slds-card slds-m-around_large" ng-show="showForm === false">
+                            <div class="slds-card__header">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-grid full-width slds-text-align_center slds-p-bottom_small border-bottom">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-around_small">
+                                            <apex:image url="{!$Resource.experianLogo}" style="max-width: initial;width: 85%;max-width:200px;"/>
+                                        </div>
+                                    </div>
+                                </header>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">
+                                <div class="slds-text-heading_large slds-text-align_center slds-p-bottom_large">Thank You For Submiting this form.</div>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <div class="slds-col slds-size_2-of-12">
+                        
+                    </div>
+                </div>
+                
+                <apex:includeScript value="{!URLFOR($Resource.jquery_js)}" />
+                <apex:includeScript value="{!URLFOR($Resource.jquery_validate)}" />
+                <apex:includeScript value="{!URLFOR($Resource.angular, 'angular.min.js')}" />
+                <apex:includeScript value="{!URLFOR($Resource.angular_validate)}" />
+                <apex:includeScript value="{!URLFOR($Resource.moment)}" />
+                <apex:includeScript value="{!URLFOR($Resource.underscore_js)}" />
+                <apex:includeScript value="{!URLFOR($Resource.angular_bootstrap, 'ui-bootstrap-tpls-2.5.0.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.angular_loader, 'loading-bar.js')}" />
+                
+                <script>
+                var App = angular.module('SurveyApp', [
+                    'ui.bootstrap','ngValidate','chieffancypants.loadingBar'
+                ]);
+                
+                App.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+                    cfpLoadingBarProvider.includeSpinner = true;
+                    var myvar = '<div class="loader_div">'+
+                        '   <div class="sk-folding-cube">'+
+                        '  <div class="sk-cube1 sk-cube"></div>'+
+                        '  <div class="sk-cube2 sk-cube"></div>'+
+                        '  <div class="sk-cube4 sk-cube"></div>'+
+                        '  <div class="sk-cube3 sk-cube"></div>'+
+                        '</div>'+
+                        '</div>';
+                    
+                    cfpLoadingBarProvider.spinnerTemplate = myvar;
+                }]);
+                
+                App.controller('MasterCtrl', function($scope,cfpLoadingBar) {
+                    $scope.contactId = '{!contactId}';
+                    $scope.responseSize = '{!responseSize}';
+                    $scope.responseSize = JSON.parse($scope.responseSize);
+                    
+                    var ls = '{!lResponses1.Salutation}';
+                    var l = '{!lResponses1.FirstName}';
+                    var lr = '{!lResponses1.LastName}';
+                    var lc = '{!lResponses1.Account.Name}';
+                    var le = '{!lResponses1.Email}';
+                    var pe = '{!lResponses1.Email_2__c}';
+                    var lp = '{!lResponses1.Phone}';
+                    var am = '{!lResponses1.Phone_2__c}';
+                    
+                    $scope.surveyModel = {
+                        useOfPlatForm: {
+                            isIndoor: false,
+                            isOutdoor: false,
+                            isBoth: false
+                        },
+                        heightOfPlatForm: {
+                            is6Meter: false,
+                            is16Meter: false,
+                            is40Meter: false
+                        },
+                        Salutation: '',
+                        FirstName: '',
+                        LastName: '',
+                        Company: '',
+                        Email: '',
+                        Personal_Email: '',
+                        Mobile: '',
+                        Alternate_Mobile: '',
+                        typeOfPlatform: {
+                            isScissorLift: false,
+                            isBoomLift: false,
+                            isMounted: false,
+                            isSpiderLift: false
+                        },
+                        budget: '',
+                        followOfBy: {
+                            isPhoneCall: false,
+                            isVideoCall: false,
+                            isDemo: false,
+                            isPersonalVisit: false,
+                            isEmail: false
+                        }
+                    }
+                    $scope.surveyModel.Salutation = ls;
+                    $scope.surveyModel.FirstName = l;
+                    $scope.surveyModel.LastName = lr;
+                    $scope.surveyModel.Company = lc;
+                    $scope.surveyModel.Email= le;
+                    $scope.surveyModel.Personal_Email =pe;
+                    $scope.surveyModel.Mobile = lp;
+                    $scope.surveyModel.Alternate_Mobile =am;
+                    $scope.showForm = null;
+                    if($scope.responseSize == 0){
+                        $scope.showForm = true;
+                    }else{
+                        $scope.showForm = false;
+                    }
+                    
+                    $scope.multicheckboxValues = {
+                        "isIndoor": "Indoor",
+                        "isOutdoor": "Outdoor / Rough terrain",
+                        "isBoth": "Indoor and Outboor",
+                        "is6Meter": "6 to 5 Meters",
+                        "is16Meter": "16 to 40 Meters",
+                        "is40Meter": "40+ Meters",
+                        "isScissorLift": "Scissior Lift",
+                        "isBoomLift": "Boom Lift",
+                        "isMounted": "Truck mounted",
+                        "isSpiderLift": "Spider Lift",
+                        "isPhoneCall": "Phone Call",
+                        "isVideoCall": "Video Call",
+                        "isDemo": "Demo",
+                        "isPersonalVisit": "Personal Visit",
+                        "isEmail": "Email"
+                    }
+                    
+                    $scope.validationOptions = {
+                        rules: {
+                            useOfPlatForm: {
+                                required: true,
+                                minlength: 1
+                            },
+                            heightOfPlatForm: {
+                                required: true
+                            },
+                            Salutation: {
+                                required: true
+                            },
+                            FirstName: {
+                                required: true
+                            },
+                            LastName: {
+                                required: true
+                            },
+                            Company: {
+                                required: true
+                            },
+                            Email: {
+                                required: true
+                            },
+                            Mobile: {
+                                required: true
+                            },
+                            Phone: {
+                                required: true
+                            },
+                            typeOfPlatform: {
+                                required: true
+                            },
+                            budget: {
+                                required: true
+                            },
+                            followOfBy: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                        }
+                    }
+                    
+                    $("input, select").change(function(){
+                        $( "label.error" ).remove();
+                        var fname = $(this).attr('name');
+                        var check = $('input[name='+fname+']').hasClass('error');
+                        var getElement = $(this).closest( ".slds-form-element" );
+                        if(check == false){
+                            getElement.removeClass( "has-error" );
+                        }else{
+                            getElement.addClass( "has-error" );
+                        }
+                        
+                    });
+                    
+                    $.validator.messages.required = '';
+                    Object.size = function(obj) {
+                        var size = 0, key;
+                        for (key in obj) {
+                            if(obj[key] == true){
+                                if (obj.hasOwnProperty(key)) size++;
+                            }
+                        }
+                        return size;
+                    };
+                    $scope.generateString = function(fieldData){                   
+                        var string;
+                        var count = 0
+                        var size = Object.size(fieldData);
+                        console.log('size =====',size);
+                        for(var propt in fieldData){
+                            if(fieldData[propt] == true){
+                                if(count == 0){
+                                    string = $scope.multicheckboxValues[propt]; 
+                                }else if(count != 0){
+                                    string = string + ";"+  $scope.multicheckboxValues[propt]
+                                }
+                                count++;                            
+                            }                        
+                        }
+                        return string;
+                        console.log('string =====',string);
+                    }
+                    
+                    $scope.safeApply = function(fn) {
+                        var phase = this.$root.$$phase;
+                        if (phase == '$apply' || phase ==
+                            '$digest') {
+                            if (fn && (typeof(fn) ===
+                                       'function')) {
+                                fn();
+                            }
+                        } else {
+                            this.$apply(fn);
+                        }
+                    };
+                    
+                    $scope.saveSurvey = function(form){
+                        console.log(form);
+                        if(form.validate()){                        
+                            var model = {
+                                "useOfPlatForm": $scope.generateString($scope.surveyModel.useOfPlatForm),
+                                "heightOfPlatForm": $scope.generateString($scope.surveyModel.heightOfPlatForm),
+                                "Salutation": $scope.surveyModel.Salutation,
+                                "FirstName":$scope.surveyModel.FirstName,
+                                "LastName":$scope.surveyModel.LastName,
+                                "Company":$scope.surveyModel.Company,
+                                "Email":$scope.surveyModel.Email,
+                                "Personal_Email":$scope.surveyModel.Personal_Email,
+                                "Mobile":$scope.surveyModel.Mobile,
+                                "Alternate_Mobile":$scope.surveyModel.Alternate_Mobile,
+                                "typeOfPlatform": $scope.generateString($scope.surveyModel.typeOfPlatform),
+                                "budget": $scope.surveyModel.budget,
+                                "followOfBy": $scope.generateString($scope.surveyModel.followOfBy)
+                            };
+                            
+                            cfpLoadingBar.start();
+                            Visualforce.remoting.Manager.invokeAction(
+                                '{!$RemoteAction.UpdateContactSitePage.updateAWPLead}',
+                                JSON.stringify(model),$scope.contactId,
+                                function(result, event) {
+                                    console.log('result ===', result);
+                                    $scope.safeApply(function() {
+                                        if(result == true){
+                                            cfpLoadingBar.complete();
+                                            $scope.showForm = false;
+                                        }                               
+                                    });
+                                });
+                            console.log('model ======',JSON.stringify(model));
+                        }else{
+                            var getElement = $( "label.error" ).closest( ".slds-form-element" );
+                            console.log('getElement=====',getElement);
+                            getElement.addClass( "has-error" );
+                            $( "label.error" ).remove();
+                        }
+                    }
+                })
+                
+                $(document).ready(function(){
+                    $("#allocated_addresss input").prop('disabled', false);
+                    var alt_mobile= $("#Alternate_Mobile").val();
+                    //alert(alt_mobile);
+                    var res = alt_mobile.split(" ");
+                    // alert(res[0]);
+                    // $("#country_code").html(" Country Code ("+res[0]+")");
+                    // $("#Alternate_Mobile").val(res[1]);
+                    
+                    var mobile= $("#Mobile").val();
+                    //alert(mobile);
+                    var res = mobile.split(" ");
+                    // alert(res[0]);
+                    // $("#country_code").html(" Country Code ("+res[0]+")");
+                    // $("#Mobile").val(res[1]);
+                    
+                    var Phone= $("#Phone").val();
+                    //alert(Phone);
+                    var res = Phone.split(" ");
+                    // alert(res[0]);
+                    // $("#country_code").html(" Country Code ("+res[0]+")");
+                    // $("#Phone").val(res[1]);
+                });
+                
+                </script>
+                
+            </div>
+        </body>
+        </apex:outputPanel>
+    </html>
+</apex:page>

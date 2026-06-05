@@ -1,0 +1,26 @@
+.has-error .slds-form-element__control {
+    color: #5b5b60;
+    /*border-color: #F8F8F8;*/
+    /*border-bottom-color: #a94442 !important;*/
+    /*border-bottom-width: 1px !important;*/
+    /*border-bottom-style: dotted;*/
+    /*border-color: #a94442 !important;*/
+    /*border-width: 1px !important;*/
+    /*border-style: dotted;*/
+}
+
+.has-error .slds-form-element__control:focus,
+.has-error .slds-form-element__control:hover {
+    /*border-color: #F8F8F8;*/
+    /*border-bottom-color: #a94442 !important;*/
+}
+
+.has-error .slds-form-element__label {
+    color: #a94442 !important;
+}
+
+.symbol.required:before {
+  content: "*";
+  display: inline;
+  color: #E6674A;
+}

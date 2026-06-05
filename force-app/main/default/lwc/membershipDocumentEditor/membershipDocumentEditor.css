@@ -1,0 +1,348 @@
+/* Table layout and containers */
+.table-outer-container {
+    position: relative;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 10px 0;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 55vh;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+}
+
+/* Custom Table Styles */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.custom-table th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 12px 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+}
+
+.custom-table td {
+    padding: 8px 6px;
+    vertical-align: middle;
+    border-bottom: 1px solid #edf2f7;
+    border-right: 1px solid #edf2f7;
+}
+
+.custom-table td:last-child {
+    border-right: none;
+}
+
+.data-row {
+    transition: background-color 0.2s ease;
+}
+
+.data-row:hover {
+    background-color: #f7fafc;
+}
+
+/* Helper cell styles */
+.cell-center {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell-doc-name {
+    min-width: 180px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.text-bold {
+    font-weight: 600;
+}
+
+/* Column Header Specific Colors (as per Excel sheet in prompt) */
+.hdr-grey {
+    background-color: #f1f3f5 !important;
+    color: #495057 !important;
+    border-bottom: 3px solid #dee2e6;
+}
+
+.hdr-yellow {
+    background-color: #fffbeb !important; /* light yellow */
+    color: #854d0e !important; /* dark yellow/brown text */
+    border-bottom: 3px solid #fef08a;
+}
+
+.hdr-blue {
+    background-color: #eff6ff !important; /* light blue */
+    color: #1e40af !important; /* dark blue text */
+    border-bottom: 3px solid #bfdbfe;
+}
+
+.hdr-orange {
+    background-color: #fff7ed !important; /* light orange/peach */
+    color: #c2410c !important; /* dark orange text */
+    border-bottom: 3px solid #fed7aa;
+}
+
+.hdr-teal {
+    background-color: #f0fdfa !important; /* light teal */
+    color: #0f766e !important; /* dark teal text */
+    border-bottom: 3px solid #99f6e4;
+}
+
+/* Custom inputs styling */
+.custom-input, 
+.custom-select {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: 1.5px solid #cbd5e0;
+    background-color: #ffffff;
+    color: #2d3748;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+}
+
+.custom-input:hover,
+.custom-select:hover {
+    border-color: #a0aec0;
+}
+
+/* Focus Animations & Glows */
+.custom-input:focus,
+.custom-select:focus {
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.25);
+    background-color: #ffffff;
+}
+
+/* Conditional input background styling for groups */
+.input-yellow, .select-yellow {
+    background-color: #fefdf0;
+}
+.input-yellow:focus, .select-yellow:focus {
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+}
+
+.input-blue, .select-blue {
+    background-color: #f5f9ff;
+}
+.input-blue:focus, .select-blue:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.input-orange, .select-orange {
+    background-color: #fff9f5;
+}
+.input-orange:focus, .select-orange:focus {
+    border-color: #ea580c;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+}
+
+.input-teal {
+    background-color: #f2fdfb;
+}
+.input-teal:focus {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.date-input {
+    min-width: 130px;
+}
+
+/* Custom Checkbox Design */
+.checkbox-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.checkbox-input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.checkbox-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    border: 1.5px solid #cbd5e0;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.checkbox-input:checked + .checkbox-btn {
+    background: #0d9488;
+    border-color: #0d9488;
+}
+
+.checkbox-btn::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-input:checked + .checkbox-btn::after {
+    display: block;
+}
+
+.checkbox-input:focus + .checkbox-btn {
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.3);
+    border-color: #0d9488;
+}
+
+/* Column widths settings to align neatly */
+.col-sr { width: 50px; }
+.col-name { min-width: 180px; }
+.col-status { min-width: 150px; }
+.col-comment { min-width: 160px; }
+.col-exception { width: 90px; }
+.col-date { min-width: 140px; }
+.col-notes { min-width: 160px; }
+
+/* Empty state styling with custom glassmorphism card */
+.empty-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px dashed #cbd5e0;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.empty-illustration {
+    background-color: #fef3c7;
+    padding: 16px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+}
+
+.empty-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 8px;
+}
+
+.empty-subtitle {
+    font-size: 0.9rem;
+    color: #718096;
+    max-width: 320px;
+    margin-bottom: 16px;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+}
+
+/* Footer layout */
+.footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 10px;
+}
+
+/* Button aesthetics */
+.action-btn-primary {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(30, 64, 175, 0.2);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.action-btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(30, 64, 175, 0.3);
+}
+
+.action-btn-primary:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);
+}
+
+.action-btn-secondary {
+    background: #ffffff;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1.5px solid #cbd5e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn-secondary:hover {
+    background: #f7fafc;
+    color: #2d3748;
+    border-color: #a0aec0;
+}
+
+.action-btn-secondary:active {
+    background: #edf2f7;
+}
