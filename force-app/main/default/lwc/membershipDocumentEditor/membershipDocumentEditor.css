@@ -11,7 +11,7 @@
 }
 
 .table-responsive {
-    overflow-x: hidden;   /* no horizontal scroll */
+    overflow-x: auto;   /* horizontal scroll if content overflows */
     overflow-y: auto;
     max-height: 55vh;
     border: 1px solid #e2e8f0;
@@ -29,20 +29,20 @@
 .custom-table th {
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.65rem;       /* reduced from 0.75rem */
-    letter-spacing: 0.03em;   /* reduced from 0.05em */
-    padding: 8px 5px;         /* reduced from 12px 10px */
+    font-size: 0.65rem;
+    letter-spacing: 0.03em;
+    padding: 8px 5px;
     position: sticky;
     top: 0;
     z-index: 10;
     box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
-    white-space: normal;       /* allow wrapping in headers */
+    white-space: normal;
     word-break: break-word;
     line-height: 1.2;
 }
 
 .custom-table td {
-    padding: 5px 4px;          /* reduced from 8px 6px */
+    padding: 5px 4px;
     vertical-align: middle;
     border-bottom: 1px solid #edf2f7;
     border-right: 1px solid #edf2f7;
@@ -68,10 +68,14 @@
     align-items: center;
 }
 
+/* Document name cell: allow full text to wrap */
 .cell-doc-name {
     font-weight: 600;
     color: #2d3748;
     font-size: 0.75rem;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .text-bold {
@@ -113,8 +117,8 @@
 .custom-input, 
 .custom-select {
     width: 100%;
-    padding: 4px 6px;           /* reduced from 6px 10px */
-    font-size: 0.72rem;         /* reduced from 0.85rem */
+    padding: 4px 6px;
+    font-size: 0.72rem;
     border-radius: 4px;
     border: 1.5px solid #cbd5e0;
     background-color: #ffffff;
@@ -137,7 +141,37 @@
     background-color: #ffffff;
 }
 
-/* Conditional input background styling for groups */
+/* Textarea styling */
+.custom-textarea {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 0.72rem;
+    border-radius: 4px;
+    border: 1.5px solid #cbd5e0;
+    background-color: #ffffff;
+    color: #2d3748;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 40px;
+    max-height: 80px;
+    overflow-y: auto;
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+.custom-textarea:hover {
+    border-color: #a0aec0;
+}
+
+.custom-textarea:focus {
+    border-color: #3182ce;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.25);
+    background-color: #ffffff;
+}
+
+/* Conditional input/select/textarea background styling for groups */
 .input-yellow, .select-yellow { background-color: #fefdf0; }
 .input-yellow:focus, .select-yellow:focus {
     border-color: #d97706;
@@ -162,15 +196,40 @@
     box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
 }
 
+/* Textarea color variants */
+.textarea-yellow { background-color: #fefdf0; }
+.textarea-yellow:focus {
+    border-color: #d97706;
+    box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.15);
+}
+
+.textarea-blue { background-color: #f5f9ff; }
+.textarea-blue:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.textarea-orange { background-color: #fff9f5; }
+.textarea-orange:focus {
+    border-color: #ea580c;
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.15);
+}
+
+.textarea-teal { background-color: #f2fdfb; }
+.textarea-teal:focus {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
+}
+
 .date-input {
-    min-width: unset;    /* remove old min-width constraint */
+    min-width: unset;
 }
 
 /* Custom Checkbox Design */
 .checkbox-wrapper {
     display: inline-block;
     position: relative;
-    width: 16px;          /* reduced from 20px */
+    width: 16px;
     height: 16px;
     cursor: pointer;
     vertical-align: middle;
@@ -228,19 +287,18 @@
     border-color: #0d9488;
 }
 
-/* ─── Column widths: fixed layout, all columns share ~100% width ─── */
-.col-sr       { width: 3.5%; }
-.col-name     { width: 12%; }
-.col-status   { width: 9%; }
-.col-comment  { width: 9%; }
-.col-exception { width: 5%; }
-.col-date     { width: 8%; }
-.col-notes    { width: 8%; }
-/* 
-  Layout breakdown (11 columns total):
-  sr(3.5) + name(12) + exe-status(9) + exe-comment(9)
-  + tl-status(9) + tl-comment(9) + adm-status(9) + adm-comment(9)
-  + exception(4) + date(8) + notes(9) = ~100.5% ≈ fits perfectly
+/* ─── Column widths ─── */
+.col-sr        { width: 3%; }
+.col-name      { width: 11%; }
+.col-status    { width: 8%; }
+.col-comment   { width: 12%; }  /* increased from 9% for textarea */
+.col-exception { width: 4%; }
+.col-date      { width: 7%; }
+.col-notes     { width: 8%; }
+/*
+  Layout: sr(3) + name(11) + exe-status(8) + exe-comment(12)
+  + tl-status(8) + tl-comment(12) + adm-status(8) + adm-comment(12)
+  + exception(4) + date(7) + notes(8) = ~93% (slight breathing room for borders)
 */
 
 /* Empty state styling */

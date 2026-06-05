@@ -14,39 +14,37 @@
                         <thead>
                             <tr class="header-row">
                                 <th scope="col" class="hdr-grey col-sr">
-                                    <div class="slds-truncate slds-text-align_center" title="Sr. No.">Sr. No.</div>
+                                    <div class="slds-text-align_center" title="Sr. No.">Sr. No.</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-name">
-                                    <div class="slds-wrap" title="Document Name">Document Name</div>
+                                    <div title="Document Name">Document Name</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-status">
-                                    <div class="slds-wrap" title="Executive Document Status">Executive Document Status</div>
+                                    <div title="Executive Document Status">Executive Document Status</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-comment">
-                                    <div class="slds-wrap" title="Executive Comments">Executive Comments</div>
+                                    <div title="Executive Comments">Executive Comments</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-status">
-                                    <div class="slds-wrap" title="TL Document Status">TL Document Status</div>
+                                    <div title="TL Document Status">TL Document Status</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-comment">
-                                    <div class="slds-wrap" title="TL Comments">TL Comments</div>
+                                    <div title="TL Comments">TL Comments</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-status">
-                                    <div class="slds-wrap" title="Admin Document Status">Admin Document Status</div>
+                                    <div title="Admin Document Status">Admin Document Status</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-comment">
-                                    <div class="slds-wrap" title="Admin Comments">Admin Comments</div>
+                                    <div title="Admin Comments">Admin Comments</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-exception">
-                                    <div class="slds-wrap" title="Is Exception?">
-                                        Is Exception?
-                                    </div>
+                                    <div title="Is Exception?">Is Exception?</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-date">
-                                    <div class="slds-truncate slds-wrap" title="Exception Valid Till">Exception Valid Till</div>
+                                    <div title="Exception Valid Till">Exception Valid Till</div>
                                 </th>
                                 <th scope="col" class="hdr-grey col-notes">
-                                    <div class="slds-truncate slds-wrap" title="Exception Notes">Exception Notes</div>
+                                    <div title="Exception Notes">Exception Notes</div>
                                 </th>
                             </tr>
                         </thead>
@@ -57,11 +55,9 @@
                                     <td class="cell-center text-bold">
                                         {doc.srNo}
                                     </td>
-                                    <!-- Document Name -->
+                                    <!-- Document Name: no truncation, full text wraps -->
                                     <td class="text-bold cell-doc-name">
-                                        <div class="slds-truncate" title={doc.Document_Name__c}>
-                                            {doc.Document_Name__c}
-                                        </div>
+                                        {doc.Document_Name__c}
                                     </td>
                                     <!-- Executive Status -->
                                     <td>
@@ -81,15 +77,14 @@
                                             </template>
                                         </select>
                                     </td>
-                                    <!-- Executive Comments -->
+                                    <!-- Executive Comments (textarea) -->
                                     <td>
-                                        <input 
-                                            type="text" 
+                                        <textarea 
                                             data-id={doc.Id} 
                                             data-field="Executive_Comments__c" 
-                                            value={doc.Executive_Comments__c} 
-                                            class="custom-input input-yellow" 
-                                            oninput={handleInputChange} />
+                                            class="custom-textarea textarea-yellow" 
+                                            rows="2"
+                                            oninput={handleInputChange}>{doc.Executive_Comments__c}</textarea>
                                     </td>
                                     <!-- TL Status -->
                                     <td>
@@ -109,15 +104,14 @@
                                             </template>
                                         </select>
                                     </td>
-                                    <!-- TL Comments -->
+                                    <!-- TL Comments (textarea) -->
                                     <td>
-                                        <input 
-                                            type="text" 
+                                        <textarea 
                                             data-id={doc.Id} 
                                             data-field="TL_Comments__c" 
-                                            value={doc.TL_Comments__c} 
-                                            class="custom-input input-blue" 
-                                            oninput={handleInputChange} />
+                                            class="custom-textarea textarea-blue" 
+                                            rows="2"
+                                            oninput={handleInputChange}>{doc.TL_Comments__c}</textarea>
                                     </td>
                                     <!-- Admin Status -->
                                     <td>
@@ -137,15 +131,14 @@
                                             </template>
                                         </select>
                                     </td>
-                                    <!-- Admin Comments -->
+                                    <!-- Admin Comments (textarea) -->
                                     <td>
-                                        <input 
-                                            type="text" 
+                                        <textarea 
                                             data-id={doc.Id} 
                                             data-field="Admin_Comments__c" 
-                                            value={doc.Admin_Comments__c} 
-                                            class="custom-input input-orange" 
-                                            oninput={handleInputChange} />
+                                            class="custom-textarea textarea-orange" 
+                                            rows="2"
+                                            oninput={handleInputChange}>{doc.Admin_Comments__c}</textarea>
                                     </td>
                                     <!-- Is Exception? -->
                                     <td class="cell-center">
@@ -170,15 +163,14 @@
                                             class="custom-input input-teal date-input" 
                                             onchange={handleInputChange} />
                                     </td>
-                                    <!-- Exception Notes -->
+                                    <!-- Exception Notes (textarea) -->
                                     <td>
-                                        <input 
-                                            type="text" 
+                                        <textarea 
                                             data-id={doc.Id} 
                                             data-field="Exception_Notes__c" 
-                                            value={doc.Exception_Notes__c} 
-                                            class="custom-input input-teal" 
-                                            oninput={handleInputChange} />
+                                            class="custom-textarea textarea-teal" 
+                                            rows="2"
+                                            oninput={handleInputChange}>{doc.Exception_Notes__c}</textarea>
                                     </td>
                                 </tr>
                             </template>
