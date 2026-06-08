@@ -1,0 +1,662 @@
+<template>
+    <lightning-card>
+        <template if:true={showSpinner}>
+            <div class="spinner-overlay">
+                <lightning-spinner size="medium"></lightning-spinner>
+            </div>
+        </template>
+        <lightning-tabset active-tab-value={activeTab} onactive={handleTabChange}>
+            <lightning-tab label="New Case" value="new">
+                <lightning-card>
+                    <div class="slds-align_absolute-center"><label style="font-size: 20px;"><b>New Case</b></label>
+                    </div>
+                    <div class="slds-p-around_medium">
+
+                        <lightning-record-edit-form object-api-name="Case">
+                            <template for:each={caseFields} for:item="cse">
+                                <lightning-layout multiple-rows key={cse.index} class="slds-wrap slds-gutters">
+
+                                    <!-- Row 1 -->
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Case
+                                            Category</label>
+                                        <lightning-input-field field-name="Case_Category__c" variant="label-hidden"
+                                            data-index={cse.index} disabled value={cse.Case_Category}
+                                            data-label="Case_Category"
+                                            onchange={handleCaseChange}></lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Case
+                                            Complaint</label>
+                                        <lightning-input-field field-name="Case_Complaints__c" variant="label-hidden"
+                                            data-index={cse.index} disabled value={cse.Case_Complaints}
+                                            data-label="Case_Complaints"
+                                            onchange={handleCaseChange}></lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Case Type</label>
+                                        <lightning-input-field field-name="Case_Type_Lookup__c" variant="label-hidden"
+                                            data-index={cse.index} disabled value={cse.Case_Type_Lookup}
+                                            data-label="Case_Type_Lookup"
+                                            onchange={handleCaseChange}></lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Sub Type</label>
+
+                                        <c-prod-reusable-lookup label="Parent Account"
+                                            selected-icon-name="standard:account" data-label="Sub_Type_Lookup"
+                                            data-index={cse.index} object-label="" parent-id={cse.Case_Type_Lookup}
+                                            object-api-name="Sub_Type__c" field-api-name="Name" other-field-api-name=""
+                                            onvalueselected={lookUpAccount}>
+
+                                        </c-prod-reusable-lookup>
+
+
+                                        <!-- <lightning-input-field field-name="Sub_Type_Lookup__c" variant="label-hidden" data-index={cse.index} data-label="Sub_Type_Lookup" onchange={handleCaseChange}></lightning-input-field> -->
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Sub Type 1</label>
+                                        <c-prod-reusable-lookup label="Parent Account"
+                                            selected-icon-name="standard:account" data-label="Sub_Type_1_Lookup"
+                                            object-label="" data-index={cse.index} parent-id={cse.Sub_Type_Lookup}
+                                            object-api-name="Sub_Type1__c" field-api-name="Name" other-field-api-name=""
+                                            onvalueselected={lookUpV1Account}>
+
+                                        </c-prod-reusable-lookup>
+                                    </lightning-layout-item>
+
+                                    <!-- Row 2 -->
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Dispute Received Date</label>
+
+                                        <!-- <lightning-input-field field-name="Date_of_the_email_received__c" variant="label-hidden"
+                                 value={cse.Date_of_the_email_received} data-index={cse.index}
+                                data-label="Date_of_the_email_received" onchange={handleCaseDateDisRaisedChange}>
+                            </lightning-input-field> -->
+
+
+                                        <lightning-input type="date" name="Date_of_the_email_received__c"
+                                            variant="label-hidden" data-index={cse.index} max={today}
+                                            data-label="Date_of_the_email_received"
+                                            onchange={handleCaseDateDisRaisedChange}
+                                            message-when-bad-input="Dispute Received Date must be in the past or today.">
+                                        </lightning-input>
+
+
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Account
+                                            Name</label>
+                                        <lightning-input-field field-name="AccountId" variant="label-hidden"
+                                            data-index={cse.index} data-label="AccountId"
+                                            onchange={handleCaseChange}></lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">ERN
+                                        </label>
+                                        <lightning-input-field field-name="Dis_Ern__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Dis_Ern"
+                                            onchange={handleCaseChange}></lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Displayed Account
+                                            Number</label>
+                                        <lightning-input-field field-name="Displayed_Account_number__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Account_number"
+                                            onchange={handleCaseChange}></lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Displayed Account
+                                            Type</label>
+                                        <!-- <lightning-input-field field-name="Displayed_Account_Type__c" variant="label-hidden"
+                                data-index={cse.index} data-label="Displayed_Account_Type" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+
+                                        <lightning-combobox name="loanType" label="Select Account Type"
+                                            value={selectedLoanType} variant="label-hidden" options={loanTypeOptions}
+                                            data-label="Displayed_Account_Type" data-index={cse.index}
+                                            onchange={handleCaseChange}>
+                                        </lightning-combobox>
+
+
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Contact
+                                            Name</label>
+                                        <!-- <lightning-input-field field-name="Contact_Name__c" variant="label-hidden"
+                                data-index={cse.index} data-label="Contact_Name" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input variant="label-hidden" type="text" label="Contact Name"
+                                            onchange={handleCaseChange} onkeydown={preventNumbers}
+                                            data-index={cse.index} data-label="Contact_Name">
+                                        </lightning-input>
+                                    </lightning-layout-item>
+
+                                    <!-- Row 3 -->
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Contact PAN</label>
+                                        <!-- <lightning-input-field field-name="ContactPan__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactPan" onchange={handleCasePanChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input name="ContactPan__c" label="Contact PAN" variant="label-hidden"
+                                            max data-index={cse.index} data-label="ContactPan"
+                                            onchange={handleCasePanChange}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isKYC}>
+                                        <label class="slds-form-element__label">Displayed PAN No</label>
+                                        <!-- <lightning-input-field field-name="ContactPan__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactPan" onchange={handleCasePanChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input name="Displayed_PAN_No__c" label="Contact PAN"
+                                            variant="label-hidden" max data-index={cse.index} data-label="DisplayedKYC"
+                                            onchange={handleCasePanChange}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isKYC}>
+                                        <label class="slds-form-element__label">Correct PAN No</label>
+                                        <!-- <lightning-input-field field-name="ContactPan__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactPan" onchange={handleCasePanChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input name="Correct_PAN_No__c" label="Contact PAN"
+                                            variant="label-hidden" max data-index={cse.index} data-label="CorrectKYC"
+                                            onchange={handleCasePanChange}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isMobileNo}>
+                                        <label class="slds-form-element__label">Displayed Mobile No
+                                        </label>
+
+                                        <lightning-input type="tel" name="ContactMobileNo__c" label="Contact Mobile No"
+                                            variant="label-hidden" maxlength="10" minlength="10" pattern="[0-9]{10}"
+                                            data-index={cse.index} data-label="DisplayedMobileNo"
+                                            onchange={handleCaseMobileChange}
+                                            message-when-pattern-mismatch="Mobile number must be exactly 10 digits.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isMobileNo}>
+                                        <label class="slds-form-element__label">Correct Mobile No</label>
+
+                                        <lightning-input type="tel" name="ContactMobileNo__c" label="Contact Mobile No"
+                                            variant="label-hidden" maxlength="10" minlength="10" pattern="[0-9]{10}"
+                                            data-index={cse.index} data-label="CorrectMobileNo"
+                                            onchange={handleCaseMobileChange}
+                                            message-when-pattern-mismatch="Mobile number must be exactly 10 digits.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Contact Mobile
+                                            No</label>
+                                        <!-- <lightning-input-field field-name="ContactMobileNo__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactMobileNo" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input type="tel" name="ContactMobileNo__c" label="Contact Mobile No"
+                                            variant="label-hidden" maxlength="10" minlength="10" pattern="[0-9]{10}"
+                                            data-index={cse.index} data-label="ContactMobileNo"
+                                            onchange={handleCaseMobileChange}
+                                            message-when-pattern-mismatch="Mobile number must be exactly 10 digits.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Date of
+                                            Birth</label>
+                                        <!-- <lightning-input-field field-name="Contact_Date_of_Birth__c" variant="label-hidden"
+                                data-index={cse.index} data-label="Contact_Date_of_Birth" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+
+                                        <lightning-input type="date" name="Contact_Date_of_Birth__c"
+                                            label="Date of Birth" variant="label-hidden" max={today}
+                                            data-index={cse.index} data-label="Contact_Date_of_Birth"
+                                            onchange={handleCaseDateBRChange}
+                                            message-when-bad-input="Date of Birth must be before today.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isEmail}>
+                                        <label class="slds-form-element__label">Displayed Email Id
+                                        </label>
+                                        <!-- <lightning-input-field field-name="ContactEmailId__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactEmailId" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input type="email" name="Displayed_Email_Id__c" label="Email ID"
+                                            variant="label-hidden" data-index={cse.index} data-label="DisplayedEmail"
+                                            onchange={handleCaseEmailChange}
+                                            message-when-type-mismatch="Email ID: Must follow a standard email format.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isEmail}>
+                                        <label class="slds-form-element__label">Correct Email
+                                            Id</label>
+                                        <!-- <lightning-input-field field-name="ContactEmailId__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactEmailId" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input type="email" name="Correct_email_id__c" label="Email ID"
+                                            variant="label-hidden" data-index={cse.index} data-label="CorrectEmail"
+                                            onchange={handleCaseEmailChange}
+                                            message-when-type-mismatch="Email ID: Must follow a standard email format.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Contact Email
+                                            Id</label>
+                                        <!-- <lightning-input-field field-name="ContactEmailId__c" variant="label-hidden"
+                                data-index={cse.index} data-label="ContactEmailId" onchange={handleCaseChange}>
+                            </lightning-input-field> -->
+
+                                        <lightning-input type="email" name="ContactEmailId__c" label="Email ID"
+                                            variant="label-hidden" data-index={cse.index} data-label="ContactEmailId"
+                                            onchange={handleCaseEmailChange}
+                                            message-when-type-mismatch="Email ID: Must follow a standard email format.">
+                                        </lightning-input>
+
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Contact
+                                            Address</label>
+                                        <lightning-input-field field-name="Contact_Address__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Contact_Address"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Contact Gender</label>
+                                        <lightning-input-field field-name="Contact_Gender__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Contact_Gender"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <!-- Row 4 -->
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isLoanBalance}>
+                                        <label class="slds-form-element__label">
+                                            Displayed Loan Balance</label>
+                                        <lightning-input-field field-name="Displayed_Loan_Balance__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Loan_Balance" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isLoanBalance}>
+                                        <label class="slds-form-element__label">
+                                            Correct Loan Balance</label>
+                                        <lightning-input-field field-name="Correct_Loan_Balance__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Correct_Loan_Balance" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isOverDue}>
+                                        <label class="slds-form-element__label"><span style="color:red">*</span>
+                                            Displayed Overdue Amount</label>
+                                        <lightning-input-field field-name="Displayed_Overdue_Amount__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Overdue_Amount" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isOverDue}>
+                                        <label class="slds-form-element__label">
+                                            Correct Overdue Amount</label>
+                                        <lightning-input-field field-name="Correct_Overdue_Amount__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Correct_Overdue_Amount" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isAccountStatus}>
+                                        <label class="slds-form-element__label">
+                                            Displayed Account Status</label>
+                                        <lightning-input-field field-name="Displayed_Account_Status__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Account_Status" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isAccountStatus}>
+                                        <label class="slds-form-element__label"><span style="color:red">*</span>
+                                            Correct Account Status</label>
+                                        <lightning-input-field field-name="Correct_Account_Status__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Correct_Account_Status" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isAccOpenDate}>
+                                        <label class="slds-form-element__label"><span style="color:red">*</span>
+                                            Displayed Account Opening Date</label>
+                                        <lightning-input-field field-name="Displayed_Account_Opening_Date__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Account_Opening_Date" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isAccOpenDate}>
+                                        <label class="slds-form-element__label">Correct Account Opening Date</label>
+                                        <lightning-input-field field-name="Correct_Account_Opening_Date__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Correct_Account_Opening_Date" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isLoanOwner}>
+                                        <label class="slds-form-element__label">Displayed loan ownership</label>
+                                        <lightning-input-field field-name="Displayed_loan_ownership__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_loan_ownership" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isLoanOwner}>
+                                        <label class="slds-form-element__label">Correct loan ownership</label>
+                                        <lightning-input-field field-name="Correct_loan_ownership__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Correct_loan_ownership" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isLoanType}>
+                                        <label class="slds-form-element__label">Displayed loan type</label>
+                                        <lightning-input-field field-name="Displayed_loan_type__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_loan_type" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isLoanType}>
+                                        <label class="slds-form-element__label">Correct loan Type</label>
+                                        <lightning-input-field field-name="Correct_loan_type__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Correct_loan_type"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isCredit}>
+                                        <label class="slds-form-element__label">Displayed Credit Facility Status</label>
+                                        <lightning-input-field field-name="Displayed_Credit_Facility_Status__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Credit_Facility_Status" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isCredit}>
+                                        <label class="slds-form-element__label">Correct Credit Facility Status</label>
+                                        <lightning-input-field field-name="Corrected_Credit_Facility_Status__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Corrected_Credit_Facility_Status" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isDName}>
+                                        <label class="slds-form-element__label">Displayed Name</label>
+                                        <lightning-input-field field-name="Displayed_Name__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Displayed_Name"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isDName}>
+                                        <label class="slds-form-element__label">Correct Name</label>
+                                        <lightning-input-field field-name="Correct_Name__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Correct_Name"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isDOB}>
+                                        <label class="slds-form-element__label">Displayed Date of Birth</label>
+                                        <lightning-input-field field-name="Displayed_Date_of_Birth__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Displayed_Date_of_Birth" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isDOB}>
+                                        <label class="slds-form-element__label">Correct Date of Birth</label>
+                                        <lightning-input-field field-name="Correct_Date_of_Birth__c"
+                                            variant="label-hidden" data-index={cse.index}
+                                            data-label="Correct_Date_of_Birth" onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isDG}>
+                                        <label class="slds-form-element__label">Displayed Gender</label>
+                                        <lightning-input-field field-name="Displayed_Gender__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Displayed_Gender"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isDG}>
+                                        <label class="slds-form-element__label">Correct Gender</label>
+                                        <lightning-input-field field-name="Correct_Gender__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Correct_Gender"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <!-- <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                            if:true={cse.isMN}>
+                            <label class="slds-form-element__label">Displayed Mobile No 1</label>
+                            <lightning-input-field field-name="Displayed_Mobile_No__c" variant="label-hidden"
+                                data-index={cse.index} data-label="Displayed_Mobile_No" onchange={handleCaseChange}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                            if:true={cse.isMN}>
+                            <label class="slds-form-element__label">Correct Mobile No 1</label>
+                            <lightning-input-field field-name="Correct_Mobile_No__c" variant="label-hidden"
+                                data-index={cse.index} data-label="Correct_Mobile_No" onchange={handleCaseChange}>
+                            </lightning-input-field>
+                        </lightning-layout-item> -->
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isA1}>
+                                        <label class="slds-form-element__label">Displayed Address 1</label>
+                                        <lightning-input-field field-name="Displayed_Address__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Displayed_Address"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2"
+                                        if:true={cse.isA1}>
+                                        <label class="slds-form-element__label">Correct Address 1</label>
+                                        <lightning-input-field field-name="Correct_Address__c" variant="label-hidden"
+                                            data-index={cse.index} data-label="Correct_Address"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+
+                                    <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                                        <label class="slds-form-element__label">Origin</label>
+                                        <lightning-input-field field-name="Origin" variant="label-hidden"
+                                            data-index={cse.index} value={cse.Origin} data-label="Origin"
+                                            onchange={handleCaseChange}>
+                                        </lightning-input-field>
+                                    </lightning-layout-item>
+
+                                    <!-- <lightning-layout-item class="slds-p-around_small" size="12" large-device-size="2">
+                            <div class="slds-p-around_large">
+                        <lightning-icon icon-name="action:new" size="x-small" data-index={cse.index}
+                                            onclick={addCases}>
+                                        </lightning-icon>
+                                        <lightning-icon icon-name="action:remove" size="x-small"
+                                            class="slds-m-left_x-small" data-index={cse.index}
+                                            onclick={removeCases}>
+                                        </lightning-icon>
+                                        </div>
+
+                                        </lightning-layout-item> -->
+
+                                </lightning-layout>
+                            </template>
+                        </lightning-record-edit-form>
+
+                    </div>
+
+
+                    <div slot="footer" class="slds-p-around_medium slds-align_absolute-center">
+                        <lightning-button label="Refresh" onclick={handleCancel}></lightning-button>
+                        <lightning-button variant="brand" class="slds-m-left_x-small" label="Save"
+                            disabled={saveDisabled} onclick={handleSave}>
+
+                            <!-- disabled={saveDisabled} -->
+                        </lightning-button>
+                        <!-- <lightning-button variant="brand" class="slds-m-left_x-small" label="Generate PI"  onclick={handleGeneratePI}> -->
+                        <!-- <lightning-button variant="brand" class="slds-m-left_x-small" label="Generate PI" if:true={isShowGeneratePI}
+                        onclick={handleGeneratePI}>
+                    </lightning-button> -->
+                    </div>
+                </lightning-card>
+            </lightning-tab>
+            <lightning-tab label="Upload Case" value="upload">
+                <div class="slds-p-around_medium">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-wrap">
+
+                        <div class="slds-m-right_small">
+                            <button class="slds-button slds-button_success" onclick={handleDownloadSample}>
+                                Download Sample File
+                            </button>
+                        </div>
+
+                        <div class="slds-m-right_small">
+                            <lightning-input type="file" accept={acceptedFormats} variant="label-hidden"
+                                onchange={handleFileChange} label="Upload CSV">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-m-right_small">
+                            <button class="slds-button slds-button_brand" onclick={handleDone} disabled={disableStartUpload}>
+                                Start Upload
+                            </button>
+                        </div>
+
+                        <template if:true={csvData.length}>
+                            <div>
+                                <lightning-button label="Download All (CSV)" variant="brand" onclick={downloadBeforeCsv}
+                                    disabled={isDownloadResult}>
+                                </lightning-button>
+                            </div>
+
+                            <div class="slds-m-left_small">
+                                <lightning-button label="Download Error (CSV)" variant="brand"
+                                    onclick={downloadErrorCsv} disabled={isDownloadError}>
+                                </lightning-button>
+                            </div>
+                        </template>
+                        <div class="slds-m-left_medium">
+                            <c-progress-bar percentage={percentage}></c-progress-bar>
+                        </div>
+
+                        <!-- ✅ ALWAYS VISIBLE COUNTS -->
+                        <div class="slds-m-left_medium slds-text-body_small">
+                            <div><strong>Total:</strong> {totalLoadedCase}</div>
+                            <div class="slds-text-color_success">
+                                <strong>Success:</strong> {successCase}
+                            </div>
+                            <div class="slds-text-color_error">
+                                <strong>Failed:</strong> {failedCase}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <template if:true={csvData.length}>
+                    <div class="slds-p-around_medium slds-m-horizontal_medium">
+                        <lightning-datatable key-field="index" data={csvData} columns={columns} hide-checkbox-column>
+                        </lightning-datatable>
+                    </div>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

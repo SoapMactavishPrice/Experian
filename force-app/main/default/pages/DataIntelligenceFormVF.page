@@ -1,0 +1,27 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />
+
+    <div id="lwcContainer"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("DOM loaded, initializing Lightning Out");
+
+            $Lightning.use(
+                "c:DataIntelligenceFormOut",
+                function () {
+                    console.log("Lightning Out loaded successfully");
+
+                    $Lightning.createComponent(
+                        "c:DataIntelligenceForm",
+                        {},
+                        "lwcContainer",
+                        function (cmp) {
+                            console.log("LWC loaded successfully");
+                        }
+                    );
+                }
+            );
+        });
+    </script>
+</apex:page>

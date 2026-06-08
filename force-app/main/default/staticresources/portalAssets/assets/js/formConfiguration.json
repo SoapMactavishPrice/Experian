@@ -1,0 +1,15 @@
+{
+    "formName" : "docUploadForm",
+    "forfields" : [
+        {
+            "fieldsName" : "Pan Card",
+            "fieldsId" : "pan_card_Id",
+            "name" : "Pan_Card",
+            "type" : "text",
+            "placeholder" : "Pan Card Number",
+            "required" : true,
+            "Maxlength":10,
+            "Minlength": 10
+        }
+    ]
+}

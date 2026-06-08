@@ -1,0 +1,25 @@
+<apex:page renderAs="pdf" controller="noGstLetterController">
+    
+    <p>
+        <b> To<br/>Membership Team<br/>ECICI,</b>
+    </p>
+    <p>
+        This is to confirm that we at  {!Company}, do hereby state that as we have the turnover below the taxable limit as specified under the Goods and Services Tax Act we are not required to get ourselves registered under the Goods and Services Tax 2017.
+    </p>
+    <p>
+        We hereby also confirm that if during any financial year we decide or required to register under the GST in that case we undertake to provide all the requisite information and documents. We request you to treat this communication as a declaration regarding non-requirement to be registered under the Goods and Service Tax Act, 2017.
+    </p>
+    <p>
+        This is a computer generated document and hence signature is not required. 
+</p>
+    <p>
+        {!First_Name_AuSig_c} {!Last_Name_AuSig_c} 
+    </p>
+    <p>
+        {!Company} 
+    </p>
+    <p>
+        {!DAY(TODAY())}/{!MONTH(TODAY())}/{!YEAR(TODAY())}
+    </p>
+    
+</apex:page>

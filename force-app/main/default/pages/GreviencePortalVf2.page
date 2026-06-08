@@ -1,0 +1,17 @@
+<apex:page showHeader="false" Controller="GrievancesNodalOfficersPortal">
+    <apex:includeLightning />
+    <div id="lightningvf" style="width: 99%; margin-left: 0.25%" />
+
+    <script>
+        $Lightning.use("c:GreviencePortal", function() {
+          $Lightning.createComponent("c:GrevienceLWCCmp",
+              { recordId : '{!accId}'},
+              "lightningvf",
+              function(cmp) {
+                console.log('LWC Componenet added in VF page','{!accId}');
+                // do some stuff
+              }
+          );
+        });
+    </script>
+</apex:page>

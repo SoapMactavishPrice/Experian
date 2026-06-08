@@ -1,0 +1,33 @@
+.swapper {
+    white-space: normal;  /* Allow text to wrap */
+    overflow-wrap: break-word; /* Break long words when necessary */
+    word-wrap: break-word; /* Legacy support for older browsers */
+    text-overflow: clip; /* Prevent text overflow clipping */
+}
+
+
+.progress-container {
+    width: 60px;
+    height: 60px;
+}
+
+.circular-progress {
+    transform: rotate(-90deg); /* To start the progress at the top */
+}
+
+.circle-bg {
+    stroke: #f3f3f3;
+}
+
+.circle {
+    stroke: #4db8ff;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease-out;
+}
+
+.percentage {
+    font-size: 10px;
+    font-weight: bold;
+    fill: #333;
+    pointer-events: none;
+}

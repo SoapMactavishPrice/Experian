@@ -1,0 +1,340 @@
+{
+    "caseType": [{
+        "cName": "Complaint",
+        "cSubType": [{
+                "cSName": "Website Related",
+                "cSSType": [{
+                    "cSSName": "Website not working"
+                }]
+            },
+            {
+                "cSName": "Password query",
+                "cSSType": [{
+                    "cSSName": "Not received the password"
+                }, {
+                    "cSSName": "Does not open"
+                }, {
+                    "cSSName": "Password Not Working"
+                }]
+            },
+            {
+                "cSName": "ECV related",
+                "cSSType": [{
+                    "cSSName": "Unable to login"
+                }, {
+                    "cSSName": "OTP not received"
+                }, {
+                    "cSSName": "Credit report Not Received"
+                }, {
+                    "cSSName": "Unable to Register"
+                }, {
+                    "cSSName": "Unable to receive refreshed Report"
+                }]
+            },
+            {
+                "cSName": "Call Center",
+                "cSSType": [{
+                    "cSSName": "Agent attitude Issue"
+                }, {
+                    "cSSName": "Agent communication Issue"
+                }, {
+                    "cSSName": "Frequent Call Drop"
+                }, {
+                    "cSSName": "Extended Call Hold"
+                }, {
+                    "cSSName": "Abusive Language"
+                }, {
+                    "cSSName": "Overall Response"
+                }]
+            },
+            {
+                "cSName": "Application not working",
+                "cSSType": [{
+                    "cSSName": "Unable to raise a request online"
+                }, {
+                    "cSSName": "Unable to pull data"
+                }]
+            },
+            {
+                "cSName": "Web Pull Id's",
+                "cSSType": [{
+                    "cSSName": "Security Designate Role"
+                }, {
+                    "cSSName": "Create New Ids"
+                }, {
+                    "cSSName": "Id Deactivated"
+                }, {
+                    "cSSName": "Id Locked"
+                }, {
+                    "cSSName": "Forgot the password"
+                }, {
+                    "cSSName": "Unable to reset the passowrd"
+                }]
+            },
+            {
+                "cSName": "STS / SFTP link",
+                "cSSType": [{
+                    "cSSName": "Security Designate Role"
+                }, {
+                    "cSSName": "Create New Ids"
+                }, {
+                    "cSSName": "Id Deactivated"
+                }, {
+                    "cSSName": "Id Locked"
+                }, {
+                    "cSSName": "Forgot the password"
+                }]
+            },
+            {
+                "cSName": "Data Quality / Rejection Report",
+                "cSSType": [{
+                    "cSSName": "DQR to be sent"
+                }, {
+                    "cSSName": "DQR not received"
+                }, {
+                    "cSSName": "Understanding the DQR"
+                }, {
+                    "cSSName": "Have uploaded the information"
+                }]
+            },
+            {
+                "cSName": "Require Application Access",
+                "cSSType": [{
+                    "cSSName": "Call Center Application"
+                }]
+            },
+            {
+                "cSName": "STS / SFTP password",
+                "cSSType": [{
+                    "cSSName": "Unable to reset the passowrd"
+                }]
+            }
+        ]
+    }, {
+        "cName": "Dispute",
+        "cSubType": [{
+                "cSName": "Account Status",
+                "cSSType": [{
+                    "cSSName": "Closed"
+                }, {
+                    "cSSName": "Active"
+                }, {
+                    "cSSName": "Settled"
+                }]
+            },
+            {
+                "cSName": "Balance Issue",
+                "cSSType": [{
+                    "cSSName": "Balance Issue"
+                }]
+            },
+            {
+                "cSName": "Days past due",
+                "cSSType": [{
+                    "cSSName": "Days past due"
+                }, {
+                    "cSSName": ""
+                }]
+            },
+            {
+                "cSName": "Account not reflecting",
+                "cSSType": [{
+                    "cSSName": "Account not reflecting"
+                }]
+            },
+            {
+                "cSName": "Account ownership issue",
+                "cSSType": [{
+                    "cSSName": "Does not belong to me"
+                }]
+            },
+            {
+                "cSName": "Account Details",
+                "cSSType": [{
+                    "cSSName": "Incorrect Name"
+                }, {
+                    "cSSName": "Incorrect Date of birth"
+                }, {
+                    "cSSName": "Incorrect Gender"
+                }, {
+                    "cSSName": "Incorrect Address"
+                }, {
+                    "cSSName": "Incorrect Email IID"
+                }, {
+                    "cSSName": "Incorrect Mobile No."
+                }, {
+                    "cSSName": "PAN no"
+                }]
+            },
+            {
+                "cSName": "Account Type",
+                "cSSType": [{
+                    "cSSName": "Joint"
+                }, {
+                    "cSSName": "Guarantor"
+                }]
+            },
+            {
+                "cSName": "Enquiry Related",
+                "cSSType": [{
+                    "cSSName": "Enquiry Related Credit"
+                }, {
+                    "cSSName": "Enquiry Related Non Credit"
+                }]
+            },
+            {
+                "cSName": "Account",
+                "cSSType": [{
+                    "cSSName": "Reflecting more than once"
+                }]
+            },
+            {
+                "cSName": "Score related issue",
+                "cSSType": [{
+                    "cSSName": "Score drop Less than 30 points"
+                }, {
+                    "cSSName": "Score drop more than 30 points"
+                }]
+            },
+            {
+                "cSName": "Loan type",
+                "cSSType": [{
+                    "cSSName": "Gold"
+                }, {
+                    "cSSName": "Education"
+                }, {
+                    "cSSName": "Home"
+                }, {
+                    "cSSName": "Auto"
+                }, {
+                    "cSSName": "Saving Account"
+                }, {
+                    "cSSName": "Current Account"
+                }]
+            }
+        ]
+    }, {
+        "cName": "Query",
+        "cSubType": [{
+                "cSName": "Score related issue",
+                "cSSType": [{
+                    "cSSName": "Score drop Less than 30 points"
+                }, {
+                    "cSSName": "Score drop more than 30 points"
+                }]
+            },
+            {
+                "cSName": "Personal Details",
+                "cSSType": [{
+                    "cSSName": "To update contact details"
+                }]
+            },
+            {
+                "cSName": "How to apply",
+                "cSSType": [{
+                    "cSSName": "Credit Report"
+                }]
+            },
+            {
+                "cSName": "General Query",
+                "cSSType": [{
+                    "cSSName": "General Query"
+                }]
+            },
+            {
+                "cSName": "Credit report",
+                "cSSType": [{
+                    "cSSName": "Score related"
+                }, {
+                    "cSSName": "UTI Number Required"
+                }]
+            },
+            {
+                "cSName": "Web Pull Id's",
+                "cSSType": [{
+                    "cSSName": "Security Designate Role"
+                }, {
+                    "cSSName": "Create New Ids"
+                }, {
+                    "cSSName": "Id Deactivated"
+                }, {
+                    "cSSName": "Id Locked"
+                }, {
+                    "cSSName": "Forgot the password"
+                }, {
+                    "cSSName": "Unable to reset the passowrd"
+                }]
+            },
+            {
+                "cSName": "STS / SFTP link",
+                "cSSType": [{
+                    "cSSName": "Security Designate Role"
+                }, {
+                    "cSSName": "Create New Ids"
+                }, {
+                    "cSSName": "Id Deactivated"
+                }, {
+                    "cSSName": "Id Locked"
+                }, {
+                    "cSSName": "Forgot the password"
+                }]
+            },
+            {
+                "cSName": "Membership Status",
+                "cSSType": [{
+                    "cSSName": "Details"
+                }]
+            },
+            {
+                "cSName": "CIR",
+                "cSSType": [{
+                    "cSSName": "Discrepancy in the customer credit report"
+                }, {
+                    "cSSName": "How to read the report"
+                }]
+            },
+            {
+                "cSName": "Application Support/Help",
+                "cSSType": [{
+                    "cSSName": "Call Center Application"
+                }, {
+                    "cSSName": "Web Pull Id's"
+                }, {
+                    "cSSName": "STS / SFTP link"
+                }]
+            },
+            {
+                "cSName": "Data Uploading Process",
+                "cSSType": [{
+                    "cSSName": "STS process"
+                }]
+            },
+            {
+                "cSName": "Invoice/Receipt/Payment",
+                "cSSType": [{
+                    "cSSName": "Status"
+                }, {
+                    "cSSName": "Clarification"
+                }]
+            },
+            {
+                "cSName": "Login issue"
+            }
+        ]
+    }, {
+        "cName": "Appreciation",
+        "cSubType": [{
+                "cSName": "Call",
+                "cSSType": [{
+                    "cSSName": "For Services Rendered"
+                }]
+            },
+            {
+                "cSName": "Email",
+                "cSSType": [{
+                    "cSSName": "For Services Rendered"
+                }]
+            }
+        ]
+    }]
+}

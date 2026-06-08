@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />
+    <div id="lwcContainer"></div>
+
+    <script>
+        $Lightning.use("c:CompensationChildCaseApp", function() {
+            $Lightning.createComponent(
+                "c:childCaseDataTable",
+                {},
+                "lwcContainer",
+                function(cmp) {}
+            );
+        });
+    </script>
+</apex:page>

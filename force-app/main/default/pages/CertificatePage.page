@@ -1,0 +1,68 @@
+<apex:page >
+    <head>
+        <style type="text/css">
+            .h1
+            {
+            position: absolute;
+            top: 34%;
+            left: 48%;
+            font-style: normal;
+            /* size: 20px; */
+            font-size: initial;
+            color: #686765;
+           }
+            
+             .h2
+            {
+            position: absolute;
+            top: 316px;
+            right: 448px;
+            font-style: normal;
+            /* size: 20px; */
+            font-size: initial;
+            color: #686765;
+           }
+            
+             .h3
+            {
+            position: absolute;
+            top: 316px;
+            right: 274px;
+            font-style: normal;
+            /* size: 20px; */
+            font-size: initial;
+            color: #686765;
+            }
+            
+             .h4
+            {
+            position: absolute;
+            top: 395px;
+            right: 650px;
+            font-style: normal;
+            /* size: 20px; */
+            font-size: initial;
+            color: #686765;
+            }
+            .img-bg{
+            width : 100%;
+            height : 500px;
+            background : url({!$Resource.Certificate_Image});
+            background-repeat : no-repeat;
+            background-size : cover;
+            }
+            
+        </style>
+    </head>
+     <html>
+         <body>
+         <img class="h5" width="100%" height="600px" alt="logo" src="{!$Resource.Certificate_Image}"></img>
+         <h1 class="h1">Sayyad Amjad </h1>
+         <h2 class="h2"> 24/01/2020</h2>
+         <h3 class="h3"> 31/12/2020</h3>
+         <h4 class="h4"> 1234567</h4>
+         
+        
+         </body>
+    </html>
+</apex:page>

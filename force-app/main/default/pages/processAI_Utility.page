@@ -1,0 +1,15 @@
+<apex:page Controller="processAI_UtilityController"  action="{!updateCase}">
+    
+  <apex:pagemessages />
+    <apex:form >
+        <apex:actionFunction name="jsName" action="{!getsomething}"/>
+    </apex:form>
+    <script>
+function reload() {
+    setTimeout(function(){ jsName(); }, 2000);
+
+}
+
+reload();
+</script>
+</apex:page>

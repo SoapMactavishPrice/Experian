@@ -1,0 +1,290 @@
+<template>
+	<lightning-card>
+		<div if:true={showSpinner}>
+			<lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+		</div>
+
+<lightning-layout>
+	<lightning-layout-item size="12"><div style="width:100%"><label class="slds-text-heading_medium slds-align_absolute-center slds-text-b"><b>Bulk Case Reminder</b></label></div></lightning-layout-item>
+</lightning-layout>
+	
+<div class="slds-m-around_xx-small">
+
+	<template if:true={isModalOpen}>
+		<div if:true={showSpinner}>
+			<lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+		</div>
+
+		<!-- Modal/Popup Box LWC starts here -->
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<!-- Modal/Popup Box LWC header here -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={IsclosedModel}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Case Information</h2>
+				</header>
+
+				<!-- subject Section-->
+				
+				
+				<!-- Modal/Popup Box LWC body starts here -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					
+					<div class="slds-grid" style="width:100%">
+						 <!-- <div class="slds-align_absolute-center" >
+								<lightning-combobox  name="Select Dispute Level" style="width: 300px;" label="Select Dispute Level" value={value} options={selectlevel} onchange={handleChange2}></lightning-combobox>
+					     </div>
+						 <div class="slds-align_absolute-right" >
+							<label>Total Cases:&nbsp;{TotalCases}</label>
+					 </div> -->
+
+
+					 <div class="slds-align_absolute-center" >
+								<lightning-combobox  name="Select Dispute Level" style="width: 300px;" label="Select Dispute Level" value={value} options={selectlevel} onchange={handleChange2}></lightning-combobox>
+					     </div>
+						 <div class="slds-align_absolute-right" >
+							<label>Total Cases:&nbsp;{TotalCases}</label>
+							
+					 </div> 
+					</div>
+
+					 <div class="slds-m-top_x-small">
+						<template for:each={allValues} for:item="val">
+						  <lightning-pill key={val} name={val} label={val} onremove={handleRemove}></lightning-pill>
+						</template>
+					  </div>
+	
+					<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon" role="none">
+					  <div class="slds-grid">
+						<div style="width:100%">
+						  <lightning-input data-id="userinput" name="resetField" value={res}
+							label="To" class="leftspace resetField"  
+							style="padding:5px" onchange={handleChangeEmail} onkeypress={handleEnter}>
+						  </lightning-input>
+						</div>
+						<!-- </div> -->
+					  </div>
+					</div>
+
+					<lightning-layout style="padding-left: 10px;"
+									class="slds-m-top_small slds-m-bottom_small">
+									<lightning-layout-item size="3" large-device-size="3"></lightning-layout-item>
+									<lightning-layout-item size="3" large-device-size="3">
+										<div style="display:flex;width:100%">
+											<label class="slds-m-top_xx-small">From Date:</label>
+											<lightning-input type="date" variant="label-hidden"
+												class="slds-m-left_small" onchange={handle_fromDate}></lightning-input>
+										</div>
+									</lightning-layout-item>
+
+									<lightning-layout-item size="3" large-device-size="3">
+										<div style="display:flex ;width:100%">
+											<label class="slds-m-top_xx-small">To Date:</label>
+											<lightning-input type="date" variant="label-hidden"
+												class="slds-m-left_small" onchange={handle_toDate}></lightning-input>
+											<!-- <lightning-button label="filter Invoice" variant="brand" onclick={handle_get_Invoice}></lightning-button> -->
+										</div>
+									</lightning-layout-item>
+									<lightning-layout-item size="3" large-device-size="3"></lightning-layout-item>
+
+								</lightning-layout>
+
+								<lightning-layout style="padding-left: 10px;" class="slds-m-top_small slds-m-bottom_small">
+								<lightning-layout-item size="12" large-device-size="12" if:false={displayTable}>
+									<label class="slds-align_absolute-center slds-text-title_bold">Cases not found
+										!</label>
+								</lightning-layout-item>
+							</lightning-layout>
+
+							<template if:true={showSpinner2}>
+								<lightning-spinner alternative-text="Loading" size="medium"
+									class="spinnerClass"></lightning-spinner>
+							</template>
+
+					
+					
+					<table
+						class="slds-table tableCls_customer_ledger slds-table_bordered slds-border_left slds-border_right" if:true={displayTable}>
+						<thead>
+							<tr>
+								<th class="" scope="col" style="text-align:center;background-color: #642156; color: #fff;">
+									<lightning-input data-id="caseIds" type="checkbox" data-accountid={currentAccountId}
+										class="selectAllcases" onchange={selectall}></lightning-input>
+
+								</th>
+								<th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Case Number</div>
+								</th>
+								<!-- <th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Subject</div>
+								</th> -->
+
+								<th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Case Category</div>
+								</th>
+
+
+								<th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Case Type*</div>
+								</th>
+
+								<th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Sub Type*</div>
+								</th>
+
+								<th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Sub Type 1*</div>
+								</th>
+
+								<th class="" scope="col" style="background-color: #642156; color: #fff;">
+									<div class="slds-truncate" title="Case Number">Case Owner</div>
+								</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={caseList} for:item="ci" for:index="index">
+								<tr key={ci.CaseId}>
+									<td style="text-align:center">
+										<lightning-input type="checkbox" value={ci.Name} name="checkbox"
+											data-id={ci.csId} data-accountid={currentAccountId} checked={ci.isSelected}
+											onchange={handlerowselected}>
+										</lightning-input>
+									</td>
+									<td>{ci.CaseNumber}</td>
+									<!-- <td class="tableCls_customer_ledger">{ci.CaseSubject }</td> -->
+									<td>{ci.CaseCategory}</td>
+									<td>{ci.CaseType}</td>
+									<td>{ci.CaseSubType}</td>
+									<td>{ci.CaseSub12Type}</td>
+									<td>{ci.CaseOwner}</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={IsclosedModel}
+						title="Cancel">Cancel</button>
+					<!--<button class="slds-button slds-button_brand" onclick={addselecedCase} title="OK">OK</button>-->
+					<button class="slds-button slds-button_brand" disabled={disablestd} onclick={TosendEmail}>Send</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+
+
+
+		<div
+		style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 1%;margin-top: 1%">
+
+		<div style="width: 20%; display: flex; flex-direction: row; align-items: center;">
+			<span style="font-weight: bold">Page Size : &nbsp;</span>
+			<lightning-combobox variant="label-hidden" options={options} label="Page Size : "
+				value={noOfRecordsOnPage} onchange={handleComboBoxChange} style="width: 30%"
+				disabled={zeroRecords}></lightning-combobox>
+		</div>
+
+		<div onkeyup={handleSearch} style="width: 60%;" >
+
+			<div style="text-align:right">
+			<lightning-input variant="label-hidden" name="enter-search"
+				placeholder="Press 'Enter' key to Search" type="search" style="width: 45%;">
+			</lightning-input>
+		</div>
+		</div>
+
+		
+	</div>
+		<table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+			<thead>
+				<tr>
+					<!--<th class="" scope="col" style="text-align:center;background-color: #642156; color: #fff;">
+						<lightning-input type="checkbox" class="selectAllaccount" checked={isAccount}
+							onchange={selectAllacount}></lightning-input>
+
+					</th>-->
+					<th class="heightcls" scope="col" style="background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="Account Name">Account Name</div>
+					</th>
+
+					<!-- <th class="heightcls" scope="col" style="background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="VIP Member">VIP Member</div>
+					</th> -->
+					<th class="heightcls" scope="col" style="background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="Subscriber Id">Subscriber Id</div>
+					</th>
+					<th class="heightcls" scope="col" style="background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="Member Type">Member Type</div>
+					</th>
+
+					<th class="heightcls" scope="col" style="background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="Member Status">Member Status</div>
+					</th>
+					<th class="heightcls" scope="col" style="text-align:center;background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="View Case">View Case/Send Email </div>
+					</th>
+
+					<!-- <th class="heightcls" scope="col" style="text-align:center;background-color: #642156; color: #fff;">
+						<div class="slds-truncate" title="View Case">Send Email</div>
+					</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={PaginationData} for:item="li" for:index="item">
+
+					<tr key={li.resId}>
+						<!--<td style="text-align:center">
+							<lightning-input type="checkbox" class="SelectedAcc" value={li.isSelected}
+								data-accid={li.resId} data-id={li.resId} onchange={handleSelectAccount}
+								checked={li.isSelected}>
+							</lightning-input>
+						</td>-->
+						<td>{li.accName}</td>
+						<!-- <td>{li.accVIPN}</td> -->
+						<td>{li.accsubId}</td>
+						<td>{li.accMemstatus}</td>
+						<td>{li.accMemType}</td>
+						<td style="text-align: center">
+							<lightning-icon icon-name="utility:preview" alternative-text="View Cases"
+								data-id={li.resId} size="x-small" onclick={viewCase_ser} data-index={li.index}>
+							</lightning-icon>
+						</td>
+					
+						<!-- <td style="text-align: center">
+							<lightning-icon icon-name="utility:email" alternative-text="View Cases"
+								data-id={li.resId} size="x-small" onclick={IssendMailOpenPoupup} data-index={li.index}>
+							</lightning-icon>
+						</td> -->
+					</tr>
+				</template>
+			</tbody>
+		</table>
+
+		<div style="margin: auto; text-align: center; display: flex; justify-content: center">
+
+			<lightning-button style="margin: 1%" variant="brand" icon-name="utility:back" label="Prev"
+				onclick={handlePrevClick} disabled={isPrevAvailable}></lightning-button>
+
+			<div style="border-radius: 5px; border: 1px solid gray; margin: 1%; padding: 0.4% 1%">
+				{start} - {end} of {totalRecords} | page {pageNo} of {totalPages}
+			</div>
+
+			<lightning-button style="margin: 1%" variant="brand" icon-name="utility:forward" icon-position="right"
+				label="Next" onclick={handleNextClick} disabled={isNextAvailable}></lightning-button>
+
+		</div>
+
+	</div>
+	</lightning-card>
+
+	
+</template>

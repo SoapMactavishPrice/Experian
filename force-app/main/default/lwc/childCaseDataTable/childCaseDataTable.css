@@ -1,0 +1,49 @@
+.container {
+    border: 1px solid black;
+}
+
+.header {
+    background: white;
+    padding: 20px;
+}
+
+.body {
+    background: #90b1f3;
+    padding: 20px;
+}
+
+.error {
+    color: red;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table-wrapper lightning-datatable {
+    min-width: 1200px;
+    /* adjust based on your columns */
+}
+
+.subtotal {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.amount {
+    margin-left: 10px;
+}
+
+.main-heading {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;   
+    font-weight: 700;
+    margin: 0;
+}

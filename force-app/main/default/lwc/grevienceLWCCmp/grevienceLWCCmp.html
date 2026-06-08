@@ -1,0 +1,1961 @@
+<template>
+    <lightning-card class="cards">
+
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12">
+                <div style="">
+                    <div style="background-color:#ffffff;" class="bgColor1">
+                        <div class="slds-grid slds-wrap" style="background: #491b5b">
+                            <div class="slds-col slds-size_3-of-12">
+                                <img src={expe_Logo} style="width:50%;height: 4rem;
+    padding: 13px;">
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12 slds-m-top_small bgColor1">
+                                <label style=" font-size:20px;
+                                text-align: left;
+                                float: left; color:white" class="slds-m-left_small">
+                                    Company Contact Details
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12 slds-m-top_small bgColor1 " style="text-align: right;
+">
+                                <label style="color:white;font-size:16px;margin-right:8%">{customerName}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+
+
+
+        <lightning-layout multiple-rows>
+
+
+            <lightning-layout-item size="12" large-device-size="3" style="background-color: #77127b;color:white;">
+                <div class="slds-m-around_large">
+                    <template for:each={grievanceData} for:item="grp">
+                        <div key={grp.id} onclick={handleParentClick} data-id={grp.id} style={grp.style}
+                            class="slds-m-around_small group-item" tabindex="0">
+                            <lightning-icon icon-name={grp.iconname} size="x-small" alternative-text={grp.name}
+                                class="slds-m-right_small white-icon" variant="inverse">
+                            </lightning-icon>
+                            <span style="font-size: 15px;font-weight: bold;">{grp.name}</span>
+                        </div>
+                        <template if:true={grp.isOpen}>
+                            <div class="child-items slds-p-left_x-large slds-m-bottom_medium" key={grp.id}>
+
+                            </div>
+                        </template>
+                    </template>
+                </div>
+
+
+
+            </lightning-layout-item>
+
+
+
+            <lightning-layout-item size="12" large-device-size="9" class="layout-container">
+
+
+                <div class="slds-p-around_medium">
+                    <div class="scrollableDiv">
+                        <template if:true={showSpinner}>
+                            <div class="spinner-overlay">
+                                <lightning-spinner size="small"></lightning-spinner>
+                            </div>
+                        </template>
+                        <lightning-accordion>
+
+                            <template for:each={SectionList} for:item="section">
+
+                                <lightning-accordion-section key={section.id} name={section.id} data-pid={section.pid}
+                                    data-hidelabel={section.labeltohide} label={section.name}
+                                    onclick={handleSectionToggle}>
+
+                                    <p>{section.content}</p>
+                                    <template if:true={showToast}>
+                                        <div class="" role="alert">
+                                            <span class="slds-assistive-text">Error</span>
+                                            <span style="color:red">{toastMessage}</span>
+                                        </div>
+                                    </template>
+                                    <table class="customTable slds-table slds-table_bordered slds-table_cell-buffer">
+                                        <thead style="background-color: #e076e4;">
+                                            <tr class="slds-line-height_reset">
+                                                <th scope="col" style="background-color: #eeeeee;">
+                                                    <div class="slds-truncate">Sr No</div>
+                                                </th>
+                                                <th scope="col" style="background-color: #eeeeee;">
+                                                    <div class="slds-truncate">Name</div>
+                                                </th>
+                                                <th scope="col" style="background-color: #eeeeee;">
+                                                    <div class="slds-truncate">Email</div>
+                                                </th>
+                                                <th scope="col" style="background-color: #eeeeee;">
+                                                    <div class="slds-truncate">Phone</div>
+                                                </th>
+                                                <th scope="col" style="background-color: #eeeeee;">
+                                                    <div class="slds-truncate">Designation</div>
+                                                </th>
+                                                <th scope="col" style="background-color: #eeeeee;" if:false={hasSignle}>
+                                                    <div class="slds-truncate">Action</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody if:true={section.one_ds1}>
+                                            <template for:each={Data_Submission_Primary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Data_Submission_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Data_Submission_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Data_Submission_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-id={rec.index} data-label="Data_Submission_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+
+                                                        <lightning-icon icon-name="action:add_relationship"
+                                                            size="xx-small" if:true={rec.isIPAddes}
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Data_Submission_Primary"
+                                                            data-user-role={rec.userRole} onclick={addRow_IpRange}>
+                                                        </lightning-icon>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Data_Submission_Primary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Data_Submission_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <tbody if:true={section.one_ds2}>
+                                            <template for:each={Data_Submission_Secondary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-label="Data_Submission_Secondary" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-label="Data_Submission_Secondary" type="email"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-label="Data_Submission_Secondary" type="tel"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Data_Submission_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:add_relationship"
+                                                            size="xx-small" if:true={rec.isIPAddes}
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Data_Submission_Secondary"
+                                                            data-user-role={rec.userRole} onclick={addRow_IpRange}>
+                                                        </lightning-icon>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Data_Submission_Secondary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Data_Submission_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <tbody if:true={section.one_ds3}>
+                                            <template for:each={DQR_Primary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-label="DQR_Primary" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-label="DQR_Primary" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="DQR_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="DQR_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="DQR_Primary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="DQR_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <tbody if:true={section.one_ds4}>
+                                            <template for:each={DQR_Secondary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="DQR_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="DQR_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="DQR_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="DQR_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="DQR_Secondary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="DQR_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.one_ds5}>
+                                            <template for:each={DQI_Primary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="DQI_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="DQI_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-label="DQI_Primary" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="DQI_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="DQI_Primary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="DQI_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.one_ds6}>
+                                            <template for:each={DQI_Secondary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="DQI_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="DQI_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="DQI_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="DQI_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="DQI_Secondary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="DQI_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.one_ds7}>
+                                            <!-- Primary: -->
+                                            <template for:each={Form_C_Primary} for:item="rec" for:index="index">
+
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Form_C_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Form_C_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Form_C_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Form_C_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Form_C_Primary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Form_C_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <tbody if:true={section.one_ds9}>
+                                            <!-- Secondary: -->
+                                            <template for:each={Form_C_Secondary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Form_C_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Form_C_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Form_C_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Form_C_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Form_C_Secondary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Form_C_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <!-- <tbody if:true={section.one_ds7}>
+                                <template for:each={formTersiary} for:item="rec" for:index="index">
+                                    <tr key={rec.index} class="slds-hint-parent">
+                                        <td>
+                                           {rec.srNo}
+                                        </td>
+                                        <td>
+                                            <lightning-input value={rec.Name} name="Name"
+                                                onchange={handleInputChange} variant="label-hidden" data-id={rec.index}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input value={rec.Email} name="Email"
+                                                onchange={handleInputChange} variant="label-hidden" type="email" data-id={rec.index}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input value={rec.Phone} name="Phone"
+                                                onchange={handleInputChange} variant="label-hidden" type="tel" data-id={rec.index}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input value={rec.Designation} name="Designation" data-id={rec.index}
+                                                onchange={handleInputChange} variant="label-hidden">
+                                            </lightning-input>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody> -->
+
+                                        <tbody if:true={section.one_ds8}>
+                                            <template for:each={Chief_Data_Officer_CDO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Data_Officer_CDO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Data_Officer_CDO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Data_Officer_CDO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Data_Officer_CDO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Data_Officer_CDO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Data_Officer_CDO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+
+                                        <tbody if:true={section.second_ds1}>
+                                            <template for:each={OLM_Primary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="OLM_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="OLM_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="OLM_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="OLM_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+
+                                                    <td>
+                                                        <lightning-icon icon-name="action:add_relationship"
+                                                            size="xx-small" if:true={rec.isIPAddes}
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="OLM_Primary" data-user-role={rec.userRole}
+                                                            onclick={addRow_IpRange}>
+                                                        </lightning-icon>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="OLM_Primary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="OLM_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.second_ds2}>
+                                            <template for:each={OLM_Secondary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="OLM_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="OLM_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="OLM_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="OLM_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-icon icon-name="action:add_relationship"
+                                                            size="xx-small" if:true={rec.isIPAddes}
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="OLM_Secondary" data-user-role={rec.userRole}
+                                                            onclick={addRow_IpRange}>
+                                                        </lightning-icon>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="OLM_Secondary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="OLM_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.second_ds3}>
+                                            <template for:each={Data_Correction_Head} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Data_Correction_Head"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Data_Correction_Head"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Data_Correction_Head"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Data_Correction_Head" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Data_Correction_Head"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Data_Correction_Head" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+
+                                        <tbody if:true={section.third_ds1}>
+                                            <template for:each={Dispute_Resolution_Officer_Primary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Dispute_Resolution_Officer_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Dispute_Resolution_Officer_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Dispute_Resolution_Officer_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Dispute_Resolution_Officer_Primary"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Dispute_Resolution_Officer_Primary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Dispute_Resolution_Officer_Primary"
+                                                            size="xx-small" data-index={rec.index}
+                                                            onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.third_ds2}>
+                                            <template for:each={Dispute_Resolution_Officer_Secondary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Dispute_Resolution_Officer_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Dispute_Resolution_Officer_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Dispute_Resolution_Officer_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Dispute_Resolution_Officer_Secondary"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Dispute_Resolution_Officer_Secondary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Dispute_Resolution_Officer_Secondary"
+                                                            size="xx-small" data-index={rec.index}
+                                                            onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.third_ds3}>
+                                            <template for:each={Grievance_Nodal_Officer_GNO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Grievance_Nodal_Officer_GNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Grievance_Nodal_Officer_GNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Grievance_Nodal_Officer_GNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Grievance_Nodal_Officer_GNO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Grievance_Nodal_Officer_GNO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Grievance_Nodal_Officer_GNO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.third_ds4}>
+                                            <template for:each={Grievance_Principal_Nodal_Officer_GPNO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Grievance_Principal_Nodal_Officer_GPNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Grievance_Principal_Nodal_Officer_GPNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Grievance_Principal_Nodal_Officer_GPNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Grievance_Principal_Nodal_Officer_GPNO"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Grievance_Principal_Nodal_Officer_GPNO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Grievance_Principal_Nodal_Officer_GPNO"
+                                                            size="xx-small" data-index={rec.index}
+                                                            onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+
+                                        <!--4th -->
+
+                                        <tbody if:true={section.four_ds1}>
+                                            <template for:each={Regulatory_and_Compliance_Primary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Regulatory_and_Compliance_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Regulatory_and_Compliance_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Regulatory_and_Compliance_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Regulatory_and_Compliance_Primary"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Regulatory_and_Compliance_Primary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Regulatory_and_Compliance_Primary"
+                                                            size="xx-small" data-index={rec.index}
+                                                            onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.four_ds2}>
+                                            <template for:each={Regulatory_and_Compliance_Secondary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Regulatory_and_Compliance_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Regulatory_and_Compliance_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Regulatory_and_Compliance_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Regulatory_and_Compliance_Secondary"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Regulatory_and_Compliance_Secondary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Regulatory_and_Compliance_Secondary"
+                                                            size="xx-small" data-index={rec.index}
+                                                            onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.four_ds3}>
+                                            <template for:each={Chief_Compliance_Officer_CCO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Compliance_Officer_CCO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Compliance_Officer_CCO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Compliance_Officer_CCO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Compliance_Officer_CCO"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Compliance_Officer_CCO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Compliance_Officer_CCO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+
+                                        <!--5-->
+
+                                        <tbody if:true={section.five_ds1}>
+                                            <template for:each={Billing_Primary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Billing_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Billing_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Billing_Primary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Billing_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Billing_Primary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Billing_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.five_ds2}>
+                                            <template for:each={Billing_Secondary} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Billing_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Billing_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Billing_Secondary" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Billing_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Billing_Secondary" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Billing_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.five_ds3}>
+                                            <template for:each={Chief_Financial_Officer_CFO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Financial_Officer_CFO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Financial_Officer_CFO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Financial_Officer_CFO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Financial_Officer_CFO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Financial_Officer_CFO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Financial_Officer_CFO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+
+                                        <!--6-->
+
+                                        <tbody if:true={section.six_ds1}>
+                                            <template for:each={Business_Sales_Team_Primary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Business_Sales_Team_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Business_Sales_Team_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Business_Sales_Team_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Business_Sales_Team_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Business_Sales_Team_Primary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Business_Sales_Team_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.six_ds2}>
+                                            <template for:each={Business_Sales_Team_Secondary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Business_Sales_Team_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Business_Sales_Team_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Business_Sales_Team_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Business_Sales_Team_Secondary"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Business_Sales_Team_Secondary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Business_Sales_Team_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.six_ds3}>
+                                            <template for:each={Chief_Business_Officer_CBO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Business_Officer_CBO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Business_Officer_CBO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Business_Officer_CBO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Business_Officer_CBO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Business_Officer_CBO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Business_Officer_CBO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <tbody if:true={section.six_ds4}>
+                                            <template for:each={Chief_Revenue_Officer_CRO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Revenue_Officer_CRO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Revenue_Officer_CRO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Revenue_Officer_CRO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Revenue_Officer_CRO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Business_Officer_CBO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Business_Officer_CBO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <!--7-->
+
+                                        <tbody if:true={section.seven_ds1}>
+                                            <template for:each={Technology_Team_Primary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Technology_Team_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Technology_Team_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Technology_Team_Primary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Technology_Team_Primary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Technology_Team_Primary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Technology_Team_Primary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.seven_ds2}>
+                                            <template for:each={Technology_Team_Secondary} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Technology_Team_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Technology_Team_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Technology_Team_Secondary"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Technology_Team_Secondary" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Technology_Team_Secondary"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Technology_Team_Secondary" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.seven_ds3}>
+                                            <template for:each={Chief_Technology_Officer_CTO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Technology_Officer_CTO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Technology_Officer_CTO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Technology_Officer_CTO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Technology_Officer_CTO"
+                                                            data-id={rec.index} onchange={handleInputChange}
+                                                            variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Technology_Officer_CTO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Technology_Officer_CTO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+                                        <!--8-->
+
+                                        <tbody if:true={section.eight_ds1}>
+                                            <template for:each={Authorized_Signatory} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Authorized_Signatory"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Authorized_Signatory"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Authorized_Signatory"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Authorized_Signatory" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Authorized_Signatory"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Authorized_Signatory" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.eight_ds2}>
+                                            <template for:each={Nodal_Officer_NO} for:item="rec" for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Nodal_Officer_NO" onchange={handleInputChange}
+                                                            variant="label-hidden" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Nodal_Officer_NO" onchange={handleInputChange}
+                                                            variant="label-hidden" type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Nodal_Officer_NO" onchange={handleInputChange}
+                                                            variant="label-hidden" type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Nodal_Officer_NO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Nodal_Officer_NO" data-user-role={rec.userRole}
+                                                            onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Nodal_Officer_NO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.eight_ds3}>
+                                            <template for:each={Principal_Nodal_Officer_PNO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Principal_Nodal_Officer_PNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Principal_Nodal_Officer_PNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Principal_Nodal_Officer_PNO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Principal_Nodal_Officer_PNO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Principal_Nodal_Officer_PNO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Principal_Nodal_Officer_PNO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+                                        <tbody if:true={section.eight_ds4}>
+                                            <template for:each={Chief_Operating_Officer_COO} for:item="rec"
+                                                for:index="index">
+                                                <tr key={rec.index} class="slds-hint-parent">
+                                                    <td>
+                                                        {rec.srNo}
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Name} name="Name"
+                                                            data-label="Chief_Operating_Officer_COO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Email} name="Email"
+                                                            data-label="Chief_Operating_Officer_COO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="email" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Phone} name="Phone"
+                                                            data-label="Chief_Operating_Officer_COO"
+                                                            onchange={handleInputChange} variant="label-hidden"
+                                                            type="tel" data-id={rec.index}>
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td>
+                                                        <lightning-input value={rec.Designation} name="Designation"
+                                                            data-label="Chief_Operating_Officer_COO" data-id={rec.index}
+                                                            onchange={handleInputChange} variant="label-hidden">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <!-- <td>
+
+                                                        <lightning-icon icon-name="action:new" size="xx-small"
+                                                            class="slds-m-right_xx-small" data-index={rec.index}
+                                                            data-label="Chief_Operating_Officer_COO"
+                                                            data-user-role={rec.userRole} onclick={addRow_RowFunction}>
+                                                        </lightning-icon>
+                                                        <lightning-icon icon-name="action:remove"
+                                                            data-label="Chief_Operating_Officer_COO" size="xx-small"
+                                                            data-index={rec.index} onclick={removeRow_RowFunction}>
+                                                        </lightning-icon>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+
+
+
+                                    </table>
+                                </lightning-accordion-section>
+                            </template>
+                        </lightning-accordion>
+
+
+                    </div>
+                </div>
+                <div class="slds-align_absolute-center slds-grid slds-grid_vertical slds-text-align_center"
+                    style="background: #d6d6d6;">
+
+                    <template if:true={showToast1}>
+                        <div class="slds-m-bottom_small" role="alert">
+                            <span class="slds-assistive-text">Error</span>
+                            <span style={messageColor}>{toastMessage1}</span>
+                        </div>
+                    </template>
+
+                    <!-- Save button -->
+                    <lightning-button label="Save" style="padding: 10px;" variant="brand" onclick={handleSave}>
+                    </lightning-button>
+                </div>
+
+
+
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Header -->
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close"
+                        onclick={closeModal}></lightning-button-icon>
+                    <h2 class="slds-text-heading_medium">Add IP Address</h2>
+                </header>
+
+                <!-- Body -->
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-align_absolute-center slds-m-bottom_small">
+                        <lightning-combobox style="width:20%" name="ipType" label="IP Type" value={selectedType}
+                            placeholder="Select Type" options={ipTypes} onchange={handleTypeChange}>
+                        </lightning-combobox>
+                    </div>
+               
+
+                <template if:true={showToast2}>
+                    <div class="slds-m-bottom_small" role="alert">
+                        <span class="slds-assistive-text">Error</span>
+                        <span style="color: red;">{toastMessage2}</span>
+                    </div>
+                </template>
+
+
+
+
+                <table class="customTable slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead style="background-color: #e076e4;">
+                        <tr class="slds-line-height_reset">
+
+                            <th scope="col" style="background-color: #eeeeee;">
+                                <div class="slds-truncate">From IP</div>
+                            </th>
+                            <th if:true={isRange} scope="col" style="background-color: #eeeeee;">
+                                <div class="slds-truncate">To IP</div>
+                            </th>
+                            <th if:true={isSignle} scope="col" style="background-color: #eeeeee;">
+                                <div class="slds-truncate">Action</div>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <!-- Secondary: -->
+                        <template for:each={currentIpList} for:item="rec" for:index="index">
+                            <tr key={rec.index} class="slds-hint-parent">
+
+                                <td>
+                                    <lightning-input value={rec.fromIp} name="fromIp" data-label="Form_C_Secondary"
+                                        onchange={handleIPChange} variant="label-hidden" data-id={rec.index}>
+                                    </lightning-input>
+                                </td>
+                                <td if:true={isRange}>
+                                    <lightning-input value={rec.fromToIp} name="fromToIp" data-label="Form_C_Secondary"
+                                        onchange={handleIPChange} variant="label-hidden" data-id={rec.index}>
+                                    </lightning-input>
+                                </td>
+
+                                <td if:true={isSignle}>
+
+                                    <lightning-icon icon-name="action:new" size="xx-small" class="slds-m-right_xx-small"
+                                        data-index={rec.index} data-label={currentIpvarLabel}
+                                        data-user-role={rec.userRole} onclick={addRow_IpFunction}>
+                                    </lightning-icon>
+                                    <lightning-icon icon-name="action:remove" data-label={currentIpvarLabel}
+                                        size="xx-small" data-index={rec.index} onclick={removeRow_IpFunction}>
+                                    </lightning-icon>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+
+                </table>
+                </div>
+           
+
+            <!-- Footer -->
+            <footer class="slds-modal__footer">
+                <div class="slds-align_absolute-center">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" label="Add IP's" class="slds-m-left_small"
+                        data-pindex={parnetIndex} data-label={currentIpvarLabel} onclick={handleAddIps}>
+                    </lightning-button>
+                </div>
+            </footer>
+            </div>
+        </section>
+
+        <!-- Backdrop -->
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

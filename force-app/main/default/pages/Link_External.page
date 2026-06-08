@@ -1,0 +1,50 @@
+<apex:page docType="html-5.0">
+
+    <html>
+
+    <head>
+        <apex:slds />
+    </head>
+
+    <body>
+        <div class="slds-card" style="width:100%">
+            <div class="slds-align_absolute-center" style="height:3rem">External Links</div><br/>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-no-row-hover" style="width:70%;" align="center">
+                <tr style="background-color: lightblue;">
+                    <th style="width:30%">Site Name</th>
+                    <th style="width:70%">Link</th>
+                </tr>
+                <tr>
+                    <td style="width:30%">Data Uploading</td>
+                    <td style="width:70%"><a href="https://data.experian.in" target="_blank">https://data.experian.in</a></td>
+                </tr>
+                <tr>
+                    <td style="width:30%">NG Link</td>
+                    <td style="width:70%"><a href="https://nxg-india.experian.com/nextgen-ind-pds/" target="_blank">https://nxg-india.experian.com/nextgen-ind-pds/</a></td>
+                </tr>
+                <!--               
+                 <tr>
+                    <td style="width:30%">Service Now</td>
+                    <td style="width:70%"><a href="https://experian.service-now.com" target="_blank">https://experian.service-now.com</a></td>
+                </tr>
+                <tr>
+                    <td style="width:30%">Ewacs</td>
+                    <td style="width:70%"><a href="https://sso.uk.experian.com/ewacs/app/dashboard?execution=e1s1" target="_blank">https://sso.uk.experian.com/ewacs/app/dashboard?execution=e1s1</a></td>
+                </tr>
+                <tr>
+                    <td style="width:30%">Payment capture</td>
+                    <td style="width:70%"><a href="https://secure.ebs.in/pg/ma/user/login/" target="_blank">https://secure.ebs.in/pg/ma/user/login/</a></td>
+                </tr>
+                <tr>
+                    <td style="width:30%">ECV</td>
+                    <td style="width:70%"><a href="https://ecs.india.admin.uk.experian.local/ECVAdmin/" target="_blank">https://ecs.india.admin.uk.experian.local/ECVAdmin/</a></td>
+                </tr>
+                -->
+            </table>
+            <br/>
+        </div>
+    </body>
+
+    </html>
+
+</apex:page>

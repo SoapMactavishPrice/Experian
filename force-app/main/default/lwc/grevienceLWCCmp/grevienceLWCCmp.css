@@ -1,0 +1,92 @@
+.cards{
+  /* --slds-c-card-radius-border: 0.1 rem; */
+  --slds-c-card-color-border:white;
+  
+  --slds-c-card-color-background:#ffffff;
+}
+
+.bgColor1{
+background: #491b5b
+}
+
+:host {
+  --sds-c-accordion-summary-color-background: transparent;
+}
+
+/* Style the open accordion tab heading */
+.slds-is-open {
+  --sds-c-accordion-summary-color-background: #77127b;
+}
+
+/* Optional: style focus state too */
+:host .parent-item:focus,
+:host .parent-item:focus-within {
+  background-color: #77127b;
+  outline: none;
+}
+
+.white-icon {
+    --sds-c-icon-color-foreground: white;
+    
+}
+.slds-scope .slds-icon-text-default {
+        color: white;
+}
+
+.parent-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Hover state */
+.parent-item:hover {
+    background-color: #77127b; /* Change to your desired hover color */
+}
+
+/* Active/open state */
+.parent-item.active {
+    background-color: #77127b; /* Keep same color when open */
+}
+
+
+.group-item {
+    padding: 8px;
+    margin: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.group-item:hover {
+    background-color: #e076e4;
+    border-radius: 17px; /* Light SLDS-like hover color */
+}
+
+/* Active (clicked or focused) state */
+.group-item.active {
+    background-color: #115fee; /* Active background */
+}
+
+.layout-container {
+    position: relative;
+    min-height: 200px; /* Ensures spinner has space */
+}
+
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: rgba(0, 0, 0, 0.2); /* semi-transparent grey */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 10;
+    border-radius: 0.25rem; /* optional: match parent rounding */
+}

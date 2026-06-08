@@ -1,0 +1,8 @@
+<template>
+    <lightning-spinner alternative-text="Loading location" size="medium" if:true={showSpinner}></lightning-spinner>
+    <lightning-button label="Send Credit Report" onclick={handleClick}></lightning-button>
+    <lightning-button label="Re-Send Credit Report" onclick={handleResendClick}></lightning-button>
+        <div style="margin-top: 10px ;text-align: center;">
+            {message}
+        </div>
+</template>

@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />
+    <div id="lwcContainer"></div>
+
+    <script>
+        $Lightning.use("c:CompensationFormApp", function() {
+            $Lightning.createComponent(
+                "c:compensationForm",
+                {},
+                "lwcContainer",
+                function(cmp) {}
+            );
+        });
+    </script>
+</apex:page>

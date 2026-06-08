@@ -1,0 +1,158 @@
+
+h1,
+h2,
+h3,
+h5,
+h6 {
+    color: #000;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+}
+
+h3,
+h5 {
+    display: inline-block;
+}
+
+.container {
+    width: 95% !important;
+    text-rendering: optimizespeed !important;
+}
+
+.page-row {
+    display: block;
+    background-image: url('../image/ex-3-line-1143.png');
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 20px;
+}
+
+.fa-arrow-circle-o-right {
+    color: rgb(230, 56, 136) !important;
+    /* color: linear-gradient(90deg, rgba(230, 56, 136, 1) 0%, rgba(29, 79, 145, 1) 100%); */
+    font-size: 24px !important;
+}
+
+
+.page-card {
+    height: 375px;
+    margin-bottom: 30px;
+}
+
+.page-card-header {
+    height: 88%;
+    width: 100%;
+}
+
+.pg-img-box {
+    width: 90%;
+    height: 90%;
+    margin: 5%;
+    /* background-color: #333; */
+}
+
+.pg-img-box img {
+    width: 100%;
+    height: 100%;
+}
+
+.page-card-body {
+    /* he */
+    height: 12%;
+    flex: none !important;
+    padding: 0 !important;
+
+    text-align: center;
+    background: rgb(230, 56, 136);
+    background: linear-gradient(90deg, rgba(230, 56, 136, 1) 0%, rgba(29, 79, 145, 1) 100%);
+
+}
+
+.page-card-body h4 {
+    color: #fff !important;
+    margin-top: 5px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.section-wise {
+    background-color: #f6f2f2;
+    color: #333;
+    width: 100%;
+    font-size: 13px;
+    padding: 5px;
+}
+
+.form-group {
+    margin-bottom: 0 !important;
+    font-size: 13px;
+}
+
+.colon{
+    float: right;
+    color: #ccc;
+    margin-bottom: 0px !important;  
+}
+@media (min-width: 1200px) {
+    .container {
+        max-width: 960px !important;
+    }
+}
+
+.space-20px{
+    display: block;
+    height: 20px;
+}
+.space-30px{
+    display: block;
+    height: 30px;
+}
+.file-upload-box{
+    width: 100%;
+    height: 40px;
+    background-color: rgba(152, 40, 129, 0.1);
+}
+.file-upload-box p{
+    margin-bottom: 0px;
+    font-size: 12px;
+}
+.file-upload-box-left{
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+.file-upload-box-left label{
+    margin-left: 10px;
+    margin-bottom: 0 !important;
+    line-height: 40px;
+}
+.file-upload-box-right{
+    width: 150px;
+    display: inline-block;
+    float: right;
+}
+.file-upload-box-right button{
+    width: 100%;
+    height: 40px;
+    background-color: #982881;
+    color: #fff;
+    border: none;
+}
+.file-upload-box-right button:hover{
+}
+
+.input-class {
+    width: 93%;
+    position: absolute;
+    top: 35px;
+    left: 18px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.fr{
+    float:right !important;
+}

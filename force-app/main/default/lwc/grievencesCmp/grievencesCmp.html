@@ -1,0 +1,1647 @@
+<template>
+ 
+        <!-- <lightning-layout multiple-rows if:false={isOpenForm} style="margin-top: 40px;">
+          <lightning-layout-item size="12" large-device-size="3"></lightning-layout-item>
+          <lightning-layout-item size="12" large-device-size="6" style="text-align: center;">
+             <lightning-card >
+            <label style="text-align: center;">Please enter the OTP sent to your registered email address to proceed.</label>
+             <div class="slds-p-around_medium">
+            <div class="otp-container" style="justify-content: center;">
+                <template for:each={otpFields} for:item="field" for:index="index">
+                    <lightning-input 
+                        key={field.key} 
+                        class="otp-input"
+                        type="text"
+                        maxlength="1"
+                        value={field.value}
+                        onchange={handleOtpInput}
+                        data-id={field.key}
+                        pattern="\d*"
+                        variant="label-hidden"
+                    ></lightning-input>
+                </template>
+            </div>
+            <template if:true={errorMessage}>
+                <div class="slds-text-color_error slds-m-top_medium">{errorMessage}</div>
+            </template>
+            <template if:true={successMessage}>
+                <div class="slds-text-color_success slds-m-top_medium">{successMessage}</div>
+            </template>
+
+      
+         <div style="display:flex;justify-content: center;">
+            <lightning-button  if:true={isVisibeButton}
+                variant="brand" 
+                label="Verify OTP"
+                onclick={verifyOtp}
+                class="slds-m-top_medium"
+                
+            ></lightning-button>
+            <lightning-button  if:false={isVisibeButton}
+                variant="brand" 
+                label="Re-Send OTP"
+                onclick={resetOtp}
+                class="slds-m-top_medium"
+                
+            ></lightning-button>
+            <div class="countdown-timer" if:false={isOpenForm}>
+                <span>OTP valid till {formattedTime}</span>
+         </div>
+        </div>
+        </div>
+             </lightning-card>
+        </lightning-layout-item>
+          <lightning-layout-item size="12" large-device-size="3"></lightning-layout-item>
+        </lightning-layout> -->
+    <!--     <lightning-card class="cards" if:true={isOpenForm}>
+ -->
+    <lightning-card class="cards" >
+      
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="2"></lightning-layout-item>
+            <lightning-layout-item size="8">
+                <div style="border:1px solid black !important;">
+                    <div style="background-color:#ffffff; height: 8rem;" class="slds-p-around_large">
+                        <div class="slds-grid slds-wrap" style="">
+                            <div class="slds-col slds-size_9-of-12 slds-m-top_small">
+                                <label style="    font-size: 2vw;
+                                text-align: left;
+                                float: left;" class="slds-m-left_small">
+                                    Grievances Resolution Contact Details
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <img src={expe_Logo} class="img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color:#90b1f3;overflow-y: auto;height: 69vh;" class="slds-p-around_large">
+                        <div class="slds-grid slds-wrap slds-p-around_small">
+
+                            <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                <label class="headercolor">Grievances Nodal Officer</label>
+                            </div>
+                            <div class="slds-grid slds-wrap slds-m-top_small" style="width:100%">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <label class="headercolor2">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Email</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Phone</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Grievances_Nodal_Officer_Name"
+                                        value={accRecData.Grievances_Nodal_Officer_Name}
+                                        placeholder="Enter Grievances Name" onchange={handlechange}></lightning-input>
+
+                                    <label style="color:red" if:true={griev_Name}>Please Enter Grievances Nodal
+                                        Name</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Grievances_Nodal_Officer_Email"
+                                        value={accRecData.Grievances_Nodal_Officer_Email}
+                                        placeholder="Enter Grievances Email" onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={griev_Email}>Please Enter Grievances Nodal
+                                        Email</label>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Grievances_Nodal_Officer_Phone" type="phone"
+                                        value={accRecData.Grievances_Nodal_Officer_Phone}
+                                        placeholder="Enter Grievances Phone" onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={griev_Phone}>Please Enter Grievances Nodal
+                                        Phone</label>
+
+                                </div>
+
+                            </div>
+
+                            <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                <label class="headercolor">Technology Contact</label>
+                            </div>
+
+                            <div class="slds-grid slds-wrap slds-m-top_small" style="width:100%">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <label class="headercolor2">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Email</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Phone</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Technology_Contact_Name"
+                                        value={accRecData.Technology_Contact_Name}
+                                        placeholder="Enter Technology Contact Name"
+                                        onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={techCon_Name}>Please Enter Technology Contact
+                                        Name</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Technology_Contact_Email"
+                                        value={accRecData.Technology_Contact_Email}
+                                        placeholder="Enter Technology Contact Email"
+                                        onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={techCon_Email}>Please Enter Technology Contact
+                                        Email</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Technology_Contact_Phone"
+                                        type="phone" value={accRecData.Technology_Contact_Phone}
+                                        placeholder="Enter Technology Contact Phone"
+                                        onchange={handlechange}></lightning-input>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                <label class="headercolor">Dispute Manager Contact</label>
+                            </div>
+
+                            <div class="slds-grid slds-wrap slds-m-top_small" style="width:100%">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <label class="headercolor2">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Email</label>
+
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                    <label class="headercolor2">Phone</label>
+
+                                </div>
+                                <div class="slds-col slds-size_1-of-12">
+                                    <label class="headercolor2">Change?</label>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_Dispute"
+                                        disabled={accRecData.inp_disabled_1} placeholder="Enter Person Name 1"
+                                        value={accRecData.Person_Name_Dispute}
+                                        onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_1_chk}>Please Enter Person Name
+                                        1</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_1_Dispute"
+                                        disabled={accRecData.inp_disabled_1} placeholder="Enter Person Email 1"
+                                        value={accRecData.Email_1_Dispute} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_1_Dispute_chk}>Please Enter Person Email
+                                        1</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_1"
+                                        disabled={accRecData.inp_disabled_1} placeholder="Enter Person Phone 1"
+                                        value={accRecData.Phone_1} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB1_disabled}
+                                        data-label="Person_Name_Dispute"></lightning-input>
+                                </div>
+
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_2"
+                                        placeholder="Enter Person Name 2" value={accRecData.Person_Name_2}
+                                        disabled={accRecData.inp_disabled_2} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_2_chk}>Please Enter Person Name
+                                        1</label>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_2_Dispute"
+                                        placeholder="Enter Person Email 2" value={accRecData.Email_2_Dispute}
+                                        disabled={accRecData.inp_disabled_2} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_2_Dispute_chk}>Please Enter Person Email
+                                        2</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_2"
+                                        disabled={accRecData.inp_disabled_2} placeholder="Enter Person Phone 2"
+                                        value={accRecData.Phone_2} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB2_disabled}
+                                        data-label="Person_Name_2"></lightning-input>
+                                </div>
+
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_3"
+                                        placeholder="Enter Person Name 3" value={accRecData.Person_Name_3}
+                                        disabled={accRecData.inp_disabled_3} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_3_chk}>Please Enter Person Name
+                                        3</label>
+                                </div>
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_3_Dispute"
+                                        placeholder="Enter Person Email 3" value={accRecData.Email_3_Dispute}
+                                        disabled={accRecData.inp_disabled_3} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_3_Dispute_chk}>Please Enter Person Email
+                                        3</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_3"
+                                        disabled={accRecData.inp_disabled_3} placeholder="Enter Person Phone 3"
+                                        value={accRecData.Phone_3} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB3_disabled}
+                                        data-label="Person_Name_3"></lightning-input>
+                                </div>
+
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_4"
+                                        disabled={accRecData.inp_disabled_4} placeholder="Enter Person Name 4"
+                                        value={accRecData.Person_Name_4} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_4_chk}>Please Enter Person Name
+                                        4</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_4_Dispute"
+                                        disabled={accRecData.inp_disabled_4} placeholder="Enter Person Email 4"
+                                        value={accRecData.Email_4_Dispute} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_4_Dispute_chk}>Please Enter Person Email
+                                        4</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_4"
+                                        disabled={accRecData.inp_disabled_4} placeholder="Enter Person Phone 4"
+                                        value={accRecData.Phone_4} onchange={handlechange}></lightning-input>
+
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB4_disabled}
+                                        data-label="Person_Name_4"></lightning-input>
+                                </div>
+
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_5"
+                                        placeholder="Enter Person Name 5" value={accRecData.Person_Name_5}
+                                        disabled={accRecData.inp_disabled_5} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_5_chk}>Please Enter Person Name
+                                        5</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_5_Dispute"
+                                        placeholder="Enter Person Email 5" value={accRecData.Email_5_Dispute}
+                                        disabled={accRecData.inp_disabled_5} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_5_Dispute_chk}>Please Enter Person Email
+                                        5</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_5"
+                                        disabled={accRecData.inp_disabled_5} placeholder="Enter Person Phone 5"
+                                        value={accRecData.Phone_5} onchange={handlechange}></lightning-input>
+                                </div>
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB5_disabled}
+                                        data-label="Person_Name_5"></lightning-input>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_6"
+                                        disabled={accRecData.inp_disabled_6} placeholder="Enter Person Name 6"
+                                        value={accRecData.Person_Name_6} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_6_chk}>Please Enter Person Name
+                                        6</label>
+                                </div>
+
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_6_Dispute"
+                                        placeholder="Enter Person Email 6" value={accRecData.Email_6_Dispute}
+                                        disabled={accRecData.inp_disabled_6} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_6_Dispute_chk}>Please Enter Person Email
+                                        6</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_6"
+                                        disabled={accRecData.inp_disabled_6} placeholder="Enter Person Phone 6"
+                                        value={accRecData.Phone_6} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB6_disabled}
+                                        data-label="Person_Name_6"></lightning-input>
+
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_7"
+                                        placeholder="Enter Person Name 7" value={accRecData.Person_Name_7}
+                                        disabled={accRecData.inp_disabled_7} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_7_chk}>Please Enter Person Name
+                                        7</label>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_7_Dispute"
+                                        placeholder="Enter Person Email 7" value={accRecData.Email_7_Dispute}
+                                        disabled={accRecData.inp_disabled_7} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_7_Dispute_chk}>Please Enter Person Email
+                                        7</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_7"
+                                        placeholder="Enter Person Phone 7" value={accRecData.Phone_7}
+                                        disabled={accRecData.inp_disabled_7} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class="slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB7_disabled}
+                                        data-label="Person_Name_7"></lightning-input>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_8"
+                                        placeholder="Enter Person Name 8" value={accRecData.Person_Name_8}
+                                        disabled={accRecData.inp_disabled_8} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_8_chk}>Please Enter Person Name
+                                        8</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_8_Dispute"
+                                        placeholder="Enter Person Email 8" value={accRecData.Email_8_Dispute}
+                                        disabled={accRecData.inp_disabled_8} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_8_Dispute_chk}>Please Enter Person Email
+                                        8</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_8"
+                                        disabled={accRecData.inp_disabled_8} placeholder="Enter Person Phone 8"
+                                        value={accRecData.Phone_8} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB8_disabled}
+                                        data-label="Person_Name_8"></lightning-input>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_9"
+                                        placeholder="Enter Person Name 9" value={accRecData.Person_Name_9}
+                                        disabled={accRecData.inp_disabled_9} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_9}> Please Enter Person Name 9</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_9_Dispute"
+                                        placeholder="Enter Person Email 9" value={accRecData.Email_9_Dispute}
+                                        disabled={accRecData.inp_disabled_9} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_9_Dispute_chk}>Please Enter Person Email
+                                        9</label>
+                                </div>
+
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_9"
+                                        disabled={accRecData.inp_disabled_9} placeholder="Enter Person Phone 9"
+                                        value={accRecData.Phone_9} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB9_disabled}
+                                        data-label="Person_Name_9"></lightning-input>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Person_Name_10"
+                                        placeholder="Enter Person Name 10" value={accRecData.Person_Name_10}
+                                        disabled={accRecData.inp_disabled_10} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Person_Name_10_chk}>Please Enter Person Name
+                                        10</label>
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Email_10_Dispute"
+                                        placeholder="Enter Person Email 10" value={accRecData.Email_10_Dispute}
+                                        disabled={accRecData.inp_disabled_10} onchange={handlechange}></lightning-input>
+                                    <label style="color:red" if:true={Email_10_Dispute_chk}>Please Enter Person Email
+                                        10</label>
+                                </div>
+
+                                <div class=" slds-col slds-size_3-of-12">
+                                    <lightning-input class="slds-m-right_large" type="phone" data-label="Phone_10"
+                                        disabled={accRecData.inp_disabled_10} placeholder="Enter Person Phone 10"
+                                        value={accRecData.Phone_10} onchange={handlechange}></lightning-input>
+                                </div>
+
+                                <div class=" slds-col slds-size_1-of-12">
+                                    <lightning-input class="slds-align_absolute-center slds-m-top_x-small"
+                                        type="checkbox" onchange={handlePB1change}
+                                        disabled={accRecData.perseon_pB10_disabled}
+                                        data-label="Person_Name_10"></lightning-input>
+                                </div>
+                            </div>
+
+
+<div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                <label class="headercolor">Billing Contact</label>
+                            </div>
+                            <div class="slds-grid slds-wrap slds-m-top_small" style="width:100%">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <label class="headercolor2">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Email</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Phone</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Billing_Contact_Name" 
+                                        value={accRecData.Billing_Contact_Name}
+                                        placeholder="Billing Contact Name" onchange={handlechange}></lightning-input>
+
+                                    <!-- <label style="color:red" if:true={griev_Name}>Please Enter Grievances Nodal
+                                        Name</label> -->
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Billing_Contact_Email"
+                                        value={accRecData.Billing_Contact_Email} 
+                                        placeholder="Billing Contact Email" onchange={handlechange}></lightning-input>
+                                    <!-- <label style="color:red" if:true={griev_Email}>Please Enter Grievances Nodal
+                                        Email</label> -->
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Billing_Contact_Phone" type="phone" 
+                                        value={accRecData.Billing_Contact_Phone}
+                                        placeholder="Billing Contact Phone" onchange={handlechange}></lightning-input>
+                                    <!-- <label style="color:red" if:true={griev_Phone}>Please Enter Grievances Nodal
+                                        Phone</label> -->
+
+                                </div>
+
+                            </div>
+                             
+                            <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                <label class="headercolor">Authorized Signatory</label>
+                            </div>
+                            <div class="slds-grid slds-wrap slds-m-top_small" style="width:100%">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <label class="headercolor2">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Email</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Phone</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Auth_Contact_Name" 
+                                        value={accRecData.Auth_Contact_Name}
+                                        disabled
+                                        placeholder="Authorized Signatory Name" onchange={handlechange}></lightning-input>
+
+                                    <!-- <label style="color:red" if:true={griev_Name}>Please Enter Grievances Nodal
+                                        Name</label> -->
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Auth_Contact_Email"
+                                        value={accRecData.Auth_Contact_Email} 
+                                        disabled
+                                        placeholder="Authorized Signatory Email" onchange={handlechange}></lightning-input>
+                                    <!-- <label style="color:red" if:true={griev_Email}>Please Enter Grievances Nodal
+                                        Email</label> -->
+                                </div>
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large"
+                                        data-label="Auth_Contact_Phone" type="phone" 
+                                        value={accRecData.Auth_Contact_Phone}
+                                        disabled
+                                        placeholder="Authorized Signatory Phone" onchange={handlechange}></lightning-input>
+                                    <!-- <label style="color:red" if:true={griev_Phone}>Please Enter Grievances Nodal
+                                        Phone</label> -->
+
+                                </div>
+
+                            </div>
+
+
+                            
+
+
+                            <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                <label class="headercolor">Nodal Officer</label>
+                            </div>
+
+                            <div class="slds-grid slds-wrap slds-m-top_small" style="width:100%">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <label class="headercolor2">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Email</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <label class="headercolor2">Phone</label>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Nodal_Officer_Name"
+                                        value={accRecData.Nodal_Officer_Name} 
+                                        placeholder="Nodal Officer Name"
+                                        disabled
+                                        onchange={handlechange}></lightning-input>
+                                    <!-- <label style="color:red" if:true={techCon_Name}>Please Enter Technology Contact
+                                        Name</label> -->
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Nodal_Officer_Email"
+                                        value={accRecData.Nodal_Officer_Email} 
+                                        placeholder="Nodal Officer Email"
+                                        disabled
+                                        onchange={handlechange}></lightning-input>
+                                    <!-- <label style="color:red" if:true={techCon_Email}>Please Enter Technology Contact
+                                        Email</label> -->
+                                </div>
+
+                                <div class=" slds-col slds-size_4-of-12">
+                                    <lightning-input class="slds-m-right_large" data-label="Nodal_Officer_Phone"
+                                        type="phone" value={accRecData.Nodal_Officer_Phone}
+                                        placeholder="Nodal Officer Phone"
+                                        disabled
+                                        onchange={handlechange}></lightning-input>
+                                </div>
+ <br/>
+
+                           <!-- <div class=" slds-col slds-size_12-of-12">
+                                <br/>
+                                <b>For Nodal Officer change in case of “Company”</b><br/>
+
+Please find the below documents required for change in Nodal Officer.<br/><br/>
+<div style="margin-left:15px">
+<table style="width:100%">
+<tr><td class="margincls">1.</td><td>A document on the letter head stating that “the company authorizes ‘ABC’ as Nodal Officer {accRecData.Nodal_Officer_Email} of the organization who can send / approve the request of the user ID and also is reachable in case of any escalations. This needs to be signed by Company Secretary / MD / Authorized Signatory appearing on the MCA portal.</td></tr>
+<tr><td class="margincls">2.</td><td>Self-attested PAN card copy / Passport copy / Driving license accepted as OVD by RBI. This document is required of the person who has signed the letter.<br/></td></tr>
+<tr><td class="margincls">3.</td><td>Self-attested Employee ID Card. This document is required of the person who has signed the letter.</td></tr>
+<tr><td class="margincls">4.</td><td>Self-attested PAN card copy / Passport copy / Driving license accepted as OVD by RBI. This document is required of the person who is being appointed as a nodal officer.</td></tr>
+<tr><td class="margincls">5.</td><td>Self-attested Employee ID Card. This document is required of the person who is being appointed as the Nodal Officer.</td></tr>
+
+</table></div>
+
+                                </div> -->
+
+
+                              <!---  <div class=" slds-col slds-size_12-of-12">
+                                    <br/>
+                                    <b>For Nodal Officer change in case of “Bank”</b><br/>
+    
+                                    Please find the below documents required for change in Nodal Officer.
+                                <br/><br/>
+    <div style="margin-left:15px">
+    <table style="width:100%">
+    <tr><td class="margincls">1.</td><td>A document on the letter head stating that “the Bank authorizes ‘ABC’ as Nodal Officer {accRecData.Nodal_Officer_Email} of the organization who can send / approve the request of the user ID and also is reachable in case of any escalations. This needs to be signed by Chairman / Company Secretary / Authorized Signatory appearing on the MCA portal.</td></tr>
+    <tr><td class="margincls">2.</td><td>Self-attested PAN card copy / Passport copy / Driving license accepted as OVD by RBI. This document is required of the person who has signed the letter.<br/></td></tr>
+    <tr><td class="margincls">3.</td><td>Self-attested Employee ID Card. This document is required of the person who has signed the letter.</td></tr>
+    <tr><td class="margincls">4.</td><td>Self-attested PAN card copy / Passport copy / Driving license accepted as OVD by RBI. This document is required of the person who is being appointed as a nodal officer.    </td></tr>
+    <tr><td class="margincls">5.</td><td>Self-attested Employee ID Card. This document is required of the person who is being appointed as the Nodal Officer.
+    </td></tr>
+    
+    </table></div>
+    
+                                    </div> -->
+
+                            </div>
+
+
+                            
+
+                            <div class=" accordion" style="background-color: rgb(144, 177, 243);">
+                                <!-- <template for:each={sections} for:item="section">
+                                  <div key={section.id} class="accordion-section">
+                                    <div class="accordion-header" data-id={section.id}>
+                                      <lightning-icon icon-name="utility:chevrondown" data-id={section.index} onclick={toggleSection} if:true={section.isOpen} size="small"></lightning-icon>
+                                      <lightning-icon icon-name="utility:chevronright" data-id={section.index} if:false={section.isOpen} onclick={toggleSection} size="small"></lightning-icon>
+                  
+                                      <label class="slds-m-left_small">{section.label}</label>
+                
+                                      
+                                    
+                                  </div>
+                
+                                  <div key={section.id} class=".accordion-content" if:true={section.isOpen}>
+                                  </div>
+                                  </div>
+                                </template> -->
+                
+                                <div class="slds-col slds-size_12-of-12 accordion-section">
+                                  <div class="slds-col slds-size_12-of-12 accordion-header">
+                                    <lightning-icon icon-name="utility:chevrondown" data-label="1"
+                                      onclick={toggleSection} if:true={DQR_Open} size="small"></lightning-icon>
+                                    <lightning-icon icon-name="utility:chevronright" data-label="1"
+                                      if:false={DQR_Open} onclick={toggleSection} size="small"></lightning-icon>
+                                    <label class="slds-m-left_small">DQR / DQI Information</label>
+                                  </div>
+                
+                                  <div class=".accordion-content" if:true={DQR_Open} >
+                                   <lightning-layout multiple-rows class="slds-m-left_small">
+                                    <!--Row 1-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 1</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_1} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_1" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 2</label>
+                                    </lightning-layout-item>
+
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_2} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_2" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 2-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 3</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_3} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_3" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 4</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_4} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_4" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 3-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 5</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_5} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_5" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 6</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_6} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_6" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 4-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 7</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_7} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                      data-label="DQR_DQI_Email_7" onchange={handleDQRChange} label="DQR_DQI_Email_7"></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 8</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_8} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_8" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                
+                                    <!--Row 5-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 9</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_9} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_9" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 10</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_10} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_10" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 6-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 11</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_11} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_11" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 12</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_12} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_12" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 7-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 13</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_13} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_13" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 14</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_14} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_14" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 8-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 15</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_15} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_15" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 16</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_16} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_16" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 9-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 17</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_17} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_17" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 18</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_18} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_18" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 10-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 19</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_19} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_19" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 20</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_20} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_20" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 11-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 21</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_21} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_21" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 22</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_22} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_22" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                
+                                    <!--Row 12-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 23</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_23} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_23" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 24</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_24} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_24" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                
+                                    <!--Row 13-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>DQR/DQI Email 25</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={DQR_Value.DQR_DQI_Email_25} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="DQR_DQI_Email_25" onchange={handleDQRChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                
+                                  </div>
+                
+                                  <div class="accordion-header">
+                                    <lightning-icon icon-name="utility:chevrondown" data-label="2"
+                                      onclick={toggleSection} if:true={Form_Open} size="small"></lightning-icon>
+                                    <lightning-icon icon-name="utility:chevronright" data-label="2"
+                                      if:false={Form_Open} onclick={toggleSection} size="small"></lightning-icon>
+                                    <label class="slds-m-left_small">Form C Information</label>
+                                  </div>
+                
+                                  <div class=".accordion-content" if:true={Form_Open}>
+                                    <lightning-layout multiple-rows class="slds-m-left_small" style="border-bottom: 1px solid;">
+                                      <!--Row 1-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 1</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_1} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                        data-label="Form_C_Level_Email_1" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 2</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_2} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_2" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 2-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 3</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_3} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_3" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 4</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_4} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_4" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 3-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 5</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_5} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_5" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 6</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_6} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_6" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 4-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 7</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_7} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_7" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 8</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_8} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_8" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                  
+                                      <!--Row 5-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 9</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_9} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_9" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 10</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_10} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_10" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 6-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 11</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_11} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_11" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 12</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_12} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_12" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 7-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 13</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_13} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_13" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 14</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_14} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_14" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 8-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 15</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_15} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_15" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <!-- <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 1 Email 16</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_A_Value.Form_C_Level_Email_16} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_16" onchange={handleForm_A_Change} label=""></lightning-input>
+                                      </lightning-layout-item> -->
+                                      </lightning-layout>
+                
+                                      <lightning-layout multiple-rows class="slds-m-left_small" style="border-bottom: 1px solid;"> 
+                
+                
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 2 Email 1</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_B_Value.Form_C_Level_2_Email_1} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_2_Email_1" onchange={handleForm_B_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 2 Email 2</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_B_Value.Form_C_Level_2_Email_2} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_2_Email_2" onchange={handleForm_B_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 2-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 2 Email 3</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_B_Value.Form_C_Level_2_Email_3} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_2_Email_3" onchange={handleForm_B_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 2 Email 4</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_B_Value.Form_C_Level_2_Email_4} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_2_Email_4" onchange={handleForm_B_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 3-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 2 Email 5</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_B_Value.Form_C_Level_2_Email_5} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_2_Email_5" onchange={handleForm_B_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                       </lightning-layout-item>
+                                       </lightning-layout>
+                
+                  
+                  
+                                      <!--Row 4-->
+                                      <lightning-layout multiple-rows class="slds-m-left_small" style=""> 
+                
+                                      
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 3 Email 1</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_C_Value.Form_C_Level_3_Email_1} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_3_Email_1" onchange={handleForm_C_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 3 Email 2</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_C_Value.Form_C_Level_3_Email_2} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_3_Email_2" onchange={handleForm_C_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                  
+                                      <!--Row 5-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 3 Email 3</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_C_Value.Form_C_Level_3_Email_3} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_3_Email_3" onchange={handleForm_C_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 3 Email 4</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_C_Value.Form_C_Level_3_Email_4} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_3_Email_4" onchange={handleForm_C_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                
+                                      <!--Row 5-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Form C Level 3 Email 5</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={Form_C_Value.Form_C_Level_3_Email_5} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_3_Email_5" onchange={handleForm_C_Change} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <!-- <label>Form C Level 3 Email 4</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={DQR_Value.Form_C_Level_Email_10} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Form_C_Level_Email_10" onclick={handleDQRChange} label=""></lightning-input> -->
+                                      </lightning-layout-item>
+                
+                
+                
+                                      
+                                      </lightning-layout>
+                
+                                  </div>
+                
+                
+                                  <div class="accordion-header">
+                                    <lightning-icon icon-name="utility:chevrondown" data-label="3"
+                                      onclick={toggleSection} if:true={Dispute_Form} size="small">
+                                    </lightning-icon>
+                                    <lightning-icon icon-name="utility:chevronright" data-label="3"
+                                      if:false={Dispute_Form} onclick={toggleSection} size="small">
+                                    </lightning-icon>
+                                    <label class="slds-m-left_small">Dispute Information</label>
+                                  </div>
+                
+                                  <div class=".accordion-content" if:true={Dispute_Form}>
+                                    <lightning-layout multiple-rows class="slds-m-left_small">
+                                      <!--Row 1-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 1</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_1} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                        data-label="Dispute_Email_1" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 2</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_2} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_2" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 2-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 3</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_3} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_3" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 4</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_4} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_4" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 3-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 5</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_5} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_5" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 6</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_6} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_6" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 4-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 7</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_7} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_7" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 8</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_8} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_8" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                  
+                                      <!--Row 5-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 9</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_9} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_9" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 10</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_10} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_10" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 6-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 11</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_11} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_11" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 12</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_12} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_12" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                  
+                  
+                                      <!--Row 7-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 13</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_13} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_13" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 14</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_14} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_14" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                
+                
+                                      <!--Row 7-->
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>Dispute Email Email 15</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={disputeValue.Dispute_Email_15} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="Dispute_Email_15" onchange={handleDisputeChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                     
+                  
+                  </lightning-layout>
+                
+                
+                
+                                </div>
+
+                                <div class="slds-col slds-size_12-of-12 accordion-header">
+                                    <lightning-icon icon-name="utility:chevrondown" data-label="4"
+                                      onclick={toggleSection} if:true={OLM_Open} size="small"></lightning-icon>
+                                    <lightning-icon icon-name="utility:chevronright" data-label="4"
+                                      if:false={OLM_Open} onclick={toggleSection} size="small"></lightning-icon>
+                                    <label class="slds-m-left_small">OLM Information</label>
+                                  </div>
+                
+                                  <div class=".accordion-content" if:true={OLM_Open} >
+                                   <lightning-layout multiple-rows class="slds-m-left_small">
+                                    <!--Row 1-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>OLM Email 1</label>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={olm_Value.OLM_Email_1} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_1" onchange={handleOLMChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                      <label>OLM Email 2</label>
+                                    </lightning-layout-item>
+                                    
+                                    <lightning-layout-item size="12" large-device-size="4">
+                                      <lightning-input value={olm_Value.OLM_Email_2} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_2" onchange={handleOLMChange} label=""></lightning-input>
+                                    </lightning-layout-item>
+
+                                    <!--Row 2-->
+                                    <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>OLM Email 3</label>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={olm_Value.OLM_Email_3} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                        data-label="OLM_Email_3" onchange={handleOLMChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+                                      <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                        <label>OLM Email 4</label>
+                                      </lightning-layout-item>
+                                      
+                                      <lightning-layout-item size="12" large-device-size="4">
+                                        <lightning-input value={olm_Value.OLM_Email_4} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_4" onchange={handleOLMChange} label=""></lightning-input>
+                                      </lightning-layout-item>
+
+                
+                                   <!--Row 3-->
+
+                                   <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 5</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_5} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_5" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 6</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_6} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_6" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 4-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 7</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_7} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_7" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 8</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_8} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_8" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 5-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 9</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_9} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_9" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 10</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_10} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_10" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 6-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 11</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_11} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_11" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 12</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_12} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_12" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 7-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 13</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_13} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                    data-label="OLM_Email_13" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 14</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_14} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                    data-label="OLM_Email_14" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 8-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 15</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_15} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                    data-label="OLM_Email_15" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 16</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_16} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large"
+                                     data-label="OLM_Email_16" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 9-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 17</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_17} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                    data-label="OLM_Email_17" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 18</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_18} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                    data-label="OLM_Email_18" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 10-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 19</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_19} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_19" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 20</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_20} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_20" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 11-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 21</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_21} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_21" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 22</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_22} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_22" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 12-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 23</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_23} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_23" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 24</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_24} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_24" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 13-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 25</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_25} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_25" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 26</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_26} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_26" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 14-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 27</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_27} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_27" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 28</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_28} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_28" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 15-->
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 29</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_29} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_29" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 30</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_30} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_30" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 16-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 31</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_31} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_31" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 32</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_32} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" 
+                                    data-label="OLM_Email_32" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 17-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 33</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_33} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_33" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 34</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_34} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_34" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 18-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 35</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_35} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_35" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 36</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_36} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_36" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 19-->
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 37</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_37} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_37" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 38</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_38} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_38" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+                                 <!--Row 20-->
+
+                                 <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 39</label>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_39} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_39" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+                                  <lightning-layout-item size="12" large-device-size="2" class="slds-m-top_small">
+                                    <label>OLM Email 40</label>
+                                  </lightning-layout-item>
+                                  
+                                  <lightning-layout-item size="12" large-device-size="4">
+                                    <lightning-input value={olm_Value.OLM_Email_40} variant="label-hidden" class="slds-m-top_small slds-m-horizontal_large" data-label="OLM_Email_40" onchange={handleOLMChange} label=""></lightning-input>
+                                  </lightning-layout-item>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                
+                                    </lightning-layout>
+                                    </div>
+
+                
+                              </div>
+                
+                            </div>
+                
+
+
+
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div style="background-color:#ffffff; height: 4rem;" class="slds-p-around_large">
+                        <lightning-button label="Confirm" variant="brand" class="slds-align_absolute-center"
+                            onclick={handleConfirm}></lightning-button>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size=" 2">
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+
+</template>

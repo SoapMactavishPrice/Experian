@@ -1,0 +1,136 @@
+{
+    "memberTypeList": [{
+         "name": "Account Aggregator (AA) NBFCs",
+         "code": 1
+        },
+        {
+         "name": "Asset Finance Companies registered with RBI",
+         "code": 2
+        },
+        {
+         "name": "Asset Reconstruction Companies (ARCs)",
+         "code": 3
+        },
+        {
+         "name": "Cellular / Telecom Company",
+         "code": 28
+        },
+        {
+         "name": "Core Investment Companies (CICs)",
+         "code": 4
+        },
+        {
+         "name": "District Central Co-Operative Banks",
+         "code": 5
+        },
+        {
+         "name": "Housing Finance Institution",
+         "code": 32
+        },
+        {
+         "name": "Insurance",
+         "code": 29
+        },
+        {
+         "name": "NBFC- Factors",
+         "code": 6
+        },
+        {
+         "name": "NBFC - Infrastructure Debt Fund (NBFC-IDF)",
+         "code": 7
+        },
+        {
+         "name": "NBFC Infrastructure Finance Companies (NBFC - IFCs)",
+         "code": 8
+        },
+        {
+         "name": "NBFC Investment and Credit Companies (NBFC-ICC)",
+         "code": 9
+        },
+        {
+         "name": "NBFC-Micro Finance Institutions (NBFC-MFIs)",
+         "code": 10
+        },
+        {
+         "name": "NBFC - Non Deposit taking Non-Systemically Important companies registered with RBI",
+         "code": 11
+        },
+        {
+         "name": "NBFC - Non-Deposit taking Systemically Important (NBFC-ND-SI) companies",
+         "code": 12
+        },
+        {
+         "name": "NBFC Peer to Peer (NBFC - P2P) companies",
+         "code": 13
+        },
+        {
+         "name": "NBFCs holding CoR for accepting Public Deposits",
+         "code": 14
+        },
+        {
+         "name": "NBFCs with asset size Rs 100 crore and above",
+         "code": 15
+        },
+        {
+         "name": "Non-Deposit taking Non-Systemically Important NBFCs (NBFCs-ND) with asset size greather than Rs 100 crore",
+         "code": 16
+        },
+        {
+         "name": "Non-Operative Financial Holding Company (NOFHC)",
+         "code": 17
+        },
+        {
+         "name": "Non-Scheduled State Co-operative Banks",
+         "code": 18
+        },
+        {
+         "name": "Non-Scheduled Urban Co-operative Banks",
+         "code": 19
+        },
+        {
+         "name": "Scheduled Foreign Banks in India",
+         "code": 20
+        },
+        {
+         "name": "Scheduled Payments Banks",
+         "code": 21
+        },
+        {
+         "name": "Scheduled Private Sector Banks",
+         "code": 22
+        },
+        {
+         "name": "Scheduled Public Sector Banks",
+         "code": 23
+        },
+        {
+         "name": "Scheduled Regional Rural Banks",
+         "code": 24
+        },
+        {
+         "name": "Scheduled Small Finance Banks",
+         "code": 25
+        },
+        {
+         "name": "Scheduled State Co-operative Banks",
+         "code": 26
+        },
+        {
+        "name": "Scheduled Urban Co-operative Banks",
+        "code": 27
+        },
+        {
+        "name": "Stock Broking -Registered with SEBI",
+        "code": 30
+        },
+        {
+        "name": "Trading Member – Registered with Commodity Exchange",
+        "code": 31
+        },
+        {
+            "name": "Other",
+            "code": 0
+        }
+
+       ]
+    }

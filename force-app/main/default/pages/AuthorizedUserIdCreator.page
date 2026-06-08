@@ -1,0 +1,498 @@
+<apex:page standardStylesheets="false" controller="profileController" showHeader="false" sidebar="false" applyHtmlTag="false"
+    applyBodyTag="false" docType="html-5.0">
+    <html ng-app="ngApp">
+
+    <head>
+        <title>SalesForce | Portal Profile </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/profile.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/header.css')}" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" rel="stylesheet" />
+        <link rel="icon" href="{!URLFOR($Resource.portalAssets,'/assets/image/expLogo.png')}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></apex:includeScript>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"> </apex:includeScript>
+
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></apex:includeScript>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></apex:includeScript>
+
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></apex:includeScript>
+
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/ng-idle/1.3.2/angular-idle.min.js"></apex:includeScript>
+
+        <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></apex:includeScript>
+        <apex:includeScript value="https://rawgit.com/l-lin/angular-datatables/v0.4.3/dist/angular-datatables.min.js"></apex:includeScript>
+
+        <apex:includescript value="https://code.angularjs.org/1.7.9/angular-messages.js"></apex:includescript>
+        <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.js"></apex:includescript>
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+        <!--  If necessary, please modify the charset parameter to specify the        -->
+        <!--  character set of your HTML page.                                        -->
+        <!--  ----------------------------------------------------------------------  -->
+
+        <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/angular.js') }" />
+        <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/FileUploadJS.js') }" />
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+        <!--  If necessary, please modify the charset parameter to specify the        -->
+        <!--  character set of your HTML page.                                        -->
+        <!--  ----------------------------------------------------------------------  -->
+        <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+    </head>
+
+
+    <body ng-controller="profileCtrl">
+        <div ng-show="showOverlay" class="overlay">
+            <div class="loader">
+                <img class="waitingImage" src="{!URLFOR($Resource.portalAssets,'/assets/image/loading.gif')}" title="Please Wait..." />
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand ml-5" href="#">
+                <img src="{!URLFOR($Resource.portalAssets,'/assets/image/Experian_logo.png')}" alt="Logo" style="width:130px;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <div class="inner-navbar" ng-repeat="t in tabs">
+                        <li class="nav-item mr-4" ng-if="(t.Tab_Url__c == 'Home' || t.Tab_Url__c == 'DataSubmission' || t.Tab_Url__c == 'Case')"
+                            ng-click="routeTo(t.Tab_Url__c)">
+                            <a class="nav-link" ng-class="t.Active ? 'l-active' : '' " href="#">{{t.Name}}</a>
+                        </li>
+                    </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i style="padding:6px;font-size:20px;" class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <!-- <li > -->
+                            <div class="inner-navbar" ng-repeat-start="t in tabs">
+                                <a class="dropdown-item" ng-if="(t.Tab_Url__c != 'Home' && t.Tab_Url__c != 'DataSubmission' && t.Tab_Url__c != 'Case')"
+                                    ng-class="t.Active ? 'l-active' : '' " ng-click="routeTo(t.Tab_Url__c)">{{t.Name}}</a>
+                            </div>
+                            <div ng-repeat-end="t in tabs"></div>
+                            <!-- </li> -->
+                            <!-- <a class="dropdown-item" ng-click="routeTo('CompanyInfo')" >Company Information</a> -->
+                            <a class="dropdown-item" ng-click="routeTo(salesforceSiteLabel)">Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">{{userDetail.Name}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <toaster-container toaster-options="{'time-out': 4000}"></toaster-container>
+        <div class="container bg-img shadow-lg mt-5">
+            <div class="row page-row"></div>
+            <div class="infopart">
+                <form name="editForm" novalidate="true">
+                    <div class="row border-line">
+                        <div class="col-sm-12" style="padding-right:0;">
+                            <h3>User Id Requestor </h3>
+                            <i style="margin-left:15px" class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+                            <h5 style="margin-left:15px;">{{useIdRequestorFormData.FirstName}} {{useIdRequestorFormData.LastName}}</h5>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-sm-2">
+                            <div class="card page-card" style="height:200px">
+                                <div class="page-card-header">
+                                    <div class="pg-img-box">
+                                        <img src="{!URLFOR($Resource.portalAssets,'/assets/image/userMaleIcon.png')}" alt="Logo" />
+                                    </div>
+                                </div>
+                                <div class="card-body page-card-body">
+                                    <h6 style="color: #fff !important;
+                                    margin-top: 10px;
+                                    font-size: 13px;">{{useIdRequestorFormData.FirstName}} {{useIdRequestorFormData.LastName}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="inputZip">First Name</label>
+                                        <span style="float:right">:</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" style="width:40%" name="firstName" ng-model="useIdRequestorFormData.FirstName" ng-disabled="!tabsAccessController.ReadWrite_Access__c"
+                                                required="true"
+                                            />
+                                            <i ng-show="tabsAccessController.ReadWrite_Access__c" class="fa fa-pencil" aria-hidden="true"></i>
+    
+                                            <div ng-if="(editForm.firstName.$dirty || editForm.$submitted)" ng-messages="editForm.firstName.$error" style="color:maroon"
+                                                role="alert">
+                                                <div class="text-danger" ng-message="required">please enter first name</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="inputZip">Last Name</label>
+                                        <span style="float:right">:</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" style="width:40%" name="LastName" ng-model="useIdRequestorFormData.LastName" ng-disabled="!tabsAccessController.ReadWrite_Access__c"
+                                                required="true" 
+                                            />
+                                            <i ng-show="tabsAccessController.ReadWrite_Access__c" class="fa fa-pencil" aria-hidden="true"></i>
+    
+                                            <div ng-if="(editForm.LastName.$dirty || editForm.$submitted)" ng-messages="editForm.LastName.$error" style="color:maroon"
+                                                role="alert">
+                                                <div class="text-danger" ng-message="required">please enter last name</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="inputZip">Phone</label>
+                                        <span style="float:right">:</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <!-- <label class="answer-color" for="inputZip">{{useIdRequestorFormData.Phone}}</label> -->
+                                        <input type="text" style="width:40%" name="phone_number" ng-model="useIdRequestorFormData.Phone" ng-disabled="!tabsAccessController.ReadWrite_Access__c"
+                                            required="true" minlength="10" maxlength="10" onkeypress="return (event.charCode > 47 && event.charCode < 58)"
+                                        />
+                                        <i ng-show="tabsAccessController.ReadWrite_Access__c" class="fa fa-pencil" aria-hidden="true"></i>
+
+                                        <div ng-if="(editForm.phone_number.$dirty || editForm.$submitted)" ng-messages="editForm.phone_number.$error" style="color:maroon"
+                                            role="alert">
+                                            <div class="text-danger" ng-message="required">please enter mobile number</div>
+                                            <div class="text-danger" ng-message="minlength">pan number should be 10 digit</div>
+                                            <div class="text-danger" ng-message="maxlength">pan number should be 10 digit</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="inputZip">Email</label>
+                                        <span style="float:right">:</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <input type="text" style="width:40%" name="email" ng-model="useIdRequestorFormData.Email" required="true" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
+                                            ng-disabled="!tabsAccessController.ReadWrite_Access__c" />
+                                        <i ng-show="tabsAccessController.ReadWrite_Access__c" class="fa fa-pencil" aria-hidden="true"></i>
+                                        <div ng-if="(editForm.email.$dirty || editForm.$submitted)" ng-messages="editForm.email.$error" style="color:maroon" role="alert">
+                                            <div class="text-danger " ng-message="required">please enter email address</div>
+                                            <div class="text-danger " ng-message="pattern">Invali Email Address</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="inputZip"> Title</label>
+                                        <span style="float:right">:</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <input type="text" style="width:40%" name="title" ng-model="useIdRequestorFormData.Job_Title__c" required="true" ng-disabled="!tabsAccessController.ReadWrite_Access__c"
+                                        />
+                                        <i ng-show="tabsAccessController.ReadWrite_Access__c" class="fa fa-pencil" aria-hidden="true"></i>
+                                        <div ng-if="(editForm.title.$dirty || editForm.$submitted)" ng-messages="editForm.title.$error" style="color:maroon" role="alert">
+                                            <div class="text-danger" ng-message="required">please enter title</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group mt-3">
+                                        <button type="submit" ng-if="tabsAccessController.ReadWrite_Access__c" class="float-right mr-4 experian-button" ng-click="submitEditedForm(editForm)">Submit &nbsp;
+                                            <i class="fa fa-angle-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-20px"></div>
+                            <div class="space-20px"></div>
+                            <div class="footer-sticky mt-4 mb-2">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <span>&copy; 2017 - 2019 Experian Information Solutions, Inc. All rights reserved.
+                                            <a>
+                                            Terms &amp; Conditions </a>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-3 text-right">
+                                        <div class="col-sm-12">
+                                            <span>Stay connected</span>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <i class="fa fa-linkedin p-1" style="font-size:20px"></i>&nbsp;
+                                            <i class="fa fa-facebook p-1" style="font-size:20px"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="space-20px"></div>
+            </div>
+        </div>
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <FORM> element to your page.             -->
+        <!--  ----------------------------------------------------------------------  -->
+        <script>
+            var app = angular.module('ngApp', ['toaster','ngMessages', 'datatables', 'ngIdle', 'ngSanitize']);
+            app.controller('profileCtrl', function ($scope, $filter, toaster, $http, $timeout, Idle, $sce) {
+
+                $scope.userDetail = undefined;
+                $scope.showOverlay = true;
+                $scope.salesforceSiteLabel = '/' + '{!force_site_label}';
+
+                $scope.safeApply = function (fn) {
+                    var phase = this.$root.$$phase;
+                    if (phase == '$apply' || phase == '$digest') {
+                        if (fn && (typeof (fn) === 'function')) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
+                    }
+                };
+
+                $scope.events = [];
+                $scope.idle = 180; //seconds
+                $scope.timeout = 305; //seconds
+
+                $scope.variable_payment_data = null;
+
+                $scope.routeTo = function (param) {
+                    if (param == $scope.salesforceSiteLabel) {
+                        localStorage.clear();
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.profileController.expire_session}',
+                            $scope.userId,
+                            function (result, event) {
+                                if (result) {
+                                    window.location.href = param;
+                                } else {
+                                    window.location.href = param;
+                                }
+                            });
+                    } else {
+                        console.log('Done');
+                        window.location.href = param;
+                    }
+                }
+
+                $scope.$on('IdleStart', function () {
+                    console.log('Log IdleStart');
+                    addEvent({ event: 'IdleStart', date: new Date() });
+                });
+
+                $scope.$on('IdleEnd', function () {
+                    console.log('Log IdleEnd');
+                    addEvent({ event: 'IdleEnd', date: new Date() });
+                });
+
+                $scope.$on('IdleWarn', function (e, countdown) {
+                    console.log('Log IdleWarn');
+                    addEvent({ event: 'IdleWarn', date: new Date(), countdown: countdown });
+                });
+
+                $scope.$on('IdleTimeout', function () {
+                    console.log('Log IdleTimeout');
+                    $scope.routeTo($scope.salesforceSiteLabel);
+                    addEvent({ event: 'IdleTimeout', date: new Date() });
+                });
+
+                $scope.$on('Keepalive', function () {
+                    console.log('Log Keepalive');
+                    addEvent({ event: 'Keepalive', date: new Date() });
+                });
+
+                function addEvent(evt) {
+                    $scope.$evalAsync(function () {
+                        $scope.events.push(evt);
+                    })
+                }
+
+                $scope.reset = function () {
+                    Idle.watch();
+                }
+
+                $scope.$watch('idle', function (value) {
+                    if (value !== null) Idle.setIdle(value);
+                });
+
+                $scope.$watch('timeout', function (value) {
+                    if (value !== null) Idle.setTimeout(value);
+                });
+
+                $scope.userId = localStorage.getItem("UserId");
+                $scope.tabs = [];
+                $scope.tabsAccessController = undefined;
+                $scope.sessionData = undefined;
+                console.log(localStorage.getItem("ControllAccess"));
+                if (localStorage.getItem("ControllAccess") != 'undefined') {
+                    $scope.sessionData = JSON.parse(localStorage.getItem("ControllAccess"));
+                }
+                $scope.accId = localStorage.getItem("AccountId");
+                $scope.useIdRequestorFormData = {
+                    Id : null,
+                    Name : null,
+                    Contact_Role__c : null,
+                    Title : null,
+                    FirstName : null,
+                    LastName : null,
+                    Phone : null,
+                    Job_Title__c : null,
+                    Email : null,
+                }
+
+                if ($scope.userId) {
+                    console.log($scope.userId, localStorage.getItem("AccessToken"))
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.getInforamtion}',
+                        $scope.userId,
+                        localStorage.getItem("AccessToken"),
+                        function (result, event) {
+                            console.log(result);
+                            console.log('-Result -->', result);
+                            if (result != null) {
+                                $scope.safeApply(function () {
+                                    $scope.userDetail = result;
+                                    $scope.showOverlay = false;
+                                })
+                            } else {
+                                $scope.routeTo($scope.salesforceSiteLabel);
+                                $scope.showOverlay = false;
+                            }
+                        });
+                } else {
+                    $scope.safeApply(function () {
+                        $scope.routeTo($scope.salesforceSiteLabel);
+                    })
+                }
+
+                $scope.pageReady = function () {
+                    $scope.safeApply(function () {
+                        _.each($scope.sessionData, function (someThing) {
+                            if (someThing.None_Access__c == false) {
+                                $scope.tabs.push(someThing.Tabs_Name__r);
+                                if (someThing.Tabs_Name__r.Name == 'Authorized User Id Creator') {
+                                    $scope.tabsAccessController = someThing
+                                    someThing.Tabs_Name__r.Active = true;
+                                    $scope.showOverlay = false;
+                                } else {
+                                    someThing.Tabs_Name__r.Active = false;
+                                    $scope.showOverlay = false;
+                                    // $scope.tabs.push(someThing.Tabs_Name__r);
+                                    // window.location.replace('/apex/' + 'PortalLogin');
+                                }
+                            }
+                        });
+                    })
+                }
+
+                $scope.pageReady();
+
+                $scope.existingUserIdRequestorContact = function () {
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.existingUserIdRequestorContact}',
+                        $scope.accId,
+                        function (result) {
+                            if (result) {
+                                console.log(result);
+                                $scope.safeApply(function () {
+                                    // $scope.variable_payment_data = result;
+                                    if(result != null){
+                                        $scope.useIdRequestorFormData = result
+                                    }
+                                })
+                            }
+                        });
+                }
+
+                $scope.existingUserIdRequestorContact();
+
+                $scope.submitEditedForm = function () {
+                    $scope.showOverlay = true;
+                    console.log($scope.variable_payment_data);
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.profileController.saveUserIdRequestorIdForm}',
+                        JSON.stringify($scope.useIdRequestorFormData),
+                        $scope.userId,
+                        $scope.accId,
+                        localStorage.getItem("AccessToken"),
+                        function (result, event) {
+                            console.log(result);
+                            if (result) {
+                                if (result.status == true) {
+                                    $scope.safeApply(function () {
+                                        $scope.showOverlay = false;
+                                        toaster.pop('success', "Information has been save");
+                                        $scope.existingUserIdRequestorContact();
+                                    });
+                                } else {
+                                    $scope.safeApply(function () {
+                                        toaster.pop('error', "failed to save information");
+                                        $scope.existingUserIdRequestorContact();
+                                        $scope.showOverlay = false;
+                                    });
+                                }
+                            } else {
+                                $scope.safeApply(function () {
+                                    toaster.pop('error', "failed to save information");
+                                    $scope.existingUserIdRequestorContact();
+                                    $scope.showOverlay = false;
+                                });
+                            }
+                        })
+                }
+            });
+            app.config(function (IdleProvider, KeepaliveProvider) {
+                KeepaliveProvider.interval(18000);
+                IdleProvider.windowInterrupt('focus');
+            })
+            app.run(function ($rootScope, Idle, $log, Keepalive) {
+                Idle.watch();
+                $log.debug('app started.');
+            });
+            app.$inject = ['$scope', '$filter'];
+
+        </script>
+    </body>
+
+    </html>
+</apex:page>

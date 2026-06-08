@@ -1,0 +1,27 @@
+.progress-container {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circular-progress {
+    transform: rotate(0deg); /* Start the progress at the top */
+}
+
+.circle-bg {
+    stroke: #d9d9d9;
+}
+
+.circle {
+    stroke: #4db8ff;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease-out; /* Smooth transition */
+}
+
+.percentage {
+    font-size: 8px;
+    fill: #333;
+    pointer-events: none;
+}

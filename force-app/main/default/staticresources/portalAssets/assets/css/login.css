@@ -1,0 +1,177 @@
+ html,
+ body {
+     height: 100% !important;
+     width: 100%;
+     overflow: hidden;
+ }
+
+ .btn-color {
+     background-color: #982881;
+     color: #fff;
+     border-color: #982881;
+ }
+
+ .container-fluid {
+     /* The image used */
+     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .6)), url("../image/bgimg2.jpg");
+
+     /* Full height */
+     height: 100%;
+     width: 100%;
+
+     /* Center and scale the image nicely */
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+ }
+
+ .form-control {
+     border-radius: 0px !important;
+ }
+
+ .card {
+     background: linear-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .5));
+     border-radius: 5px;
+     -webkit-box-shadow: 0 0 20px #555;
+     box-shadow: 0 0 20px #555;
+ }
+
+ .bgni-color {
+     color: #982881;
+ }
+
+ .white-color {
+     color: #fff;
+ }
+
+ .link-color {
+     color: #0000EE !important;
+     cursor: pointer;
+ }
+
+ .link-color:hover {
+     color: #551A8B !important;
+     cursor: pointer;
+ }
+
+ .link-color:visited {
+     color: #551A8B !important;
+     cursor: pointer;
+ }
+
+ .border-radius {
+     border-radius: 5px !important;
+ }
+
+ .extra-widht {
+     width: 24rem !important;
+ }
+
+ .bg-gray {
+     background-color: #ccc;
+ }
+
+ .btn-color:hover {
+     color: #ccc;
+ }
+
+ @media only screen and (max-width: 405px) {
+     .bgni-color {
+         font-size: 24px;
+     }
+
+     .extra-widht {
+         width: 22rem !important;
+     }
+ }
+
+ @media only screen and (max-width: 376px) {
+     .bgni-color {
+         font-size: 23px;
+     }
+
+     .extra-widht {
+         width: 20rem !important;
+     }
+ }
+
+ @media only screen and (max-width: 340px) {
+     .bgni-color {
+         font-size: 22px;
+     }
+
+     .extra-widht {
+         width: 18rem !important;
+     }
+ }
+
+
+ .pg-Link a {
+     background: linear-gradient(90deg, rgba(230, 56, 136, 1) 0%, rgba(29, 79, 145, 1) 100%);
+     /* box-shadow: 0 5px 0 darkred; */
+     /* box-shadow: ound: rgb(193,49,115); */
+     box-shadow: 0 5px 0 rgba(29, 79, 145, 1);
+     color: white;
+     padding: 1em 1.5em;
+     position: relative;
+     text-decoration: none;
+     text-transform: uppercase;
+ }
+
+ .pg-Link a:hover {
+     background: linear-gradient(90deg, rgba(230, 56, 136, 1) 0%, rgba(29, 79, 145, 1) 100%);
+     cursor: pointer;
+ }
+
+ .pg-Link a:active {
+     box-shadow: none;
+     top: 5px;
+ }
+
+ .example_e {
+     border: none;
+     background: #333;
+     color: #ffffff !important;
+     font-weight: 100;
+     padding: 20px;
+     text-transform: uppercase;
+     border-radius: 6px;
+     display: inline-block;
+     transition: all 0.3s ease 0s;
+ }
+
+ .example_e:hover {
+     color: #404040 !important;
+     font-weight: 700 !important;
+     letter-spacing: 3px;
+     background: #fff;
+     -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+     -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+     transition: all 0.3s ease 0s;
+ }
+
+ .bg-img {
+     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .6)), url("../image/bgimg2.jpg");
+
+     /* Full height */
+     height: 100%;
+     width: 100%;
+     /* Center and scale the image nicely */
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+ }
+
+ .tag-line {
+     display: flex;
+     width: 100%;
+     height: 100%;
+     justify-content: center;
+     flex-direction: column;
+     /* text-align: center; */
+ }
+ .tag-line h1{
+    font-family: "Roboto",serif !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+ }

@@ -1,0 +1,211 @@
+<apex:page standardStylesheets="false" controller="profileController" showHeader="false" sidebar="false" applyHtmlTag="false"
+  applyBodyTag="false" docType="html-5.0">
+  <html ng-app="ngApp">
+
+  <head>
+    <title>SalesForce | Portal Login</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- MS, fb & Whatsapp -->
+
+    <!-- MS Tile - for Microsoft apps-->
+    <!-- <meta name="msapplication-TileImage" content="http://www.example.com/image01.jpg" /> -->
+
+    <!-- fb & Whatsapp -->
+
+    <!-- Site Name, Title, and Description to be displayed -->
+    <!-- <meta property="og:site_name" content="Ye Jo Phot me hai Vo Samir CHutiya hai" />
+    <meta property="og:title" content="link pe click kriyee Chutiyee ko dekhne ke liyee" />
+    <meta property="og:description" content="Sab se badha chutiyaa hai apna Banda SAMIR" /> -->
+
+    <!-- Image to display -->
+    <!-- Replace   «example.com/image01.jpg» with your own -->
+    <!-- <meta property="og:image" content="{!URLFOR($Resource.portalAssets,'/assets/image/userMaleIcon.png')}" /> -->
+
+    <!-- No need to change anything here -->
+    <!-- <meta property="og:type" content="website" />
+    <meta property="og:image:type" content="image/jpeg" /> -->
+
+    <!-- Size of image. Any size up to 300. Anything above 300px will not work in WhatsApp -->
+    <!-- <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="300" /> -->
+
+    <!-- Website to visit when clicked in fb or WhatsApp-->
+    <!-- <meta property="og:url" content="http://www.samirChutiya.com" /> -->
+
+    <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <apex:stylesheet value="{!URLFOR($Resource.portalAssets,'/assets/css/login.css')}" />
+
+    <link rel="icon" href="{!URLFOR($Resource.portalAssets,'/assets/image/expLogo.png')}" />
+
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></apex:includeScript>
+    <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></apex:includeScript>
+    <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></apex:includeScript>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></apex:includeScript>
+
+    <!-- <apex:includeScript value="{!URLFOR($Resource.portalAssets,'/assets/js/angular.js') }" /> -->
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+    <!--  If necessary, please modify the charset parameter to specify the        -->
+    <!--  character set of your HTML page.                                        -->
+    <!--  ----------------------------------------------------------------------  -->
+
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+  </head>
+
+  <body ng-controller="loginCtrl">
+    <nav class="navbar navbar-expand-sm bg-white">
+      <a class="navbar-brand ml-5" href="#">
+        <img src="{!URLFOR($Resource.portalAssets,'/assets/image/Experian_logo.png')}" alt="Logo" style="width:130px;" />
+      </a>
+      <ul class="navbar-nav mr-auto">
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5 mt-5">
+          <div class="card mt-5 extra-widht">
+            <div class="card-body">
+              <h3 class="p-2 bgni-color">Experian Login Portal</h3>
+              <p style="margin: 0;text-align: center;color:#FF0000">{{serverMsg}}</p>
+              <form class="p-3" name="loginForm" novalidate="true">
+                <div class="form-group">
+                  <label for="exampleInputUsername" class="white-color">Username</label>
+                  <input type="text" name="username" ng-model="username" class="form-control border-radius" placeholder="Enter Username" required="true"
+                  autofocus="autofocus" autocomplete="on" />
+                  <!-- <small class="form-text text-danger" ng-show="loginForm.username.$dirty && loginForm.username.$invalid"> -->
+                  <!-- Please enter valid username address. -->
+                  <!-- <small class="form-text text-danger" ng-show="loginForm.username.$dirty && loginForm.username.$invalid"> -->
+                  <small class="form-text text-danger" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">Username is required</small>
+                  <!-- </small> -->
+                </div>
+                <div class="form-group mt-4">
+                  <label for="exampleInputPassword1" class="white-color">Password</label>
+                  <div class="input-group">
+                    <input ng-attr-type="{{ typePassword ? 'text' : 'password' }}" type="password" name="password" ng-model="password" class="form-control border-radius" placeholder="Password" required="true"
+                      autocomplete="on" />
+                      <span class="input-group-btn" ng-click="togglePassword()">
+                        <button class="btn btn-default" type="button">
+                            <i  ng-class="typePassword ? 'fa fa-eye-slash' : 'fa fa-eye' "></i>
+                        </button>
+                    </span>
+                </div>
+                  <small class="form-text text-danger" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Please enter your password.</small>
+                </div>
+                <button type="submit" id="clickMe" ng-click="goTo(loginForm)" class="btn btn-color mt-3 float-right">Login &nbsp;
+                  <i ng-show="showSping" class="fa fa-spinner fa-spin" style="font-size:20px"></i>
+                </button>
+              </form>
+            </div>
+            <div class="form-group forgot-password" style="text-align: center">
+              <a href="{{forgotPasswordURL}}" class="link-color">Forgot / Change password</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <!-- <div class="tag-line">
+            <h1>Get your profile information / company information and raise a case</h1>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <FORM> element to your page.             -->
+    <!--  ----------------------------------------------------------------------  -->
+    <script>
+      var app = angular.module('ngApp', []);
+
+      app.controller('loginCtrl', function ($scope) {
+
+        $scope.showSping = false;
+        $scope.username = undefined;
+        $scope.password = undefined;
+        $scope.serverMsg = '';
+        $scope.forgotPasswordURL = '{!forgotpasswordURL}';
+        $scope.salesforceSiteLabel = '{!force_site_label}';
+
+        $scope.safeApply = function (fn) {
+          var phase = this.$root.$$phase;
+          if (phase == '$apply' || phase == '$digest') {
+            if (fn && (typeof (fn) === 'function')) {
+              fn();
+            }
+          } else {
+            this.$apply(fn);
+          }
+        };
+
+        $scope.togglePassword = function () { $scope.typePassword = !$scope.typePassword; };
+        
+        $scope.goTo = function (loginForm) {
+          // console.log(window.location.href);
+          $scope.showSping = true;
+          $scope.serverMsg = '';
+          if (loginForm.$valid) {
+            Visualforce.remoting.Manager.invokeAction(
+              '{!$RemoteAction.profileController.login}',
+              $scope.username,
+              $scope.password,
+              function (result, event) {
+                if (result) {
+                  if (result.Status == true) {
+                    // console.log('-If--Result->', result);
+                    $scope.safeApply(function () {
+                      // console.log(localStorage.getItem("AccountId"));
+                      if(localStorage.getItem("UserId") == null || localStorage.getItem("UserId") == undefined || localStorage.getItem("UserId") == '' ){
+                          localStorage.setItem("UserId", result.contactList.Id);
+                          localStorage.setItem("AccountId", result.contactList.AccountId);
+                          localStorage.setItem("ControllAccess", JSON.stringify(result.contactList.Contact_Access_Control__r));
+                          localStorage.setItem("AccessToken", result.Token);
+                      }else{
+                        localStorage.clear();
+                      }
+                      $scope.showSping = false;
+                      // console.log(window.location.href);
+                      var str = window.location.href
+                      var t = (str.substring(str.length-1));
+                      if(t == 'n'){
+                        window.location.assign(window.location.href + '/Home');
+                      }else{
+                        window.location.assign(window.location.href + 'Home');
+                      }
+                    })
+
+                  } else {
+                    $scope.safeApply(function () {
+                      $scope.showSping = false;
+                      $scope.serverMsg = result.msg;
+                      // console.log('else', result);
+                    })
+                  }
+                } else {
+                  $scope.safeApply(function () {
+                    $scope.showSping = false;
+                    $scope.serverMsg = result.msg;
+                    // console.log('else', result);
+                    $scope.$apply();
+                  })
+                }
+              });
+          } else {
+            $scope.safeApply(function () {
+              $scope.showSping = false;
+              $scope.serverMsg = '';
+              $scope.username = undefined;
+              $scope.password = undefined;
+            })
+          }
+        }
+      });
+
+
+    </script>
+
+  </body>
+
+  </html>
+</apex:page>

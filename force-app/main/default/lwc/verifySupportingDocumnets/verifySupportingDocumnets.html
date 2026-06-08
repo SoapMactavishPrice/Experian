@@ -1,0 +1,112 @@
+<template>
+    <lightning-card>
+
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12">
+                <label class="slds-align_absolute-center slds-text-title_caps slds-text-heading_large"
+                    style="font-size: large;text-decoration:underline">Verify Documents</label>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div style="margin-bottom: 100px;">
+
+            <lightning-layout multiple-row class="itemlayout">
+                <lightning-layout-item size="1">
+                    <label class="slds-align_absolute-center slds-text-title_caps slds-text-heading_large"
+                        style="font-size: larger;font-weight: bold;color: #fff;">Sr No</label>
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <label class="slds-align_absolute-center slds-text-title_caps slds-text-heading_large"
+                        style="font-size: larger;font-weight: bold;color: #fff;">File Name</label>
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <label class="slds-align_absolute-center slds-text-title_caps slds-text-heading_large"
+                        style="font-size: larger;font-weight: bold;color: #fff;">Document Status</label>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <label class="slds-align_absolute-center slds-text-title_caps slds-text-heading_large"
+                        style="font-size: larger;font-weight: bold;color: #fff;">View Document</label>
+                </lightning-layout-item>
+
+
+            </lightning-layout>
+
+            <template for:each={docList} for:item="item" for:index="index">
+                <lightning-layout multiple-row class="itemlayoutv2" key={item.Id}>
+                    <lightning-layout-item size="1">
+                        <label class="slds-align_absolute-center" style="font-size: larger;">{item.index}</label>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4">
+                        <label class="slds-text-heading_larger" style="font-size: larger;">{item.Name}</label>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4">
+
+                        <lightning-combobox class="slds-align_absolute-center" name="progress" label="Status"
+                            variant="label-hidden" value={item.status} placeholder="Select Progress" options={options}
+                            data-id={item.Id} style="width:50%" onchange={handleChange}></lightning-combobox>
+                        <!-- <label class="slds-a" style="font-size: larger;">{item.status}</label> -->
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" class="slds-align_absolute-center">
+                        <lightning-icon icon-name="standard:document_preview" size="medium (default)" data-id={item.Id}
+                            data-name={item.Name} onclick={previewHandler}
+                            alternative-text="Document Icon"></lightning-icon>
+
+                    </lightning-layout-item>
+
+
+                </lightning-layout>
+
+            </template>
+        </div>
+
+        <div class="slds-docked-form-footer">
+            <button type="button" class="slds-button slds-button_neutral" onclick={cancel}>Cancel</button>
+            <button type="button" class="slds-button slds-button_brand" onclick={saveDocuments}>Save</button>
+        </div>
+
+
+
+    </lightning-card>
+
+
+    <template if:true={viewImpDocModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open common-modal-slide-animation"
+            style="height: 1000px;transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0)">
+            <div class="slds-modal__container" style="float: right;margin-top: -50px">
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3" style="height: 1000px;">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="11">
+                            <div class="ribbon ribbonone">
+                                {commonImpDocName}
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1">
+                            <lightning-icon style="float: right;cursor:pointer" icon-name="utility:close"
+                                alternative-text="close" title="close" size="small" data-action="broucher"
+                                onclick={closeModal}>
+                            </lightning-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout multiple-rows>
+                        <div class="unit-floors-full__image">
+                            <iframe src={commonImpDocumentModal} height="700px" width="500" style="width: 743px;
+                            height: 570px;" class="slds-align_absolute-center"></iframe>
+                        </div>
+                    </lightning-layout>
+
+                    <lightning-layout multiple-rows class="slds-align_absolute-center slds-m-top_small">
+                        <lightning-button label="Approve" class="slds-m-horizontal_xx-small" onclick={handleApprove}
+                            variant="brand"></lightning-button>
+                        <lightning-button label="Reject" class="slds-m-horizontal_xx-small" onclick={handleReject}
+                            variant="destructive"></lightning-button>
+                        <lightning-button label="Change Requested" onclick={handleChangeRequest} variant="success"
+                            class="slds-m-horizontal_xx-small"></lightning-button>
+                        <lightning-button label="Back" onclick={closeModal}
+                            class="slds-m-horizontal_xx-small"></lightning-button>
+                    </lightning-layout>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>
