@@ -991,6 +991,254 @@ public class FormsCotroller {
        
     }
 
+    // -----------------------------------------------------------------------
+    // LOGIN OTP METHODS - Used in "Already filled? Continue from where you left" flow
+    // -----------------------------------------------------------------------
+
+    private static String encryptOTP(String plainOtp) {
+        Blob privateKey = Blob.valueOf('046QdQEH24AgGa==');
+        Blob encryptedBlob = Crypto.encryptWithManagedIV('AES128', privateKey, Blob.valueOf(plainOtp));
+        return EncodingUtil.convertToHex(encryptedBlob);
+    }
+
+    private static String decryptOTP(String encryptedHex) {
+        Blob privateKey = Blob.valueOf('046QdQEH24AgGa==');
+        Blob encryptedBlob = EncodingUtil.convertFromHex(encryptedHex);
+        Blob decryptedBlob = Crypto.decryptWithManagedIV('AES128', privateKey, encryptedBlob);
+        return decryptedBlob.toString();
+    }
+
+    @RemoteAction
+    public static resSendReturnResult sendLoginOTP(String existingCompanyName) {
+        resSendReturnResult status = new resSendReturnResult();
+        // try {
+            Lead l = [SELECT Id, Email, Login_OTP__c, Company 
+                    FROM Lead 
+                    WHERE (Company =: existingCompanyName OR Id =: existingCompanyName) 
+                    AND Status <> 'Qualified' 
+                    LIMIT 1];
+
+            Integer rawOtpInt = Math.mod(Math.abs(Crypto.getRandomInteger()), 900000) + 100000;
+            String plainOtp = String.valueOf(rawOtpInt);
+
+            l.Login_OTP__c = encryptOTP(plainOtp);
+            update l;
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            // mail.setToAddresses(new List<String>{ l.Email });
+            mail.setSubject('Your OTP for Experian Portal Login');
+            mail.setHtmlBody(
+                '<p>Dear Member,</p>' +
+                '<p>Your OTP to continue your Experian membership application is:</p>' +
+                '<h2 style="color:#982881;">' + plainOtp + '</h2>' +
+                '<p>This OTP is valid for this session only. Please do not share it with anyone.</p>' +
+                '<p>Regards,<br/>Experian Team</p>'
+            );
+            mail.setTargetObjectId(l.Id);
+            mail.setSaveAsActivity(true);
+            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+
+            status.status = true;
+            status.msg = 'OTP sent to ' + l.Email;
+            status.leadId = l.Id;
+            status.leadEmail = l.Email;
+
+            System.debug('Status ==> ' + status);
+
+        // } catch (QueryException e) {
+        //     status.status = false;
+        //     status.msg = 'No record found. Please check the company name.';
+        // } catch (Exception e) {
+        //     status.status = false;
+        //     status.msg = 'Something went wrong. Please try again.';
+        //     System.debug('sendLoginOTP Exception: ' + e);
+        // }
+        return status;
+    }
+
+
+    @RemoteAction
+    public static resSendReturnResult sendVerificationOTP(String leadId) {
+        resSendReturnResult status = new resSendReturnResult();
+        // try {
+            Lead l = [SELECT Id, Email, Verification_OTP__c, Company 
+                    FROM Lead 
+                    WHERE Id = :leadId
+                    AND Status <> 'Qualified' 
+                    LIMIT 1];
+
+            Integer rawOtpInt = Math.mod(Math.abs(Crypto.getRandomInteger()), 900000) + 100000;
+            String plainOtp = String.valueOf(rawOtpInt);
+
+            l.Verification_OTP__c = encryptOTP(plainOtp);
+            update l;
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            // mail.setToAddresses(new List<String>{ l.Email });
+            mail.setSubject('Your OTP for Experian Portal Verification');
+            mail.setHtmlBody(
+                '<p>Dear Member,</p>' +
+                '<p>Your OTP to continue your Experian Portal Verification is:</p>' +
+                '<h2 style="color:#982881;">' + plainOtp + '</h2>' +
+                '<p>This OTP is valid for this session only. Please do not share it with anyone.</p>' +
+                '<p>Thanks & Regards,<br/>Experian Customer Support</p>'
+            );
+            mail.setTargetObjectId(l.Id);
+            mail.setSaveAsActivity(true);
+            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+
+            status.status = true;
+            status.msg = 'OTP sent to ' + l.Email;
+            status.leadId = l.Id;
+            status.leadEmail = l.Email;
+
+            System.debug('Status ==> ' + status);
+
+        // } catch (QueryException e) {
+        //     status.status = false;
+        //     status.msg = 'No record found. Please check the company name.';
+        // } catch (Exception e) {
+        //     status.status = false;
+        //     status.msg = 'Something went wrong. Please try again.';
+        //     System.debug('sendLoginOTP Exception: ' + e);
+        // }
+        return status;
+    }
+
+    @RemoteAction
+    public static resSendReturnResult resendLoginOTP(String leadId) {
+        resSendReturnResult status = new resSendReturnResult();
+        // try {
+            Lead l = [SELECT Id, Email, Login_OTP__c FROM Lead WHERE Id =: leadId LIMIT 1];
+
+            // Decrypt stored OTP and resend
+            String plainOtp = decryptOTP(l.Login_OTP__c);
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            // mail.setToAddresses(new List<String>{ l.Email });
+            mail.setSubject('Your OTP for Experian Portal Login');
+            mail.setHtmlBody(
+                '<p>Dear Member,</p>' +
+                '<p>Your OTP to continue your Experian membership application is:</p>' +
+                '<h2 style="color:#982881;">' + plainOtp + '</h2>' +
+                '<p>This OTP is valid for this session only. Please do not share it with anyone.</p>' +
+                '<p>Regards,<br/>Experian Team</p>'
+            );
+            mail.setTargetObjectId(l.Id);
+            mail.setSaveAsActivity(true);
+            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+
+            status.status = true;
+            status.msg = 'OTP resent to ' + l.Email;
+
+        // } catch (QueryException e) {
+        //     status.status = false;
+        //     status.msg = 'Unable to resend OTP. Please try again.';
+        // } catch (Exception e) {
+        //     status.status = false;
+        //     status.msg = 'Something went wrong. Please try again.';
+        //     System.debug('resendLoginOTP Exception: ' + e);
+        // }
+        return status;
+    }
+
+    @RemoteAction
+    public static resSendReturnResult resendVerificationOTP(String leadId) {
+        resSendReturnResult status = new resSendReturnResult();
+        // try {
+            Lead l = [SELECT Id, Email, Verification_OTP__c FROM Lead WHERE Id =: leadId LIMIT 1];
+
+            // Decrypt stored OTP and resend
+            String plainOtp = decryptOTP(l.Verification_OTP__c);
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            // mail.setToAddresses(new List<String>{ l.Email });
+            mail.setSubject('Your OTP for Experian Portal Verification');
+            mail.setHtmlBody(
+                '<p>Dear Member,</p>' +
+                '<p>Your OTP to continue your Experian Portal Verification is:</p>' +
+                '<h2 style="color:#982881;">' + plainOtp + '</h2>' +
+                '<p>This OTP is valid for this session only. Please do not share it with anyone.</p>' +
+                '<p>Thanks & Regards,<br/>Experian Customer Support</p>'
+            );
+            mail.setTargetObjectId(l.Id);
+            mail.setSaveAsActivity(true);
+            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+
+            status.status = true;
+            status.msg = 'OTP resent to ' + l.Email;
+
+        // } catch (QueryException e) {
+        //     status.status = false;
+        //     status.msg = 'Unable to resend OTP. Please try again.';
+        // } catch (Exception e) {
+        //     status.status = false;
+        //     status.msg = 'Something went wrong. Please try again.';
+        //     System.debug('resendLoginOTP Exception: ' + e);
+        // }
+        return status;
+    }
+
+    @RemoteAction
+    public static resSendReturnResult verifyLoginOTP(String enteredOtp, String leadId) {
+        resSendReturnResult status = new resSendReturnResult();
+        try {
+            Lead l = [SELECT Id, Email, Login_OTP__c FROM Lead WHERE Id =: leadId LIMIT 1];
+
+            String plainOtp = decryptOTP(l.Login_OTP__c);
+
+            if (plainOtp == enteredOtp) {
+                status.status = true;
+                status.msg = 'OTP Verified';
+                status.leadId = l.Id;
+                status.leadEmail = l.Email;
+            } else {
+                status.status = false;
+                status.msg = 'Invalid OTP. Please try again.';
+            }
+
+        } catch (QueryException e) {
+            status.status = false;
+            status.msg = 'Something went wrong. Please try again.';
+        } catch (Exception e) {
+            status.status = false;
+            status.msg = 'Something went wrong. Please try again.';
+            System.debug('verifyLoginOTP Exception: ' + e);
+        }
+        return status;
+    }
+
+    @RemoteAction
+    public static resSendReturnResult verifyVerificationOTP(String OTP, String Id) {
+        resSendReturnResult status = new resSendReturnResult();
+        try {
+            Lead l = [SELECT Id, Email, Verification_OTP__c FROM Lead WHERE Id =: Id LIMIT 1];
+
+            String plainOtp = decryptOTP(l.Verification_OTP__c);
+
+            if (plainOtp == OTP) {
+                status.status = true;
+                status.msg = 'OTP Verified';
+                status.leadId = l.Id;
+                status.leadEmail = l.Email;
+            } else {
+                status.status = false;
+                status.msg = 'Invalid OTP. Please try again.';
+            }
+
+        } catch (QueryException e) {
+            status.status = false;
+            status.msg = 'Something went wrong. Please try again.';
+        } catch (Exception e) {
+            status.status = false;
+            status.msg = 'Something went wrong. Please try again.';
+            System.debug('verifyVerificationOTP Exception: ' + e);
+        }
+        return status;
+    }
+
+    // -----------------------------------------------------------------------
+
     @RemoteAction
     public static returnLeadInfo getLeadInfo(String existingCompanyName){
 
@@ -1295,8 +1543,8 @@ public class FormsCotroller {
 
         try{
             Lead l = [SELECT Id,Company,Resend_OTP__c FROM Lead WHERE Id =: Id];
-            l.Resend_OTP__c = true;
-            ap.Company_Name__c=l.Company;
+            // l.Resend_OTP__c = true;
+            // ap.Company_Name__c=l.Company;
 
             // ap.Request__c = String.valueof(l);
 
@@ -1917,6 +2165,8 @@ public class FormsCotroller {
     public class resSendReturnResult{
         public Boolean status;
         public String msg;
+        public String leadId;
+        public String leadEmail;
     }
 
     public class returnLeadInfo{

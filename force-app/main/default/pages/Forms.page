@@ -112,12 +112,22 @@
                                 <div class="form-group">
                                     <label for="member_Type">PAN Number &nbsp; <span style="color: red">*</span> <span style="color:{{verfiedResponse[0].color}};font-size:11px"> <i class="{{verfiedResponse[0].icon}}"></i> {{verfiedResponse[0].msg}} </span> </label>
                                     <div class="input-group">
-                                        <input ng-attr-type="{{ typePassword ? 'text' : 'password' }}" class="form-control" id="pan_number_id" name="pan_number" ng-model="becomMember.Pan_no_c" minlength="10" maxlength="10" onkeypress="return (event.charCode > 47 && event.charCode < 58 || event.charCode > 64 && event.charCode < 91)"
+                                        <input ng-attr-type="{{ typePassword ? 'text' : 'password' }}"
+                                            class="form-control"
+                                            id="pan_number_id"
+                                            name="pan_number"
+                                            ng-model="becomMember.Pan_no_c"
+                                            minlength="10"
+                                            maxlength="10"
+                                            ng-pattern="/^[A-Z]{3}[^P][A-Z]\d{4}[A-Z]$/"
+                                            onkeypress="return (event.charCode > 47 && event.charCode < 58 || event.charCode > 64 && event.charCode < 91)"
                                         /> <span class="input-group-btn" ng-click="togglePassword()"> <button class="btn btn-default" type="button" style="margin-top: -2.5px;"> <i ng-class="typePassword ? 'fa fa-eye-slash' : 'fa fa-eye' "></i> </button> </span>                                        </div>
-                                    <div ng-if="(becomMemberForm.pan_number.$dirty || becomMemberForm.$submitted)" ng-messages="becomMemberForm.pan_number.$error" style="color:maroon" role="alert">
+                                    <div ng-if="(becomMemberForm.pan_number.$dirty || becomMemberForm.$submitted)"
+                                        ng-messages="becomMemberForm.pan_number.$error" style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please enter PAN</div>
-                                        <div class="text-danger" ng-message="minlength">PAN number shoulde be 10 digit </div>
-                                        <div class="text-danger" ng-message="maxlength">PAN number shoulde be 10 digit </div>
+                                        <div class="text-danger" ng-message="minlength">PAN number should be 10 digits</div>
+                                        <div class="text-danger" ng-message="maxlength">PAN number should be 10 digits</div>
+                                        <div class="text-danger" ng-message="pattern">Please enter a valid PAN Number</div>
                                     </div>
                                 </div>
                             </div>
@@ -1495,7 +1505,9 @@
                         <div class="space-20px"></div>
                     </form>
                 </div>
-                <div ng-switch-when="Step 5">
+                <!-- PLAN SELECTION STEP - Commented out as per requirement. After Additional details, skip directly to Payment.
+                     To re-enable: change ng-if="false" back to remove the ng-if attribute on the div below. -->
+                <!-- <div ng-switch-when="Step 5" ng-if="false">
                     <div class="row instruction text-center mt-1">
                         <p style="font-size: 16px;font-weight: 500;">You will be charged a fixed member free and a
                             variable transaction based fee based on your usage.</p>
@@ -1558,7 +1570,6 @@
                     <div class="row mt-4">
                         <div class="col-sm-4 pb-3" ng-repeat="v in variable_payment_data">
                             <div class="container-fluid" style="background-color: rgba(152,40,129,.1);height:420px">
-                                <!-- <p>Consumer Credit Information Report</p> -->
                                 <input type="checkbox" ng-change="product_select(v.Id,v.Selected__c)"
                                     ng-model="v.Selected__c" name="product_select"
                                     style="text-align: center;margin-top: 0%;margin-left: 1%;width: 25px;height: 25px;" />
@@ -1580,72 +1591,15 @@
                                 <p style="margin:0;font-size: 11px;"></p>
                                 <p style="margin:0;font-size: 11px;height: 120px;overflow: scroll;"
                                     ng-bind-html="v.Examples__c"></p>
-                                <!-- {{v.Examples__c}} -->
-                                <!-- <p style="margin:0;font-size: 11px;"><strong>{{planSelection.ConsumerText2}}</strong></p> -->
-                                <!-- <p style="margin:0;font-size: 11px;">{{planSelection.ConsumerText3}}</p> -->
-                                <!-- <p style="margin:0;font-size: 11px;"><strong>No charge will be levied in the event the search does not return any data.</strong></p>
-                                <p style="margin:0;font-size: 11px;">Enquiries 'with score' and 'without score' will both contribute to the total monthly volume of CIR reports, used to calculate the appropriate slab for invoicing purposes.</p> -->
                             </div>
                         </div>
-                        <!-- <div class="col" style="border-right: .5px solid #982881;"> -->
-                        <!-- <div class="col-sm-4">
-                            <div class="container-fluid" style="background-color: rgba(152,40,129,.1);min-height: 420px;">
-                                <p>Delphi For New Business Score</p>
-                                <table class="table table-striped"  style="height:200px;">
-                                    <thead>
-                                        <tr style="font-size:14px;">
-                                            <th style="padding : 0px">Monthly Volumes</th>
-                                            <th style="padding : 0px">Price per Report(INR)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="font-size:13px;" ng-repeat="d in planSelection.delphiForNewBusinessScore">
-                                            <td style="padding : 0px">{{d.MRV}}</td>
-                                            <td style="padding : 0px">{{d.ppr}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                
-                                <p style="margin:0;font-size: 11px;">
-                                    {{ planSelection.DelphiText | limitTo:numLimit }}
-                                </p>
-                                <a type='button' ng-if="!numLimitFlag" ng-click="readMore(true)">Read more</a> 
-                                <a type='button' ng-if="numLimitFlag" ng-click="readMore(false)">Read less</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="container-fluid" style="background-color: rgba(152,40,129,.1);height:420px">
-                                <p>Commercial Credit Information Report</p>
-                                <table class="table table-striped" style="height:200px;">
-                                    <thead>
-                                        <tr style="font-size:14px;">
-                                            <th style="padding : 0px">Monthly Volumes</th>
-                                            <th style="padding : 0px">Price per Report(INR)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="font-size:14px;" ng-repeat="d in planSelection.commercialCreditInformationReport">
-                                            <td style="padding : 0px">{{d.MRV}}</td>
-                                            <td style="padding : 0px">{{d.ppr}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p style="margin:0;font-size: 11px;">{{planSelection.CommercialText}}</p>
-                                <p style="margin:0;font-size: 11px;"><strong>{{planSelection.CommercialText}}</strong></p>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="row">
                         <div class="col" style="border-right: .5px solid #982881;">
-                            <!-- <p style="margin:0;font-size: 11px;"><strong>All prices are on a 'no-hit no-fee' basis</strong></p>
-                            <p style="margin:0;font-size: 11px;"><strong>No charge will be levied in the event the search does not return any data.</strong></p>
-                            <p style="margin:0;font-size: 11px;">Enquiries 'with score' and 'without score' will both contribute to the total monthly volume of CIR reports, used to calculate the appropriate slab for invoicing purposes.</p> -->
                         </div>
                         <div class="col" style="border-right: .5px solid #982881;">
-                            <!-- <p style="margin:0;font-size: 11px;">A Delphi for New Business score fee is payable for CIR's 'with score'. The fee for the Delphi for New Buisness score is payable in addition to the price of CIR</p> -->
                         </div>
                         <div class="col">
-                            <!-- <p style="margin:0;font-size: 11px;">For example, if a Member draws 300 reports in a month, the fee payable would be IN 400 * 300 = 1,20,000</p> -->
                         </div>
                     </div>
                     <div class="form-row mt-3">
@@ -1660,8 +1614,10 @@
                         </div>
                     </div>
                     <div class="space-20px"></div>
-                </div>
+                </div> -->
+                <!-- END PLAN SELECTION COMMENTED SECTION -->
                 <div ng-switch-when="Step 6">
+
                     <div class="row instruction text-center mt-1">
                         <p style="font-size: 16px;font-weight: 500;">Please review the details and make the payment</p>
                     </div>
@@ -1997,6 +1953,60 @@
                 </div>
             </div>
         </div>
+
+        <!-- Login OTP Verification Modal - shown after Get Data click for "Already filled" flow -->
+        <div id="login_otp_modal_id" class="welcome-modal" style="display:none;">
+            <div class="welcome-modal-modal-content" style="width: 50%">
+                <div class="row page-row"></div>
+                <div class="row new-window-heading">
+                    <div class="col">
+                        <span style="font-size:18px;color:#7d256b">OTP Verification</span>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-md-12">
+                        <p style="font-size:13px;color:#777;">
+                            An OTP has been sent to your registered email
+                            <strong>{{loginOtpEmail}}</strong>.
+                            Please enter the OTP below to continue.
+                        </p>
+                    </div>
+                </div>
+                <form name="login_otp_form" class="mt-2 m-3" novalidate="login_otp_form">
+                    <div class="form-group">
+                        <label for="login_otp_input">Enter OTP &nbsp;<span style="color:red">*</span></label>
+                        <input type="text" id="login_otp_input" name="login_otp"
+                            class="form-control" style="max-width:200px"
+                            ng-model="loginOtpValue" required="true"
+                            maxlength="6"
+                            onkeypress="return (event.charCode > 47 && event.charCode < 58)" />
+                        <div ng-if="(login_otp_form.login_otp.$dirty || login_otp_form.$submitted)"
+                            ng-messages="login_otp_form.login_otp.$error" style="color:maroon" role="alert">
+                            <div class="text-danger" ng-message="required">Please enter the OTP sent to your email</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="color:{{loginOtpMsg.color}};font-size:13px;">{{loginOtpMsg.text}}</span>
+                    </div>
+                    <div class="form-group">
+                        <a style="cursor:pointer;font-size:13px;" ng-click="resendLoginOtp()">
+                            <i class="fa fa-refresh"></i> Resend OTP
+                        </a>
+                        &nbsp;&nbsp;
+                        <span ng-show="showOverlay" style="font-size:12px;color:#777">
+                            <i class="fa fa-spinner fa-spin"></i> Please wait...
+                        </span>
+                    </div>
+                    <div class="new-window-button">
+                        <button type="submit" ng-click="verifyLoginOtp(login_otp_form)">
+                            Verify &amp; Continue &nbsp;
+                            <i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Login OTP Verification Modal -->
 
         <div id="cin_detail_form_id" class="welcome-modal">
             <div class="welcome-modal-modal-content" style="width: 50%">
@@ -2504,33 +2514,33 @@
                 $scope.steps = [{
                         stp: "Step 1",
                         icon: "fa fa-user",
-                        stpName: "Company details & verification",
+                        stpName: "Company Details & Verification",
                         isActive: true
                     },
                     {
                         stp: "Step 2",
                         icon: "fa fa-check-circle-o",
-                        stpName: "Email verification",
+                        stpName: "Email Verification",
                         isActive: false
                     },
                     {
                         stp: "Step 3",
                         icon: "fa fa-info-circle",
-                        stpName: "Member details",
+                        stpName: "Member Details",
                         isActive: false
                     },
                     {
                         stp: "Step 4",
                         icon: "fa fa-plus",
-                        stpName: "Additional details",
+                        stpName: "Additional Details",
                         isActive: false
                     },
-                    {
-                        stp: "Step 5",
-                        icon: "fa fa-tasks",
-                        stpName: "Plan selection",
-                        isActive: false
-                    },
+                    // {
+                    //     stp: "Step 5",
+                    //     icon: "fa fa-tasks",
+                    //     stpName: "Plan selection",
+                    //     isActive: false
+                    // },
                     {
                         stp: "Step 6",
                         icon: "fa fa-inr",
@@ -2539,22 +2549,28 @@
                     },
                     {
                         stp: "Step 7",
-                        icon: "fa fa-eye",
-                        stpName: "Agreement Viewing",
+                        icon: "fa fa-file-text",
+                        stpName: "Document Verification",
                         isActive: false
                     },
                     {
                         stp: "Step 8",
                         icon: "fa fa-pencil",
-                        stpName: "Agreement signing",
+                        stpName: "Agreement Signing",
                         isActive: false
                     },
                     {
                         stp: "Step 9",
+                        icon: "fa fa-eye",
+                        stpName: "Agreement Viewing",
+                        isActive: false
+                    },
+                    {
+                        stp: "Step 10",
                         icon: "fa fa-check",
                         stpName: "Success",
                         isActive: false
-                    },
+                    }
                 ];
 
                 $scope.stateList = undefined;
@@ -3215,7 +3231,7 @@
                         const fi = document.getElementById(param);
                         if (fi.files.length > 0) {
                             console.log('filesize1', fi.files.length);
-                            for (const i = 0; i <= fi.files.length - 1; i++) {
+                            for (let i = 0; i <= fi.files.length - 1; i++) {
                                 const fsize = fi.files.item(i).size;
                                 const file = Math.round((fsize / 1024));
                                 // The size of the file. 
@@ -3262,7 +3278,7 @@
                 $scope.resendOTP = function () {
                     $scope.showOverlay = true;
                     Visualforce.remoting.Manager.invokeAction(
-                        '{!$RemoteAction.FormsCotroller.resendOTP}',
+                        '{!$RemoteAction.FormsCotroller.resendVerificationOTP}',
                         window.localStorage.getItem("LeadId"),
                         function (result) {
                             if (result) {
@@ -3270,15 +3286,18 @@
                                     if (result.status) {
                                         $scope.showOverlay = false;
                                         $scope.serverResponseForOTP = result;
+                                        toaster.pop('success', result.msg);
                                     } else {
                                         $scope.showOverlay = false;
                                         $scope.serverResponseForOTP = result;
+                                        toaster.pop('error', result.msg || 'Failed to resend OTP.');
                                     }
                                 })
                             } else {
                                 $scope.safeApply(function (params) {
                                     $scope.showOverlay = false;
                                     $scope.serverResponseForOTP = result;
+                                    toaster.pop('error', 'Failed to resend OTP.');
                                 });
                             }
                         })
@@ -3556,352 +3575,306 @@
                                     $scope.showOverlay = false;
                                 })
                             });
-                    } else {
-                        $scope.safeApply(function (params) {
-                            $scope.showOverlay = false;
-                        })
                     }
                 }
 
                 $scope.getLeadInfo = function (param) {
                     $scope.newWindowErrorMsg = '';
                     if (param.$valid) {
-                        console.log(param);
                         $scope.showOverlay = true;
-                        Visualforce.remoting.timeout = 120000; 
+                        Visualforce.remoting.timeout = 120000;
+                        // Step 1: Send Login OTP to lead's email before loading data
                         Visualforce.remoting.Manager.invokeAction(
-                            '{!$RemoteAction.FormsCotroller.getLeadInfo}',
+                            '{!$RemoteAction.FormsCotroller.sendLoginOTP}',
                             $scope.existingCompanyName,
                             function (result, event) {
-                                console.log('LeadInfo--->', result);
-                                if (result.status) {
-                                    $scope.safeApply(function () {
-                                        $scope.closeNewMemberForm();
-                                        if(result.documentVerifying){
-                                            $scope.SaveFormResponse.status = true;
-                                                $scope.SaveFormResponse.msg =
-                                                    'your information has been successfully saved';
-                                                $scope.SaveFormResponse.sing =
-                                                    'fa fa-thumbs-up';
-
-                                                $scope.SaveFormResponse.instruction =
-                                                    'We are validating your information and documents. You will hear from us within 7 days on your email id ' +
-                                                    result.Email;
-                                                $scope.SaveFormResponse.instruction1 =
-                                                    'You are just 4 steps away from completing the membership process--';
-                                                $scope.SaveFormResponse.instruction2 =
-                                                    '1. Validation of the documents submitted';
-                                                $scope.SaveFormResponse.instruction3 =
-                                                    '2. Additional details to be submitted.';
-                                                $scope.SaveFormResponse.instruction4 =
-                                                    '3. Payment for your Membership';
-                                                $scope.SaveFormResponse.instruction5 =
-                                                    '4. E-signing of the Agreement';
-                                        }
-                                        if (result.becomMemberApex) {
-                                            window.localStorage.setItem("LeadId", result
-                                            .leadId);
-                                            console.log('result.becomMemberApex.Date_of_Incorporation_c--->',
-                                            new Date(result.becomMemberApex.Date_of_Incorporation_c));
-                                            var now = new Date(result.becomMemberApex.Date_of_Incorporation_c);
-                                            var day = ("0" + now.getDate()).slice(-2);
-                                            var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
-                                            var today = now.getFullYear() + "-" + (month) +
-                                                "-" + (day);
-                                            result.becomMemberApex.Date_of_Incorporation_c =
-                                                new Date(today);
-                                            // console.log('today--->', today);
-                                            // console.log(result.becomMemberApex);
-                                            $scope.becomMember = result.becomMemberApex;
-                                            $scope.is_gst_registered=result.becomMemberApex.GST_Registered_c;
-                                            if(result.becomMemberApex.GST_Registered_c =='Yes'){
-                                                $scope.gstDisabled = false;
-                                            }else{
-                                                $scope.gstDisabled = true;
-                                            }
-                                            $scope.verfiedData = result.becomMemberApex
-                                                .verfiedData;
-
-                                            // console.log('result.becomMemberApex.Company_Type',result.becomMemberApex.Company_Type);
-                                            $scope.baknType = result.becomMemberApex.Company_Type;
-                                            //add by shashank 5 july 2023
-                                            if(result.becomMemberApex.Company_Type =='Other'){
-                                                $scope.Class='col-md-3';
-                                            }else{
-                                                $scope.Class='col-md-6';
-                                            }
-                                            $scope.uploadDoclist = result.uploadDoclist;
-                                            // console.log($scope.becomMember);
-                                            
-                                            //add by shashank on 23_03_2022 - get Auth Singtory List By CIN  
-                                            // $scope.getCINVerified(result.becomMemberApex.Company,result.becomMemberApex.CIN_Company_Identification_Number_c,false);
-                                            $scope.authSignList=result.becomMemberApex.clsDirectList;
-                                            $scope.becomMember.authSignListValue=result.becomMemberApex.authSignListValue;
-                                            if(result.becomMemberApex.authSignListValue =='Other'){
-                                                    $scope.userAuthAndPan_fileUploadHideandShow = true;
-                                                    $scope.user_auth_letterDisabled = true;
-                                                    $scope.user_auth_panDisabled = true;
-                                            }
-
-                                           // $scope.getRBIVerified(result.becomMemberApex.Company,result.becomMemberApex.Company_Type);
-
-                                           if(result.becomMemberApex.verfiedData.RBI_List_Verification_Remarks_c =='Verified'){
-                                                $scope.RBIverfiedResponse[0].msg = 'Verified';
-                                                $scope.RBIverfiedResponse[0].icon = 'fa fa-check';
-                                                $scope.RBIverfiedResponse[0].color = '#007f00';
-                                            }else{
-                                                $scope.RBIverfiedResponse[0].msg = 'We are unable to verify your name from the RBI list of specified users. Without RBI certificate, we will not be able to onboard you as a Bureau Member as per CICRA rules.Please upload your RBI Certificate for us to proceed further.';
-                                                $scope.RBIverfiedResponse[0].icon = 'fa fa-times';
-                                                $scope.RBIverfiedResponse[0].color = 'red';
-                                            }
-
-                                            if(result.becomMemberApex.verfiedData.CIN_Number_Verified_c =='Verified'){
-                                                $scope.CINverfiedResponse[0].msg = 'Verified';
-                                                $scope.CINverfiedResponse[0].icon = 'fa fa-check';
-                                                $scope.CINverfiedResponse[0].color = '#007f00';
-                                            }else{
-                                                $scope.CINverfiedResponse[0].msg = 'Not Verified';
-                                                $scope.CINverfiedResponse[0].icon = 'fa fa-times';
-                                                $scope.CINverfiedResponse[0].color = 'red';
-                                            }
-                                            
-                                            $scope.verfiedResponse[0].msg = 'Verified';
-                                            $scope.verfiedResponse[0].icon = 'fa fa-check';
-                                            $scope.verfiedResponse[0].color = '#007f00';
-                                            $scope.verfiedResponse[1].msg = 'Verified';
-                                            $scope.verfiedResponse[1].icon = 'fa fa-check';
-                                            $scope.verfiedResponse[1].color = '#007f00';
-                                            $scope.selection = $scope.steps[0].stp;
-                                            $scope.counter = 0;
-                                            if (result.becomMemberApex
-                                                .RBI_Certificate_Verified_c == 'False') {
-                                                $scope.rbiDisabled = false;
-                                                $scope.panDisabled = false;
-                                                $scope.comDisabled = false;
-                                                $scope.gstDisabled = false;
-                                            } 
-                                            else if (result.becomMemberApex
-                                                .RBI_Certificate_Verified_c == 'True') {
-                                                $scope.rbiDisabled = true;
-                                                $scope.panDisabled = true;
-                                                $scope.comDisabled = true;
-                                                $scope.gstDisabled = true;
-                                            } else {
-                                                $scope.rbiDisabled = true;
-                                                $scope.panDisabled = true;
-                                                $scope.comDisabled = true;
-                                                $scope.gstDisabled = true;
-                                            }
-                                        }
-                                        if (result.OTPApex) {
-                                            $scope.APILoginDetail.stage = 'Email verification';
-                                            $scope.APILoginDetail.startTime = new Date();
-                                            $scope.verificationMember = result.OTPApex;
-                                            $scope.selection = $scope.steps[1].stp;
-                                            $scope.counter = 1;
-                                        }
-                                        if (result.detailMemberApex) {
-                                            $scope.APILoginDetail.stage = 'Member details';
-                                            $scope.APILoginDetail.startTime = new Date();
-                                            $scope.detailMember = result.detailMemberApex;
-                                            console.log($scope.detailMember);
-                                            $scope.selection = $scope.steps[2].stp;
-                                            $scope.counter = 2;
-                                            $scope.APILoginDetail.stage = 'Member details';
-                                            $scope.APILoginDetail.startTime = new Date();
-                                            
-                                        }
-                                        if (result.authUserIdReqApex) {
-                                            // console.log("AOSOSDKSLDKSLKDLSDSSSSSSSSSSSS", result
-                                            //     .authUserIdReqApex);
-                                            // console.log("AOSOSDKSLDKSLKDLSDSSSSSSSSSSSS", JSON
-                                            //     .stringify(result.authUserIdReqApex));
-                                            $scope.authUserIdRequestor = result.authUserIdReqApex;
-                                        }
-                                        if (result.webUserDetailsApex) {
-                                            // console.log("AOSOSDKSLDKSLKDLSDSSSSSSSSSSSS");
-                                            for (var i = 0; i < result.webUserDetailsApex.length; i++) {
-                                                var dummyWebUserDetails = {
-                                                    Id: result.webUserDetailsApex[i].Id,
-                                                    Web_User_First_Name_c: result
-                                                        .webUserDetailsApex[i]
-                                                        .Web_User_First_Name__c,
-                                                    Web_User_Job_Title_c: result
-                                                        .webUserDetailsApex[i]
-                                                        .Web_User_Job_Title__c,
-                                                    Web_User_Last_Name_c: result
-                                                        .webUserDetailsApex[i]
-                                                        .Web_User_Last_Name__c,
-                                                    Web_User_Email_c: result
-                                                        .webUserDetailsApex[i]
-                                                        .Web_User_Email__c,
-                                                    Web_User_Tel_No_c: result
-                                                        .webUserDetailsApex[i]
-                                                        .Web_User_Tel_No__c,
-                                                    Web_User_Type_c: result
-                                                        .webUserDetailsApex[i]
-                                                        .Web_User_Type__c
-                                                };
-                                                if (i == 0) {
-                                                    $scope.webUserDetails[i] =
-                                                        dummyWebUserDetails;
-                                                } else {
-                                                    $scope.webUserDetails.push(
-                                                        dummyWebUserDetails);
-                                                }
-                                                $scope.selection = $scope.steps[3].stp;
-                                                $scope.counter = 3;
-                                            }
-                                            $scope.APILoginDetail.stage = 'Additional details';
-                                            $scope.APILoginDetail.startTime = new Date();
-                                        }
-                                        // console.log('=R=P=> ', result.planSelectionApex);
-                                        if (result.planSelectionApex) {
-                                            // console.log('=R=P=> ', JSON.stringify(result
-                                            //     .planSelectionApex));
-                                            $scope.Payment_Detail = [];
-                                            result.planSelectionApex.forEach((item, index) => {
-                                                if (item.Product__r.Fee_Plan_Type__c ==
-                                                    'Fixed') {
-                                                    $scope.Payment_Detail.push(item);
-                                                }
-                                                if (item.Product__r.Fee_Plan_Type__c ==
-                                                    'Products') {
-                                                    $scope.variable_payment_data
-                                                        .forEach((subitem, index) => {
-                                                            if (subitem.Name == item
-                                                                .Product__r.Name) {
-                                                                console.log(
-                                                                    '=R=subitem=> ',
-                                                                    JSON
-                                                                    .stringify(
-                                                                        subitem)
-                                                                    );
-                                                                $scope
-                                                                    .variable_payment_data[
-                                                                        index]
-                                                                    .Selected__c =
-                                                                    true;
-                                                            }
-                                                        });
-                                                }
-                                            });
-                                            $scope.selection = $scope.steps[4].stp;
-                                            $scope.counter = 4;
-                                        
-                                        	$scope.APILoginDetail.stage = 'Plan selection';
-                                            $scope.APILoginDetail.startTime = new Date();
-										}
-
-                                        if (result.paymentDetailApexForPlan) {
-                                            console.log('5');
-                                            $scope.Payment_Detail = [];
-                                            result.paymentDetailApexForPlan.forEach((item,
-                                                index) => {
-                                                if (item.Product__r.Fee_Plan_Type__c ==
-                                                    'Fixed') {
-                                                    $scope.Payment_Detail.push(item);
-                                                }
-                                                if (item.Product__r.Fee_Plan_Type__c ==
-                                                    'Products') {
-                                                    $scope.variable_payment_data
-                                                        .forEach((subitem, index) => {
-                                                            if (subitem.Name == item
-                                                                .Product__r.Name) {
-                                                                console.log(
-                                                                    '=R=subitem=> ',
-                                                                    JSON
-                                                                    .stringify(
-                                                                        subitem)
-                                                                    );
-                                                                $scope
-                                                                    .variable_payment_data[
-                                                                        index]
-                                                                    .Selected__c =
-                                                                    true;
-                                                            }
-                                                        });
-                                                }
-                                            });
-                                            $scope.selection = $scope.steps[5].stp;
-                                            $scope.counter = 5;
-                                    
-                                            $scope.APILoginDetail.stage = 'Payment';
-                                            $scope.APILoginDetail.startTime = new Date();
-                                        }
-                                        if (result.paymentNextButton) {
-                                            // console.log('6');
-                                            $scope.paymentNextButton = result.paymentNextButton;
-                                        } else {
-                                            $scope.paymentNextButton = result.paymentNextButton;
-                                        }
-                                        if (result.sentForAgreementReturnResult) {
-                                            // console.log('7');
-                                            $scope.safeApply(function (params) {
-                                                fetch('data:application/pdf;base64,' +
-                                                        result
-                                                        .sentForAgreementReturnResult
-                                                        .pdf)
-                                                    .then(response => response.blob())
-                                                    .then(blob => document
-                                                        .getElementById(
-                                                            'agreement_Copy').src = URL
-                                                        .createObjectURL(blob));
-                                                // window.open("data:application/pdf;base64," + result.sentForAgreementReturnResult.pdf); 
-                                                $scope.agreementcopyResponse = result
-                                                    .sentForAgreementReturnResult;
-                                                console.log(
-                                                    '$scope.agreementcopyResponse--->',
-                                                    $scope.agreementcopyResponse);
-                                                $scope.selection = $scope.steps[6].stp;
-                                                $scope.counter = 6;
-                                                
-                                                $scope.APILoginDetail.stage = 'Agreement Viewing';
-                                            $scope.APILoginDetail.startTime = new Date();
-                                            });
-                                            
-                                            
-                                        }
-                                        
-                                if (result.returnDocsStatus) {
-                                    $scope.safeApply(function (params) {
-                                        fetch('data:application/pdf;base64,' +
-                                              result.returnDocsStatus
-                                              .csvAsString)
-                                        .then(response => response.blob())
-                                        .then(blob => document
-                                              .getElementById(
-                                                  'agreement_signed_Copy')
-                                              .src = URL.createObjectURL(blob)
-                                             );
-                                        // window.open("data:application/pdf;base64," + result.sentForAgreementReturnResult.pdf); 
-                                        // $scope.agreementcopyResponse = result.returnDocsStatus;
-                                        $scope.selection = $scope.steps[7].stp;
-                                        $scope.counter = 7;
-                                        $scope.APILoginDetail.stage = 'Agreement signing';
-                                        $scope.APILoginDetail.startTime = new Date();
-                                    });
-                                }
-                                
-                            });
-                    } 
-                    else {
-                        $scope.safeApply(function (params) {
-                            console.log("ELSE");
-                            $scope.newWindowErrorMsg = result.msg;
-                        })
-                    }
-                                $scope.safeApply(function (params) {
+                                $scope.safeApply(function () {
                                     $scope.showOverlay = false;
-                                })
+                                    if (result && result.status) {
+                                        // Store leadId for OTP verification step
+                                        $scope.loginOtpLeadId = result.leadId;
+                                        $scope.loginOtpEmail = result.leadEmail;
+                                        $scope.loginOtpValue = '';
+                                        $scope.loginOtpMsg = {};
+                                        // Hide the "Already filled" welcome modal and show OTP modal
+                                        var welcomeModal = document.getElementById('new_member_form_id');
+                                        if (welcomeModal) welcomeModal.style.display = 'none';
+                                        var otpModal = document.getElementById('login_otp_modal_id');
+                                        if (otpModal) otpModal.style.display = 'block';
+                                    } else {
+                                        $scope.newWindowErrorMsg = (result && result.msg) ? result.msg : 'Company not found. Please check the name.';
+                                    }
+                                });
                             });
-                    } else {
-                        $scope.safeApply(function (params) {
-                            $scope.showOverlay = false;
-                        })
                     }
                 }
+
+                // Called after login OTP is verified - loads the actual lead data
+                $scope.loadLeadDataAfterOtpVerification = function () {
+                    $scope.showOverlay = true;
+                    Visualforce.remoting.timeout = 120000;
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.FormsCotroller.getLeadInfo}',
+                        $scope.existingCompanyName,
+                        function (result, event) {
+                            console.log('LeadInfo--->', result);
+                            if (result.status) {
+                                $scope.safeApply(function () {
+                                    $scope.closeNewMemberForm();
+                                    if (result.documentVerifying) {
+                                        $scope.SaveFormResponse.status = true;
+                                        $scope.SaveFormResponse.msg = 'your information has been successfully saved';
+                                        $scope.SaveFormResponse.sing = 'fa fa-thumbs-up';
+                                        $scope.SaveFormResponse.instruction = 'We are validating your information and documents. You will hear from us within 7 days on your email id ' + result.Email;
+                                        $scope.SaveFormResponse.instruction1 = 'You are just 4 steps away from completing the membership process--';
+                                        $scope.SaveFormResponse.instruction2 = '1. Validation of the documents submitted';
+                                        $scope.SaveFormResponse.instruction3 = '2. Additional details to be submitted.';
+                                        $scope.SaveFormResponse.instruction4 = '3. Payment for your Membership';
+                                        $scope.SaveFormResponse.instruction5 = '4. E-signing of the Agreement';
+                                    }
+                                    if (result.becomMemberApex) {
+                                        window.localStorage.setItem("LeadId", result.leadId);
+                                        console.log('result.becomMemberApex.Date_of_Incorporation_c--->', new Date(result.becomMemberApex.Date_of_Incorporation_c));
+                                        var now = new Date(result.becomMemberApex.Date_of_Incorporation_c);
+                                        var day = ("0" + now.getDate()).slice(-2);
+                                        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+                                        result.becomMemberApex.Date_of_Incorporation_c = new Date(today);
+                                        $scope.becomMember = result.becomMemberApex;
+                                        $scope.is_gst_registered = result.becomMemberApex.GST_Registered_c;
+                                        if (result.becomMemberApex.GST_Registered_c == 'Yes') {
+                                            $scope.gstDisabled = false;
+                                        } else {
+                                            $scope.gstDisabled = true;
+                                        }
+                                        $scope.verfiedData = result.becomMemberApex.verfiedData;
+                                        $scope.baknType = result.becomMemberApex.Company_Type;
+                                        if (result.becomMemberApex.Company_Type == 'Other') {
+                                            $scope.Class = 'col-md-3';
+                                        } else {
+                                            $scope.Class = 'col-md-6';
+                                        }
+                                        $scope.uploadDoclist = result.uploadDoclist;
+                                        $scope.authSignList = result.becomMemberApex.clsDirectList;
+                                        $scope.becomMember.authSignListValue = result.becomMemberApex.authSignListValue;
+                                        if (result.becomMemberApex.authSignListValue == 'Other') {
+                                            $scope.userAuthAndPan_fileUploadHideandShow = true;
+                                            $scope.user_auth_letterDisabled = true;
+                                            $scope.user_auth_panDisabled = true;
+                                        }
+                                        if (result.becomMemberApex.verfiedData.RBI_List_Verification_Remarks_c == 'Verified') {
+                                            $scope.RBIverfiedResponse[0].msg = 'Verified';
+                                            $scope.RBIverfiedResponse[0].icon = 'fa fa-check';
+                                            $scope.RBIverfiedResponse[0].color = '#007f00';
+                                        } else {
+                                            $scope.RBIverfiedResponse[0].msg = 'We are unable to verify your name from the RBI list of specified users. Without RBI certificate, we will not be able to onboard you as a Bureau Member as per CICRA rules.Please upload your RBI Certificate for us to proceed further.';
+                                            $scope.RBIverfiedResponse[0].icon = 'fa fa-times';
+                                            $scope.RBIverfiedResponse[0].color = 'red';
+                                        }
+                                        if (result.becomMemberApex.verfiedData.CIN_Number_Verified_c == 'Verified') {
+                                            $scope.CINverfiedResponse[0].msg = 'Verified';
+                                            $scope.CINverfiedResponse[0].icon = 'fa fa-check';
+                                            $scope.CINverfiedResponse[0].color = '#007f00';
+                                        } else {
+                                            $scope.CINverfiedResponse[0].msg = 'Not Verified';
+                                            $scope.CINverfiedResponse[0].icon = 'fa fa-times';
+                                            $scope.CINverfiedResponse[0].color = 'red';
+                                        }
+                                        $scope.verfiedResponse[0].msg = 'Verified';
+                                        $scope.verfiedResponse[0].icon = 'fa fa-check';
+                                        $scope.verfiedResponse[0].color = '#007f00';
+                                        $scope.verfiedResponse[1].msg = 'Verified';
+                                        $scope.verfiedResponse[1].icon = 'fa fa-check';
+                                        $scope.verfiedResponse[1].color = '#007f00';
+                                        $scope.selection = $scope.steps[0].stp;
+                                        $scope.counter = 0;
+                                        if (result.becomMemberApex.RBI_Certificate_Verified_c == 'False') {
+                                            $scope.rbiDisabled = false;
+                                            $scope.panDisabled = false;
+                                            $scope.comDisabled = false;
+                                            $scope.gstDisabled = false;
+                                        } else if (result.becomMemberApex.RBI_Certificate_Verified_c == 'True') {
+                                            $scope.rbiDisabled = true;
+                                            $scope.panDisabled = true;
+                                            $scope.comDisabled = true;
+                                            $scope.gstDisabled = true;
+                                        } else {
+                                            $scope.rbiDisabled = true;
+                                            $scope.panDisabled = true;
+                                            $scope.comDisabled = true;
+                                            $scope.gstDisabled = true;
+                                        }
+                                    }
+                                    if (result.OTPApex) {
+                                        $scope.APILoginDetail.stage = 'Email verification';
+                                        $scope.APILoginDetail.startTime = new Date();
+                                        $scope.verificationMember = result.OTPApex;
+                                        $scope.selection = $scope.steps[1].stp;
+                                        $scope.counter = 1;
+                                    }
+                                    if (result.detailMemberApex) {
+                                        $scope.APILoginDetail.stage = 'Member details';
+                                        $scope.APILoginDetail.startTime = new Date();
+                                        $scope.detailMember = result.detailMemberApex;
+                                        console.log($scope.detailMember);
+                                        $scope.selection = $scope.steps[2].stp;
+                                        $scope.counter = 2;
+                                    }
+                                    if (result.authUserIdReqApex) {
+                                        $scope.authUserIdRequestor = result.authUserIdReqApex;
+                                    }
+                                    if (result.webUserDetailsApex) {
+                                        for (var i = 0; i < result.webUserDetailsApex.length; i++) {
+                                            var dummyWebUserDetails = {
+                                                Id: result.webUserDetailsApex[i].Id,
+                                                Web_User_First_Name_c: result.webUserDetailsApex[i].Web_User_First_Name__c,
+                                                Web_User_Job_Title_c: result.webUserDetailsApex[i].Web_User_Job_Title__c,
+                                                Web_User_Last_Name_c: result.webUserDetailsApex[i].Web_User_Last_Name__c,
+                                                Web_User_Email_c: result.webUserDetailsApex[i].Web_User_Email__c,
+                                                Web_User_Tel_No_c: result.webUserDetailsApex[i].Web_User_Tel_No__c,
+                                                Web_User_Type_c: result.webUserDetailsApex[i].Web_User_Type__c
+                                            };
+                                            if (i == 0) {
+                                                $scope.webUserDetails[i] = dummyWebUserDetails;
+                                            } else {
+                                                $scope.webUserDetails.push(dummyWebUserDetails);
+                                            }
+                                            $scope.selection = $scope.steps[3].stp;
+                                            $scope.counter = 3;
+                                        }
+                                        $scope.APILoginDetail.stage = 'Additional details';
+                                        $scope.APILoginDetail.startTime = new Date();
+                                    }
+                                    if (result.planSelectionApex) {
+                                        $scope.Payment_Detail = [];
+                                        result.planSelectionApex.forEach((item, index) => {
+                                            if (item.Product__r.Fee_Plan_Type__c == 'Fixed') {
+                                                $scope.Payment_Detail.push(item);
+                                            }
+                                            if (item.Product__r.Fee_Plan_Type__c == 'Products') {
+                                                $scope.variable_payment_data.forEach((subitem, index) => {
+                                                    if (subitem.Name == item.Product__r.Name) {
+                                                        $scope.variable_payment_data[index].Selected__c = true;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                        $scope.selection = $scope.steps[4].stp;
+                                        $scope.counter = 4;
+                                        $scope.APILoginDetail.stage = 'Plan selection';
+                                        $scope.APILoginDetail.startTime = new Date();
+                                    }
+                                    if (result.paymentDetailApexForPlan) {
+                                        $scope.Payment_Detail = [];
+                                        result.paymentDetailApexForPlan.forEach((item, index) => {
+                                            if (item.Product__r.Fee_Plan_Type__c == 'Fixed') {
+                                                $scope.Payment_Detail.push(item);
+                                            }
+                                            if (item.Product__r.Fee_Plan_Type__c == 'Products') {
+                                                $scope.variable_payment_data.forEach((subitem, index) => {
+                                                    if (subitem.Name == item.Product__r.Name) {
+                                                        $scope.variable_payment_data[index].Selected__c = true;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                        $scope.selection = $scope.steps[5].stp;
+                                        $scope.counter = 5;
+                                        $scope.APILoginDetail.stage = 'Payment';
+                                        $scope.APILoginDetail.startTime = new Date();
+                                    }
+                                    if (result.paymentNextButton) {
+                                        $scope.paymentNextButton = result.paymentNextButton;
+                                    } else {
+                                        $scope.paymentNextButton = result.paymentNextButton;
+                                    }
+                                    if (result.sentForAgreementReturnResult) {
+                                        $scope.safeApply(function (params) {
+                                            fetch('data:application/pdf;base64,' + result.sentForAgreementReturnResult.pdf)
+                                                .then(response => response.blob())
+                                                .then(blob => document.getElementById('agreement_Copy').src = URL.createObjectURL(blob));
+                                            $scope.agreementcopyResponse = result.sentForAgreementReturnResult;
+                                            $scope.selection = $scope.steps[6].stp;
+                                            $scope.counter = 6;
+                                            $scope.APILoginDetail.stage = 'Agreement Viewing';
+                                            $scope.APILoginDetail.startTime = new Date();
+                                        });
+                                    }
+                                    if (result.returnDocsStatus) {
+                                        $scope.safeApply(function (params) {
+                                            fetch('data:application/pdf;base64,' + result.returnDocsStatus.csvAsString)
+                                                .then(response => response.blob())
+                                                .then(blob => document.getElementById('agreement_signed_Copy').src = URL.createObjectURL(blob));
+                                            $scope.selection = $scope.steps[7].stp;
+                                            $scope.counter = 7;
+                                            $scope.APILoginDetail.stage = 'Agreement signing';
+                                            $scope.APILoginDetail.startTime = new Date();
+                                        });
+                                    }
+                                });
+                            } else {
+                                $scope.safeApply(function (params) {
+                                    console.log("ELSE");
+                                    $scope.newWindowErrorMsg = result.msg;
+                                });
+                            }
+                            $scope.safeApply(function (params) {
+                                $scope.showOverlay = false;
+                            });
+                        });
+                };
+
+                // -------------------------------------------------------
+                // Login OTP functions for "Already filled" flow
+                // -------------------------------------------------------
+
+                $scope.verifyLoginOtp = function (form) {
+                    if (!form.$valid) return;
+                    $scope.loginOtpMsg = {};
+                    $scope.showOverlay = true;
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.FormsCotroller.verifyLoginOTP}',
+                        $scope.loginOtpValue,
+                        $scope.loginOtpLeadId,
+                        function (result, event) {
+                            $scope.safeApply(function () {
+                                $scope.showOverlay = false;
+                                if (result && result.status) {
+                                    // OTP verified - close modal and load actual lead data
+                                    $scope.loginOtpMsg = { text: 'OTP Verified! Loading your data...', color: 'green' };
+                                    var otpModal = document.getElementById('login_otp_modal_id');
+                                    if (otpModal) otpModal.style.display = 'none';
+                                    $scope.loadLeadDataAfterOtpVerification();
+                                } else {
+                                    $scope.loginOtpMsg = { text: (result && result.msg) ? result.msg : 'Invalid OTP. Please try again.', color: 'red' };
+                                }
+                            });
+                        });
+                }
+
+                $scope.resendLoginOtp = function () {
+                    if (!$scope.loginOtpLeadId) {
+                        toaster.pop('error', 'Unable to resend OTP. Please start again.');
+                        return;
+                    }
+                    $scope.showOverlay = true;
+                    $scope.loginOtpMsg = {};
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.FormsCotroller.resendLoginOTP}',
+                        $scope.loginOtpLeadId,
+                        function (result, event) {
+                            $scope.safeApply(function () {
+                                $scope.showOverlay = false;
+                                if (result && result.status) {
+                                    $scope.loginOtpMsg = { text: 'OTP resent to ' + $scope.loginOtpEmail, color: 'green' };
+                                } else {
+                                    $scope.loginOtpMsg = { text: (result && result.msg) ? result.msg : 'Failed to resend OTP.', color: 'red' };
+                                }
+                            });
+                        });
+                }
+
+                // -------------------------------------------------------
 
                 // doi_id.max = new Date().toISOString().split("T")[0];
 
@@ -4136,7 +4109,7 @@
                     } else {
                         // console.log("Please enter");
                         toaster.pop('error',
-                            "Pan Number  is mandatory for verification "
+                            "Please enter valid PAN number for verification"
                             );
                         // $scope.gstDisabled = true;
                         $scope.showOverlay = false;
@@ -4317,6 +4290,41 @@
                     }
                 }
 
+                $scope.sendVerificationOtp = function () {
+                    var leadId = window.localStorage.getItem("LeadId");
+                    if (!leadId) {
+                        $scope.showOverlay = false;
+                        $scope.serverResponseForOTP = {
+                            status: false,
+                            msg: 'Unable to send OTP. LeadId is missing.',
+                            color: 'red'
+                        };
+                        toaster.pop('error', $scope.serverResponseForOTP.msg);
+                        return;
+                    }
+
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.FormsCotroller.sendVerificationOTP}',
+                        leadId,
+                        function (result, event) {
+                            $scope.safeApply(function () {
+                                $scope.showOverlay = false;
+                                if (result && result.status) {
+                                    $scope.serverResponseForOTP = result;
+                                    toaster.pop('success', result.msg);
+                                    if ($scope.URLHaveId == true) {
+                                        $scope.selection = $scope.steps[$scope.counter].stp;
+                                    } else {
+                                        $scope.incrementStep();
+                                    }
+                                } else {
+                                    $scope.serverResponseForOTP = result || { status: false, msg: 'Failed to send OTP.', color: 'red' };
+                                    toaster.pop('error', $scope.serverResponseForOTP.msg);
+                                }
+                            });
+                        });
+                };
+
                 $scope.submitBecomMemberForm = function (param, param2) {
                     $scope.showOverlay = true;
                      console.log('param===========>', param);
@@ -4368,12 +4376,7 @@
                                                     $scope.rbiDisabled = true;
                                                     console.log('$scope.URLHaveId-------> ',
                                                         $scope.URLHaveId);
-                                                    if ($scope.URLHaveId == true) {
-                                                        $scope.selection = $scope.steps[$scope
-                                                            .counter].stp;
-                                                    } else {
-                                                        $scope.incrementStep();
-                                                    }
+                                                    $scope.sendVerificationOtp();
                                                 }
                                                 $scope.showOverlay = false;
                                             }
@@ -4404,76 +4407,98 @@
                 }
 
                 $scope.submitverificationForm = function (param) {
-                    // console.log($scope.verificationMember);
                     $scope.serverResponseForOTP = '';
                     $scope.showOverlay = true;
+
                     if (param.$valid) {
                         $scope.APILoginDetail.EndTime = new Date();
+
                         Visualforce.remoting.Manager.invokeAction(
-                            '{!$RemoteAction.FormsCotroller.verificationMember}',
+                            '{!$RemoteAction.FormsCotroller.verifyVerificationOTP}',
                             $scope.verificationMember.OTP,
                             window.localStorage.getItem("LeadId"),
-                            JSON.stringify($scope.APILoginDetail), 
                             function (result, event) {
-                                // console.log(result);
-                                if (result) {
-                                    if (result.status == true) {
-                                        $scope.safeApply(function () {
-                                            
-                                            toaster.pop('success',
-                                                "Successfully data Submitted");
-                                            $scope.serverResponseForOTP = result;
-                                            setTimeout(function (params) {
-                                            $scope.showOverlay = false;
-                                               
-                                                    if(result.LeadStatus =='Document Verifiying'){
-                                                        $scope.SaveFormResponse.status = true;
-                                                        $scope.SaveFormResponse.msg =
-                                                            'your information has been successfully saved';
-                                                        $scope.SaveFormResponse.sing =
-                                                            'fa fa-thumbs-up';
 
-                                                        $scope.SaveFormResponse.instruction =
-                                                            'We are validating your information and documents. You will hear from us shortly on your email id ' +
-                                                            result.Email;
-                                                        $scope.SaveFormResponse.instruction1 =
-                                                            'You are just 4 steps away from completing the membership process--';
-                                                        $scope.SaveFormResponse.instruction2 =
-                                                            '1. Validation of the documents submitted';
-                                                        $scope.SaveFormResponse.instruction3 =
-                                                            '2. Additional details to be submitted.';
-                                                        $scope.SaveFormResponse.instruction4 =
-                                                            '3. Payment for your Membership';
-                                                        $scope.SaveFormResponse.instruction5 =
-                                                            '4. E-signing of the Agreement';
-                                                    }else{
-                                                        $scope.incrementStep();
-                                                        $scope.APILoginDetail.stage = 'Member Details';
-                                                        $scope.APILoginDetail.startTime = new Date();
-                                                    }
-                                               
-                                                
-                                            }, 10)
-                                        });
-                                    } else {
+                                if (result) {
+
+                                    if (result.status === true) {
+
                                         $scope.safeApply(function () {
-                                            toaster.pop('error', "OTP verificatoin Failed");
+
+                                            toaster.pop('success', 'Successfully data Submitted');
+                                            $scope.serverResponseForOTP = result;
+
+                                            setTimeout(function () {
+
+                                                $scope.showOverlay = false;
+
+                                                if (result.LeadStatus == 'Document Verifiying') {
+
+                                                    $scope.SaveFormResponse.status = true;
+                                                    $scope.SaveFormResponse.msg =
+                                                        'your information has been successfully saved';
+                                                    $scope.SaveFormResponse.sing =
+                                                        'fa fa-thumbs-up';
+
+                                                    $scope.SaveFormResponse.instruction =
+                                                        'We are validating your information and documents. You will hear from us shortly on your email id ' +
+                                                        result.Email;
+
+                                                    $scope.SaveFormResponse.instruction1 =
+                                                        'You are just 4 steps away from completing the membership process--';
+
+                                                    $scope.SaveFormResponse.instruction2 =
+                                                        '1. Validation of the documents submitted';
+
+                                                    $scope.SaveFormResponse.instruction3 =
+                                                        '2. Additional details to be submitted.';
+
+                                                    $scope.SaveFormResponse.instruction4 =
+                                                        '3. Payment for your Membership';
+
+                                                    $scope.SaveFormResponse.instruction5 =
+                                                        '4. E-signing of the Agreement';
+
+                                                } else {
+
+                                                    $scope.incrementStep();
+                                                    $scope.APILoginDetail.stage = 'Member Details';
+                                                    $scope.APILoginDetail.startTime = new Date();
+
+                                                }
+
+                                            }, 10);
+
+                                        });
+
+                                    } else {
+
+                                        $scope.safeApply(function () {
+                                            toaster.pop('error', 'OTP verificatoin Failed');
                                             $scope.serverResponseForOTP = result;
                                             $scope.showOverlay = false;
                                         });
+
                                     }
+
                                 } else {
+
                                     $scope.safeApply(function () {
-                                        toaster.pop('error', "OTP verificatoin Failed");
+                                        toaster.pop('error', 'OTP verificatoin Failed');
                                         $scope.serverResponseForOTP = result;
                                         $scope.showOverlay = false;
                                     });
+
                                 }
-                            })
+                            }
+                        );
+
                     } else {
+
                         $scope.showOverlay = false;
+
                     }
-                }
+                };
 
                 $scope.submitMemberDetailForm = function (param, param2) {
                     // console.log($scope.detailMember);
