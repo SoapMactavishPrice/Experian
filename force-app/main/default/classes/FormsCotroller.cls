@@ -666,7 +666,7 @@ public class FormsCotroller {
             Ld.Job_Title_Auth_Usr_Req__c = authUserIdReqApex.Job_Title_Auth_Usr_Req_c;
 
             if(Ld.Status == 'Additional details'){
-                Ld.Status = 'Plan selection';
+                Ld.Status = 'Payment';
                 Ld.Data_Pull_id_s__c = data_pull_ids;
                 update Ld;
             }else{
@@ -1059,6 +1059,7 @@ public class FormsCotroller {
 
     @RemoteAction
     public static resSendReturnResult sendVerificationOTP(String leadId) {
+        System.debug('leadId ==> ' + leadId);
         resSendReturnResult status = new resSendReturnResult();
         // try {
             Lead l = [SELECT Id, Email, Verification_OTP__c, Company 
@@ -1074,7 +1075,6 @@ public class FormsCotroller {
             update l;
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            // mail.setToAddresses(new List<String>{ l.Email });
             mail.setSubject('Your OTP for Experian Portal Verification');
             mail.setHtmlBody(
                 '<p>Dear Member,</p>' +
@@ -1092,15 +1092,14 @@ public class FormsCotroller {
             status.leadId = l.Id;
             status.leadEmail = l.Email;
 
-            System.debug('Status ==> ' + status);
-
         // } catch (QueryException e) {
         //     status.status = false;
-        //     status.msg = 'No record found. Please check the company name.';
+        //     status.msg = 'Lead not found. Please try again.';
+        //     System.debug('sendVerificationOTP QueryException: ' + e);
         // } catch (Exception e) {
         //     status.status = false;
-        //     status.msg = 'Something went wrong. Please try again.';
-        //     System.debug('sendLoginOTP Exception: ' + e);
+        //     status.msg = 'Something went wrong: ' + e.getMessage();
+        //     System.debug('sendVerificationOTP Exception: ' + e);
         // }
         return status;
     }
@@ -1212,11 +1211,13 @@ public class FormsCotroller {
     public static resSendReturnResult verifyVerificationOTP(String OTP, String Id) {
         resSendReturnResult status = new resSendReturnResult();
         try {
-            Lead l = [SELECT Id, Email, Verification_OTP__c FROM Lead WHERE Id =: Id LIMIT 1];
-
+            Lead l = [SELECT Id, Email, Verification_OTP__c, Status FROM Lead WHERE Id =: Id LIMIT 1];
+            
             String plainOtp = decryptOTP(l.Verification_OTP__c);
 
             if (plainOtp == OTP) {
+                l.Status = 'Member details';
+                update l;
                 status.status = true;
                 status.msg = 'OTP Verified';
                 status.leadId = l.Id;
