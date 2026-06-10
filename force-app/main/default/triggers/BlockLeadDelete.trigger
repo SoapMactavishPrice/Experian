@@ -5,6 +5,6 @@ trigger BlockLeadDelete on Lead (before delete) {
     }
     
     for (Lead ld : Trigger.old) {
-        ld.addError('Deletion is not allowed for Lead records.');
+        //ld.addError('Deletion is not allowed for Lead records.');
     }
 }

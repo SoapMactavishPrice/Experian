@@ -47,7 +47,7 @@ trigger Lead_PaymentDetail on Lead (before update,after update, after insert) {
                 
                 if(!System.isFuture() && !System.isBatch()){
                     if(!Test.isRunningTest()){
-                        AgreementAPiRESTController.save_pdf_in_attachment(l.Billing_Contact_Person__c,l.Billing_Contact_Details__c,l.Billing_Job_Title__c,l.Company,l.FirstName+' '+l.LastName,l.Billing_Job_Title__c,l.Phone,l.Email,l.Billing_Email_Address__c,billing_address,l.GST_No__c,l.Id,l.Nodal_Officer_Name__c,l.Official_Email_Address_Nodal__c,l.Tel_No_Nodal__c,l.Billing_Street__c,l.Billing_City__c,l.Billing_Zip_Postal_Code__c,l.Billing_State__c,l.Billing_Country__c,l.First_Name_Auth_Usr_Req__c,l.Last_Name_Auth_Usr_Req__c,l.Job_Title_Auth_Usr_Req__c,l.Official_Email_Auth_Usr_Req__c,l.Tel_No_Auth_Usr_Req__c,l.First_Name_AuSig__c,l.Last_Name_AuSig__c,l.Job_Title_AuSig__c,l.Tel_No_AuSig__c,l.Official_Email_Address_AuSig__c);
+                        //AgreementAPiRESTController.save_pdf_in_attachment(l.Billing_Contact_Person__c,l.Billing_Contact_Details__c,l.Billing_Job_Title__c,l.Company,l.FirstName+' '+l.LastName,l.Billing_Job_Title__c,l.Phone,l.Email,l.Billing_Email_Address__c,billing_address,l.GST_No__c,l.Id,l.Nodal_Officer_Name__c,l.Official_Email_Address_Nodal__c,l.Tel_No_Nodal__c,l.Billing_Street__c,l.Billing_City__c,l.Billing_Zip_Postal_Code__c,l.Billing_State__c,l.Billing_Country__c,l.First_Name_Auth_Usr_Req__c,l.Last_Name_Auth_Usr_Req__c,l.Job_Title_Auth_Usr_Req__c,l.Official_Email_Auth_Usr_Req__c,l.Tel_No_Auth_Usr_Req__c,l.First_Name_AuSig__c,l.Last_Name_AuSig__c,l.Job_Title_AuSig__c,l.Tel_No_AuSig__c,l.Official_Email_Address_AuSig__c);
                     }
                     
                 }

@@ -59,10 +59,10 @@ global class CommonCaseBatch implements Database.batchable<sObject>,schedulable{
         for(Case cs : scope){
             csLists.add(cs);
             
-            if (cs.AccountId !=null && cs.Account.Member_Status__c == 'Credit Institution - License Cancelled Entity'){
-                cs.Send_Email_to_Terminated_Member__c = true;
-                csValues.put(cs.Id,cs);  
-            }
+            //if (cs.AccountId !=null && cs.Account.Member_Status__c == 'Credit Institution - License Cancelled Entity'){
+                //cs.Send_Email_to_Terminated_Member__c = true;
+                //csValues.put(cs.Id,cs);  
+            //}
             if (cs.Circle__c == null && cs.AccountId == null && cs.Displayed_Bank_Name__c == 'State Bank of India' && cs.Status =='Open') {
                 cs.accountId = (Id)accMap.get('State Bank of India'); 
                 csValues.put(cs.Id,cs);

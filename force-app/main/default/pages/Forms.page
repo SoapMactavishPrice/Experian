@@ -4427,10 +4427,41 @@
                                             setTimeout(function () {
 
                                                 $scope.showOverlay = false;
-                                                $scope.incrementStep();
-                                                $scope.APILoginDetail.stage = 'Member Details';
-                                                $scope.APILoginDetail.startTime = new Date();
 
+                                                if (result.LeadStatus == 'Document Verifiying') {
+
+                                                    $scope.SaveFormResponse.status = true;
+                                                    $scope.SaveFormResponse.msg =
+                                                        'your information has been successfully saved';
+                                                    $scope.SaveFormResponse.sing =
+                                                        'fa fa-thumbs-up';
+
+                                                    $scope.SaveFormResponse.instruction =
+                                                        'We are validating your information and documents. You will hear from us shortly on your email id ' +
+                                                        result.Email;
+
+                                                    $scope.SaveFormResponse.instruction1 =
+                                                        'You are just 4 steps away from completing the membership process--';
+
+                                                    $scope.SaveFormResponse.instruction2 =
+                                                        '1. Validation of the documents submitted';
+
+                                                    $scope.SaveFormResponse.instruction3 =
+                                                        '2. Additional details to be submitted.';
+
+                                                    $scope.SaveFormResponse.instruction4 =
+                                                        '3. Payment for your Membership';
+
+                                                    $scope.SaveFormResponse.instruction5 =
+                                                        '4. E-signing of the Agreement';
+
+                                                } else {
+
+                                                    $scope.incrementStep();
+                                                    $scope.APILoginDetail.stage = 'Member Details';
+                                                    $scope.APILoginDetail.startTime = new Date();
+
+                                                }
 
                                             }, 10);
 

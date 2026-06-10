@@ -213,7 +213,7 @@ public class CaseTriggerHandler {
                    cid.add(cs.Id);
                }
             if(cs.Account.Member_Status__c =='Credit Institution - License Cancelled Entity'){
-                 RBIcsid.add(cs.Id);
+                 //RBIcsid.add(cs.Id);
             }
         }
         system.debug('cid '+cid);

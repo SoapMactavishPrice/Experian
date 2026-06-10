@@ -177,12 +177,10 @@ trigger LeadConverter on Lead(before insert, before update, after update) {
     }
 */
     
-    // Aditya - 14/09/2022 - For Validation of Status when updating to "Member Details"
     if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)) {
         for(Lead ld : Trigger.New) {
-            if(ld.Status == 'Member details' || ld.Status == 'Sent for Agreement') {
-                /* || ld.Status == 'Additional details' || ld.Status == 'Plan selection' || ld.Status == 'Payment' ||
-               ld.Status == 'Sent for Agreement' || ld.Status == 'Agreement Received' || ld.Status == 'Qualified') { */
+            if(ld.Status == 'Sent for Agreement') {//ld.Status == 'Member details' - commented by Balram on 0906206
+
                 if(ld.RBI_Certificate_Verified__c != 'True')
                     ld.RBI_Certificate_Verified__c.addError('RBI Certificate Verified? required to change status to \'Member Details\'');
                 if(ld.Pan_Verified__c != 'True')
@@ -215,7 +213,6 @@ trigger LeadConverter on Lead(before insert, before update, after update) {
                 if(ld.RBI_Certificate_Verified__c != 'True') ld.RBI_Certificate_Verified__c.addError('RBI certificate should be verified');
                 if(ld.Pan_Verified__c != 'True') ld.Pan_Verified__c.addError('Pan should be verified');
                 if(ld.GST_Verified__c != 'True') ld.GST_Verified__c.addError('GST should be verified');
-                //if(ld.RBI_Member_Verified__c != 'Yes') ld.RBI_Member_Verified__c.addError('RBI Member should be verified');
                 if(ld.Checked_in_NBFC_List__c != 'Yes') ld.Checked_in_NBFC_List__c.addError('Should be checked in NBFC list');
                 if(ld.Checked_in_Termination_List__c != 'Yes') ld.Checked_in_Termination_List__c.addError('Should be checked in Termination list');
             }
