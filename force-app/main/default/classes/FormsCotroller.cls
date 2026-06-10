@@ -293,6 +293,7 @@ public class FormsCotroller {
             nl.First_Name_AuSig__c = bApex.First_Name_AuSig_c;
             nl.Last_Name_AuSig__c = bApex.Last_Name_AuSig_c;
             nl.Job_Title_AuSig__c = bApex.Job_Title_AuSig_c;
+            nl.Title = bApex.Job_Title_AuSig_c;
             nl.DIN__c = bApex.DIN_AuSig_c;
             nl.Official_Email_Address_AuSig__c = bApex.Official_Email_Address_AuSig_c;
             nl.Tel_No_AuSig__c = bApex.Tel_No_AuSig_c;

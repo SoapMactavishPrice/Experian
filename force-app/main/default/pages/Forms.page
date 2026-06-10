@@ -181,6 +181,7 @@
                                     </label>
                                     <input type="text" id="company_Name_id" name="company_Name"
                                         ng-model="becomMember.Company" class="form-control" required="true"
+                                        ng-disabled="becomMember.Company != undefined && becomMember.Company != ''"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode == 32) || (event.charCode == 38) || (event.charCode == 40) || (event.charCode == 41) || (event.charCode == 45) || (event.charCode > 47 && event.charCode < 58)" />
                                     <div ng-if="(becomMemberForm.company_Name.$dirty || becomMemberForm.$submitted)"
                                         ng-messages="becomMember.company_Name.$error" style="color:maroon" role="alert">
@@ -381,7 +382,8 @@
                                     <!-- <input type="date" id="doi_id" name="doi" ng-disabled="becomMember.Date_of_Incorporation_c != undefined" ng-model="becomMember.Date_of_Incorporation_c" class="form-control" required="true" max='maxDate' /> -->
                                     <input type="date" id="doi_id" name="doi"
                                         ng-model="becomMember.Date_of_Incorporation_c" class="form-control"
-                                        required="true" max='maxDate' />
+                                        required="true" max='maxDate'
+                                        ng-disabled="becomMember.Date_of_Incorporation_c != undefined && becomMember.Date_of_Incorporation_c != ''" />
                                     <div ng-if="(becomMemberForm.doi.$dirty || becomMemberForm.$submitted)"
                                         ng-messages="becomMemberForm.doi.$error" style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please enter date of
@@ -437,7 +439,7 @@
                                     <input class="form-control" type="file" ng-model="rbiDocument" name="rbi_doc"
                                         valid-File="rbi_doc" id="rbi_doc_id"
                                         onchange="angular.element(this).scope().fileNameChanged('rbi_doc_id','file1')"
-                                        accept="image/*,.pdf" ng-required="!rbiDisabled" ng-disabled="rbiDisabled" />
+                                        accept=".pdf,.docx" ng-required="!rbiDisabled" ng-disabled="rbiDisabled" />
                                     <div ng-if="(becomMemberForm.rbi_doc.$dirty || becomMemberForm.$submitted)"
                                         ng-messages="becomMemberForm.rbi_doc.$error" style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please upload the Certificate
@@ -455,7 +457,7 @@
                                     <input class="form-control" type="file" ng-model="panDocument" name="pan_doc"
                                         valid-File="pan_doc" id="pan_doc_id"
                                         onchange="angular.element(this).scope().fileNameChanged('pan_doc_id','file2')"
-                                        accept="image/*,.pdf" ng-required="!panDisabled" ng-disabled="panDisabled" />
+                                        accept=".pdf,.docx" ng-required="!panDisabled" ng-disabled="panDisabled" />
                                     <div ng-if="(becomMemberForm.pan_doc.$dirty || becomMemberForm.$submitted)"
                                         ng-messages="becomMemberForm.pan_doc.$error" style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please upload your PAN Card</div>
@@ -472,7 +474,7 @@
                                     <input class="form-control" type="file" ng-model="comDocument" name="com_doc"
                                         valid-File="com_doc" id="com_doc_id"
                                         onchange="angular.element(this).scope().fileNameChanged('com_doc_id','file3')"
-                                        accept="image/*,.pdf" ng-required="!comDisabled" ng-disabled="comDisabled" />
+                                        accept=".pdf,.docx" ng-required="!comDisabled" ng-disabled="comDisabled" />
                                     <div ng-if="(becomMemberForm.com_doc.$dirty || becomMemberForm.$submitted)"
                                         ng-messages="becomMemberForm.com_doc.$error" style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please upload the Company
@@ -490,7 +492,7 @@
                                     <input class="form-control" type="file" ng-model="gstDocument" name="gst_doc"
                                         valid-File="gst_doc" id="gst_doc_id"
                                         onchange="angular.element(this).scope().fileNameChanged('gst_doc_id','file4')"
-                                        accept="image/*,.pdf" ng-required="!gstDisabled" ng-disabled="gstDisabled" />
+                                        accept=".pdf,.docx" ng-required="!gstDisabled" ng-disabled="gstDisabled" />
                                     <div ng-if="(becomMemberForm.gst_doc.$dirty || becomMemberForm.$submitted)"
                                         ng-messages="becomMemberForm.gst_doc.$error" style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please upload your GST
@@ -1756,17 +1758,16 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="row mt-3 border-bottom ml-3">
+                            <!-- <div class="row mt-3 border-bottom ml-3">
                                 <table style="width: 95%;border: 1px solid black;border-collapse: collapse">
                                     <tr style="border: 1px solid black;background-color:#982881;color:#fff">
-                                        <!-- <tr style="border: 1px solid black;font-weight:800"> -->
                                         <td style="border: 1px solid black"> Selected Products </td>
                                     </tr>
                                     <tr style="border: 1px solid black" ng-repeat="v in variable_payment_data">
                                         <td style="border: 1px solid black" ng-If="v.Selected__c==true">{{v.Name}}</td>
                                     </tr>
                                 </table>
-                            </div>
+                            </div> -->
                             <div class="space-20px"></div>
                             <div class="space-20px"></div>
                             <button class="experian-button-large mt-2" id="btnSubmit_paynow"
@@ -3224,9 +3225,7 @@
                     var fileName = document.getElementById(param).value;
                     var idxDot = fileName.lastIndexOf(".") + 1;
                     var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-                    if (extFile == "pdf" || extFile == "jpg" || extFile == "jpeg" || extFile == "gif" ||
-                        extFile == "png" || extFile == "doc" || extFile == "docx" || extFile == "xls" ||
-                        extFile == "xlsx" || extFile == "ppt" || extFile == "txt") {
+                    if (extFile == "pdf" || extFile == "docx") {
                         //const fi= document.getElementById('rbi_doc_id');
                         const fi = document.getElementById(param);
                         if (fi.files.length > 0) {
