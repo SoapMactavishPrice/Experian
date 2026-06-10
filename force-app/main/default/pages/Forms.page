@@ -4565,7 +4565,8 @@
                         //$scope.APILoginDetail.startTime = new Date();
                     //}
                     $scope.showOverlay = true;
-                        if (param.$valid && $scope.userTypeCheckOn_NO) {
+                        var hasGrievanceUser = $scope.webUserDetails.some(function(u){ return u.Web_User_Type_c === 'For Grievance on Disputes'; });
+                            if (param.$valid && hasGrievanceUser) {
                             Visualforce.remoting.Manager.invokeAction(
                                 '{!$RemoteAction.FormsCotroller.webUserDetails}',
                                 JSON.stringify($scope.webUserDetails),
@@ -4708,13 +4709,7 @@
                             $scope.showOverlay = false;
                             console.log('Form is not valid');
                             if(param.$valid){
-                                if($scope.Web_User_Type_c !=undefined || $scope.webUserDetails.length>0){
-                                    $scope.userType_poup('No');
-                                    var modal = document.getElementById("User_Type_AdditionalDetails_popup_id");
-                                    modal.style.display = "block";
-                                }else{
-                                     alert('Please select user type');
-                                }
+                                alert('At least one user of type "For Grievance on Disputes" is mandatory to proceed.');
                             }
                         }
                 }
