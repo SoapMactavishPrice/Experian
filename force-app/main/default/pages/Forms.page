@@ -588,8 +588,8 @@
                                     <div ng-if="(becomMemberForm.mobile_number.$dirty || becomMemberForm.$submitted)" ng-messages="becomMemberForm.mobile_number.$error"
                                         style="color:maroon" role="alert">
                                         <div class="text-danger" ng-message="required">Please enter mobile number</div>
-                                        <div class="text-danger" ng-message="minlength">mobile numerb should be 10 digit</div>
-                                        <div class="text-danger" ng-message="maxlength">mobile numerb should be 10 digit</div>
+                                        <div class="text-danger" ng-message="minlength">mobile number should be 10 digit</div>
+                                        <div class="text-danger" ng-message="maxlength">mobile number should be 10 digit</div>
                                     </div>
                                 </div>
                             </div> -->
@@ -807,7 +807,7 @@
                                     <button type="submit"
                                         ng-class="!(verfiedResponse[0].msg == 'Verified') ? 'btn-disabled' : '' "
                                         ng-disabled="!(verfiedResponse[0].msg == 'Verified')"
-                                        ng-click="submitBecomMemberForm(becomMemberForm,'Save')">Save &nbsp;
+                                        ng-click="submitBecomMemberForm(becomMemberForm,'Save')">Save &amp; Close &nbsp;
                                         <i class="fa fa-save"></i>
                                     </button>
                                 </div>
@@ -864,10 +864,10 @@
                                 {{serverResponseForOTP.msg}} </h5>
                         </div>
                         <div class="form-row mr-1">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <button type="button" ng-click="decrementStep()">
                                     <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                            </div>
+                            </div> -->
                             <div class="col text-right">
                                 <button type="submit" ng-click="submitverificationForm(verificationForm)"
                                     data-toggle="tooltip"
@@ -1032,9 +1032,9 @@
                                         ng-messages="memberDetailForm.mobile_number.$error" style="color:maroon"
                                         role="alert">
                                         <div class="text-danger" ng-message="required">Please enter mobile number</div>
-                                        <div class="text-danger" ng-message="minlength">mobile numerb should be 10 digit
+                                        <div class="text-danger" ng-message="minlength">mobile number should be 10 digit
                                         </div>
-                                        <div class="text-danger" ng-message="maxlength">mobile numerb should be 10 digit
+                                        <div class="text-danger" ng-message="maxlength">mobile number should be 10 digit
                                         </div>
                                     </div>
                                 </div>
@@ -1070,7 +1070,7 @@
                                     <div ng-if="(memberDetailForm.BCD_contact_person.$dirty || memberDetailForm.$submitted)"
                                         ng-messages="memberDetailForm.BCD_contact_person.$error" style="color:maroon"
                                         role="alert">
-                                        <div class="text-danger" ng-message="required">please enter last name</div>
+                                        <div class="text-danger" ng-message="required">please enter first name</div>
                                     </div>
                                 </div>
                             </div>
@@ -1084,8 +1084,7 @@
                                     <div ng-if="(memberDetailForm.BCD_contact_details.$dirty || memberDetailForm.$submitted)"
                                         ng-messages="memberDetailForm.BCD_contact_details.$error" style="color:maroon"
                                         role="alert">
-                                        <div class="text-danger" ng-message="required">please enter contact details
-                                        </div>
+                                        <div class="text-danger" ng-message="required">please enter last name</div>
                                     </div>
                                 </div>
                             </div>
@@ -1185,10 +1184,10 @@
                             </div>
                         </div>
                         <div class="form-row mr-1">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <button type="button" ng-click="decrementStep()">
                                     <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                            </div>
+                            </div> -->
                             <div class="col text-right">
                                 <button type="submit" ng-click="submitMemberDetailForm(memberDetailForm,'Save')">Save
                                     &nbsp;
@@ -1485,10 +1484,10 @@
                         <div class="space-20px"></div>
                         <div class="space-20px"></div>
                         <div class="form-row mr-3">
-                            <div class="col-sm-3">
+                            <!-- <div class="col-sm-3">
                                 <button type="submit" ng-click="decrementStep()">
                                     <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                            </div>
+                            </div> -->
                             <div class="col-sm-4 text-right">
                                 <button type="button" ng-click="addWebUserDetails()">
                                     <i class="fa fa-plus-circle"></i> &nbsp; Add User </button>
@@ -1784,10 +1783,10 @@
                         </div>
                     </div>
                     <div class="form-row mr-1">
-                        <div class="col">
+                        <!-- <div class="col">
                             <button type="submit" ng-click="decrementStep()">
                                 <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                        </div>
+                        </div> -->
                         <div class="col text-right">
                             <button type="submit" id="paymentSubmit_next"
                                 ng-class="(paymentNextButton != '') ? 'btn-disabled' : '' " ng-click="paymentSubmit()"
@@ -1819,10 +1818,10 @@
                     </div>
                     <form name="verificationForm" class="mt-2" novalidate="verificationForm">
                         <div class="form-row mr-1">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <button type="submit" ng-click="decrementStep()">
                                     <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                            </div>
+                            </div> -->
                             <div class="col text-right">
                                 <button type="submit" ng-click="getAgreementCopy()" data-toggle="tooltip"
                                     title="Buttun will be enable when status of both parties would become signed"
@@ -1845,10 +1844,10 @@
                     <iframe src="" id='agreement_signed_Copy' width="100%" height="430px"></iframe>
                     <form name="verificationForm" class="mt-2" novalidate="verificationForm">
                         <div class="form-row mr-1">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <button type="submit" ng-click="decrementStep()">
                                     <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                            </div>
+                            </div> -->
                             <div class="col text-right">
                                 <button type="submit" ng-click="getAgreementView()">Next &nbsp;
                                     <i class="fa fa-angle-right"></i>
@@ -1967,9 +1966,7 @@
                 <div class="row m-3">
                     <div class="col-md-12">
                         <p style="font-size:13px;color:#777;">
-                            An OTP has been sent to your registered email
-                            <strong>{{loginOtpEmail}}</strong>.
-                            Please enter the OTP below to continue.
+                            An OTP has been sent to your registered Authorized Signatory email address. Please enter the OTP below to continue.
                         </p>
                     </div>
                 </div>
@@ -2202,9 +2199,9 @@
                                     ng-messages="payUsingLinkForm.pu_mobile_number.$error" style="color:maroon"
                                     role="alert">
                                     <div class="text-danger" ng-message="required">please enter mobile number</div>
-                                    <div class="text-danger" ng-message="minlength">mobile numerb should be 10 digit
+                                    <div class="text-danger" ng-message="minlength">mobile number should be 10 digit
                                     </div>
-                                    <div class="text-danger" ng-message="maxlength">mobile numerb should be 10 digit
+                                    <div class="text-danger" ng-message="maxlength">mobile number should be 10 digit
                                     </div>
                                 </div>
                             </div>
@@ -4144,7 +4141,9 @@
                                             //     $scope.becomMember.verfiedData.CIN_Number_Verified_c='Not Verified';
                                             // }
                                             $scope.becomMember.CIN_Number_Verified_c='Verified';
-                                            $scope.becomMember.Date_of_Incorporation_c=new Date(result.dateOfIncorporation);
+                                            const parts = result.dateOfIncorporation.split('/');
+                                            $scope.becomMember.Date_of_Incorporation_c =
+                                                new Date(parts[2], parts[1] - 1, parts[0]);
                                             $scope.com_by_user = Company;
                                             $scope.com_by_mca = Company;
                                             $scope.cin_details_open();
