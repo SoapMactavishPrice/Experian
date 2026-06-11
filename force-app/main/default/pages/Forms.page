@@ -1483,23 +1483,22 @@
                         </div>
                         <div class="space-20px"></div>
                         <div class="space-20px"></div>
-                        <div class="form-row mr-3">
-                            <!-- <div class="col-sm-3">
-                                <button type="submit" ng-click="decrementStep()">
-                                    <i class="fa fa-angle-left"></i> &nbsp; Back </button>
-                            </div> -->
-                            <div class="col-sm-4 text-right">
+                        <div class="form-row mr-3 d-flex align-items-center">
+                            <div style="flex:1; text-align:center;">
                                 <button type="button" ng-click="addWebUserDetails()">
-                                    <i class="fa fa-plus-circle"></i> &nbsp; Add User </button>
-                            </div>
-                            <div class="col-sm-5 text-right">
-                                <button type="submit"
-                                    ng-click="submitWebUserDetailsForm(webUserDetailsForm,'Save')">Save &nbsp;
-                                    <i class="fa fa-save"></i>
+                                    <i class="fa fa-plus-circle"></i> &nbsp; Add User
                                 </button>
+                            </div>
+
+                            <div>
                                 <button type="submit"
-                                    ng-click="submitWebUserDetailsForm(webUserDetailsForm,'Next')">Next &nbsp;
-                                    <i class="fa fa-angle-right"></i>
+                                    ng-click="submitWebUserDetailsForm(webUserDetailsForm,'Save')">
+                                    Save &nbsp;<i class="fa fa-save"></i>
+                                </button>
+
+                                <button type="submit"
+                                    ng-click="submitWebUserDetailsForm(webUserDetailsForm,'Next')">
+                                    Next &nbsp;<i class="fa fa-angle-right"></i>
                                 </button>
                             </div>
                         </div>
@@ -3481,40 +3480,29 @@
                                                         });
                                                 }
                                             });
-                                            $scope.selection = $scope.steps[4].stp;
+                                            $scope.selection = $scope.steps[4].stp;  // was [4] - Plan Selection no longer exists, Payment is now [4]
                                             $scope.counter = 4;
 
                                         }
 
                                         if (result.paymentDetailApexForPlan) {
-                                            console.log('5');
                                             $scope.Payment_Detail = [];
-                                            result.paymentDetailApexForPlan.forEach((item,
-                                                index) => {
-                                                if (item.Product__r.Fee_Plan_Type__c ==
-                                                    'Fixed') {
+                                            result.paymentDetailApexForPlan.forEach((item, index) => {
+                                                if (item.Product__r.Fee_Plan_Type__c == 'Fixed') {
                                                     $scope.Payment_Detail.push(item);
                                                 }
-                                                if (item.Product__r.Fee_Plan_Type__c ==
-                                                    'Products') {
-                                                    $scope.variable_payment_data
-                                                        .forEach((subitem, index) => {
-                                                            if (subitem.Name == item
-                                                                .Product__r.Name) {
-                                                                console.log(
-                                                                    '=R=subitem=> ',
-                                                                    subitem);
-                                                                $scope
-                                                                    .variable_payment_data[
-                                                                        index]
-                                                                    .Selected__c =
-                                                                    true;
-                                                            }
-                                                        });
+                                                if (item.Product__r.Fee_Plan_Type__c == 'Products') {
+                                                    $scope.variable_payment_data.forEach((subitem, index) => {
+                                                        if (subitem.Name == item.Product__r.Name) {
+                                                            $scope.variable_payment_data[index].Selected__c = true;
+                                                        }
+                                                    });
                                                 }
                                             });
-                                            $scope.selection = $scope.steps[5].stp;
-                                            $scope.counter = 5;
+                                            $scope.selection = $scope.steps[4].stp; 
+                                            $scope.counter = 4;                      
+                                            $scope.APILoginDetail.stage = 'Payment';
+                                            $scope.APILoginDetail.startTime = new Date();
                                         }
                                         if (result.paymentNextButton) {
                                             $scope.paymentNextButton = result.paymentNextButton;
@@ -3538,8 +3526,8 @@
                                                 console.log(
                                                     '$scope.agreementcopyResponse--->',
                                                     $scope.agreementcopyResponse);
-                                                // $scope.selection = $scope.steps[6].stp;
-                                                $scope.counter = 6;
+                                                // $scope.selection = $scope.steps[5].stp;
+                                                $scope.counter = 5;
                                             });
                                         }
                                         if (result.returnDocsStatus) {
@@ -3556,7 +3544,7 @@
                                                 // window.open("data:application/pdf;base64," + result.sentForAgreementReturnResult.pdf); 
                                                 // $scope.agreementcopyResponse = result.returnDocsStatus;
                                                 // $scope.selection = $scope.steps[7].stp;
-                                                $scope.counter = 7;
+                                                $scope.counter = 6;
                                             });
                                         }
 
@@ -3774,8 +3762,8 @@
                                                 });
                                             }
                                         });
-                                        $scope.selection = $scope.steps[5].stp;
-                                        $scope.counter = 5;
+                                        $scope.selection = $scope.steps[4].stp;
+                                        $scope.counter = 4;
                                         $scope.APILoginDetail.stage = 'Payment';
                                         $scope.APILoginDetail.startTime = new Date();
                                     }
@@ -3790,8 +3778,8 @@
                                                 .then(response => response.blob())
                                                 .then(blob => document.getElementById('agreement_Copy').src = URL.createObjectURL(blob));
                                             $scope.agreementcopyResponse = result.sentForAgreementReturnResult;
-                                            $scope.selection = $scope.steps[6].stp;
-                                            $scope.counter = 6;
+                                            $scope.selection = $scope.steps[5].stp;
+                                            $scope.counter = 5;
                                             $scope.APILoginDetail.stage = 'Agreement Viewing';
                                             $scope.APILoginDetail.startTime = new Date();
                                         });
@@ -3801,8 +3789,8 @@
                                             fetch('data:application/pdf;base64,' + result.returnDocsStatus.csvAsString)
                                                 .then(response => response.blob())
                                                 .then(blob => document.getElementById('agreement_signed_Copy').src = URL.createObjectURL(blob));
-                                            $scope.selection = $scope.steps[7].stp;
-                                            $scope.counter = 7;
+                                            $scope.selection = $scope.steps[6].stp;
+                                            $scope.counter = 6;
                                             $scope.APILoginDetail.stage = 'Agreement signing';
                                             $scope.APILoginDetail.startTime = new Date();
                                         });

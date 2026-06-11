@@ -1040,7 +1040,7 @@ public class FormsCotroller {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
-            status.msg = 'OTP sent to ' + l.Email;
+            status.msg = 'OTP sent to registered Authorized Signatory email address';
             status.leadId = l.Id;
             status.leadEmail = l.Email;
 
@@ -1089,7 +1089,7 @@ public class FormsCotroller {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
-            status.msg = 'OTP sent to ' + l.Email;
+            status.msg = 'OTP sent to registered Authorized Signatory email address';
             status.leadId = l.Id;
             status.leadEmail = l.Email;
 
@@ -1129,7 +1129,7 @@ public class FormsCotroller {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
-            status.msg = 'OTP resent to ' + l.Email;
+            status.msg = 'OTP resent to registered Authorized Signatory email address';
 
         // } catch (QueryException e) {
         //     status.status = false;
@@ -1166,7 +1166,7 @@ public class FormsCotroller {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
-            status.msg = 'OTP resent to ' + l.Email;
+            status.msg = 'OTP resent to registered Authorized Signatory email address';
 
         // } catch (QueryException e) {
         //     status.status = false;
