@@ -415,11 +415,11 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <button type="button" data-toggle="tooltip" title="click to verify with RBI"
+                                            <!-- <button type="button" data-toggle="tooltip" title="click to verify with RBI"
                                                 style="margin-top: 1.3rem!important;" class="btn btn-primary"
                                                 ng-click="getRBIVerified(becomMember.Company,becomMember.Company_Type)">Verify with RBI
                                                 <i class="fa fa-check"></i>
-                                            </button>
+                                            </button> -->
                                         </div>
                                         <div class="col-md-9" style="margin-top: 25px">
                                             <span style="color:{{RBIverfiedResponse[0].color}};font-size:15px;">
@@ -3651,7 +3651,7 @@
                                             $scope.RBIverfiedResponse[0].icon = 'fa fa-check';
                                             $scope.RBIverfiedResponse[0].color = '#007f00';
                                         } else {
-                                            $scope.RBIverfiedResponse[0].msg = 'We are unable to verify your name from the RBI list of specified users. Without RBI certificate, we will not be able to onboard you as a Bureau Member as per CICRA rules.Please upload your RBI Certificate for us to proceed further.';
+                                            $scope.RBIverfiedResponse[0].msg = '';
                                             $scope.RBIverfiedResponse[0].icon = 'fa fa-times';
                                             $scope.RBIverfiedResponse[0].color = 'red';
                                         }
