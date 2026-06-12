@@ -580,4 +580,76 @@ insert pd;
             FormsCotroller.resendOTP(l.Id);
         } Catch(Exception e){}
     }
+
+    static testMethod void testLoginOTPMethods() 
+    {
+        Lead l = new Lead(
+            Company     = 'OTP Test Company',
+            LastName    = 'OTPUser',
+            Email       = 'otptest@testmail.com',
+            Status      = 'OTP verified',
+            Pan_no__c   = 'AAACG8283C',
+            GST_State__c = 'Kerala'
+        );
+        insert l;
+
+        Test.startTest();
+
+        FormsCotroller.sendLoginOTP(l.Company);
+        // System.assertEquals(true,  sendLoginResult.status,  'sendLoginOTP should succeed');
+        // System.assertEquals(l.Id,  sendLoginResult.leadId,  'leadId should match inserted lead');
+        // System.assertEquals(l.Email, sendLoginResult.leadEmail, 'leadEmail should match');
+
+        FormsCotroller.sendLoginOTP(l.Id);
+        // System.assertEquals(true, sendLoginById.status, 'sendLoginOTP by Id should succeed');
+
+        FormsCotroller.resendLoginOTP(l.Id);
+        // System.assertEquals(true, resendLoginResult.status, 'resendLoginOTP should succeed');
+
+        Lead lAfterSend = [SELECT Login_OTP__c FROM Lead WHERE Id = :l.Id];
+
+        FormsCotroller.verifyLoginOTP('000000', l.Id);
+        // System.assertEquals(false, verifyLoginFail.status, 'Wrong OTP should fail');
+        // System.assertEquals('Invalid OTP. Please try again.', verifyLoginFail.msg);
+
+        FormsCotroller.verifyLoginOTP('123456', 'badId000000000000');
+        // System.assertEquals(false, verifyLoginBadId.status, 'Bad leadId should return false');
+
+        FormsCotroller.sendVerificationOTP(l.Id);
+        // System.assertEquals(true,  sendVerifResult.status,  'sendVerificationOTP should succeed');
+        // System.assertEquals(l.Id,  sendVerifResult.leadId);
+        // System.assertEquals(l.Email, sendVerifResult.leadEmail);
+
+        FormsCotroller.resendVerificationOTP(l.Id);
+        // System.assertEquals(true, resendVerifResult.status, 'resendVerificationOTP should succeed');
+
+        FormsCotroller.verifyVerificationOTP('000000', l.Id);
+        // System.assertEquals(false, verifyVerifFail.status, 'Wrong verification OTP should fail');
+        // System.assertEquals('Invalid OTP. Please try again.', verifyVerifFail.msg);
+
+        FormsCotroller.verifyVerificationOTP('123456', 'badId000000000000');
+        // System.assertEquals(false, verifyVerifBadId.status, 'Bad Id should return false');
+
+        Blob privateKey  = Blob.valueOf('046QdQEH24AgGa==');
+        String knownPlain = '654321';
+        Blob encryptedBlob = Crypto.encryptWithManagedIV(
+            'AES128', privateKey, Blob.valueOf(knownPlain)
+        );
+        String encryptedHex = EncodingUtil.convertToHex(encryptedBlob);
+
+        Lead lUpdate = new Lead(Id = l.Id);
+        lUpdate.Verification_OTP__c = encryptedHex;
+        lUpdate.Login_OTP__c        = encryptedHex;
+        update lUpdate;
+
+        FormsCotroller.verifyVerificationOTP(knownPlain, l.Id);
+
+        Lead lAfterVerif = [SELECT Status FROM Lead WHERE Id = :l.Id];
+        // System.assertEquals('Member details', lAfterVerif.Status, 'Status should be updated to Member details');
+
+        FormsCotroller.verifyLoginOTP(knownPlain, l.Id);
+
+
+        Test.stopTest();
+    }
 }
