@@ -1036,7 +1036,7 @@ public class FormsCotroller {
                 '<p>Regards,<br/>Experian Team</p>'
             );
             mail.setTargetObjectId(l.Id);
-            mail.setSaveAsActivity(true);
+            // mail.setSaveAsActivity(true);
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
@@ -1085,7 +1085,7 @@ public class FormsCotroller {
                 '<p>Thanks & Regards,<br/>Experian Customer Support</p>'
             );
             mail.setTargetObjectId(l.Id);
-            mail.setSaveAsActivity(true);
+            // mail.setSaveAsActivity(true);
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
@@ -1125,7 +1125,7 @@ public class FormsCotroller {
                 '<p>Regards,<br/>Experian Team</p>'
             );
             mail.setTargetObjectId(l.Id);
-            mail.setSaveAsActivity(true);
+            // mail.setSaveAsActivity(true);
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
@@ -1162,7 +1162,7 @@ public class FormsCotroller {
                 '<p>Thanks & Regards,<br/>Experian Customer Support</p>'
             );
             mail.setTargetObjectId(l.Id);
-            mail.setSaveAsActivity(true);
+            // mail.setSaveAsActivity(true);
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
             status.status = true;
