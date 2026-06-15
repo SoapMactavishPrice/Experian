@@ -14,7 +14,7 @@ public class FetchMoreDetailsByCIN {
         String t = '';
         String u = '';
         String jsonBody = '{"username": "' + userName + '","password" :"' + password + '"}';
-
+        System.debug('Input Request:' + jsonBody);
         HttpRequest req = new HttpRequest();
         HttpResponse res = new HttpResponse();
         Http http = new Http();
@@ -119,7 +119,7 @@ public class FetchMoreDetailsByCIN {
         String loginURL = Label.SinzyLoginAPI;
 
         String inputJson = '{ "target": "Organization", "itemId": "' + userId + '", "accessToken": "' + token + '", "task": "simpleSearchByCin", "essentials": { "cin": "' + Cin + '" }}';
-
+        System.debug('Input Request verifyCompanyCin:' + inputJson);
         String url = system.label.SignzyBaseUrl+'/hunts';
         ////String url = system.label.verify_cin;
         HttpRequest req = new HttpRequest();
@@ -144,6 +144,7 @@ public class FetchMoreDetailsByCIN {
         try {
             // System.debug('========verifyCompanyCin====================input Js--->' + req.getBody());
             res = http.send(req);
+            System.debug('Response:' + res.getBody());
             If(res.getStatusCode() == 200) {
                 Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
                 // fromJSON js = fromJSON.parseCINdetails(res.getBody());
