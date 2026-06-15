@@ -14,7 +14,7 @@ public class PanToCompanyCinRESTController {
         String t = '';
         String u = '';
         String jsonBody = '{"username": "'+userName+'","password" :"'+password+'"}';
-        
+
         HttpRequest req = new HttpRequest();
         HttpResponse res = new HttpResponse();
         Http http = new Http();
@@ -61,6 +61,7 @@ public class PanToCompanyCinRESTController {
     
 			
            		String jsonb = '{"task":"fetch","essentials":{"number":"'+pan_no+'"}}';
+                System.debug('Input Request:' + jsonb);
             	String jsonBody = '{"username": "'+userName+'","password" :"'+password+'"}';   
                 String url =system.label.gstin_validation+userId+'/panv2';            
                 HttpRequest req = new HttpRequest();
@@ -79,6 +80,7 @@ public class PanToCompanyCinRESTController {
                              
                 If(res.getStatusCode()==200 ){
                     JSON2ApexCompany js = JSON2ApexCompany.parse(res.getBody());
+                    System.debug('Response object->'+res.getBody());
                     System.debug('Name of the Company : ----> '+js.result.name); 
 
                     company_status.Company_Verified_c = 'True';
